@@ -13,7 +13,7 @@ Man skall kunna logga in.
 
 Finnas en QR inloggnings kod.
 
-Skapa inlägg där senaste inlägget visas först.
+Skapa inlägg, där senaste inlägget visas först.
 
 Använda sig av bilder i sina post
 
