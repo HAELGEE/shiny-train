@@ -46,6 +46,29 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        let connection = new signalR.HubConnectionBuilder()
+                                    .withUrl("/chatHub").build();
+        connection.on("ReceiveMessage", function (User, Message) {
+            let encodedUser = $("<div />").text(user).html();
+            let encodedMsg = $("<div />").text(message).html();
+            $("#chatBox").append("<p><strong>" + encodedUser + "</strong>: " + encodedMsg + "</p>");
+        });
+
+        $("#send-btn").click(function () {
+            let our_user = $("#username").val();
+            let Message = $("#message").val();
+            connection.invoke("Message", our_user, Message);
+            $("#message").val("").focus();
+        });
+
+
+        connection.start().then(function () {
+            console.log("Connected!");
+        }).catch(function (err) {
+            console.error(err.toString());
+        });
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
