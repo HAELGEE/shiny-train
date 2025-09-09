@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36414.22 d17.14
+VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Domain", "1. Domain", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Info.txt = Info.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snackis", "Snackis\Snackis.csproj", "{EB6639FE-567F-4358-B3A9-FB10336A36CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{FBE38698-BEEC-4FE4-A75A-5F68D36E7466}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBE38698-BEEC-4FE4-A75A-5F68D36E7466}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBE38698-BEEC-4FE4-A75A-5F68D36E7466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB6639FE-567F-4358-B3A9-FB10336A36CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB6639FE-567F-4358-B3A9-FB10336A36CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB6639FE-567F-4358-B3A9-FB10336A36CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB6639FE-567F-4358-B3A9-FB10336A36CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{C43A42E3-9A67-40C8-A93C-41A8999E2534} = {C326D9AC-765B-49A4-B432-733FC6A1B32D}
 		{9ABAB2DF-8203-40E7-8327-1A1B27D7F1D7} = {8FC830F1-9269-4B5D-9734-19CA73A18267}
 		{FBE38698-BEEC-4FE4-A75A-5F68D36E7466} = {F689F44C-DF70-439D-A0B1-9A44CEC2D30C}
+		{EB6639FE-567F-4358-B3A9-FB10336A36CA} = {F1595648-404B-450F-A841-81191B459F0C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8E499865-0E19-44B8-B434-6F540DA51C5C}
