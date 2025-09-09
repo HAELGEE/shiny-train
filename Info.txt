@@ -15,6 +15,8 @@ Finnas en QR inloggnings kod.
 
 Skapa inlägg där senaste inlägget visas först.
 
+Använda sig av bilder i sina post
+
 Svara på andras inlägg med en Timestamp (där det första inlägget visas först)
 
 Det ska gå att hämta alla inlägg för en diskussion, med författare och datum, via API.
