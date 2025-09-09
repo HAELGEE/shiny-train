@@ -20,6 +20,7 @@
     <ProjectReference Include="..\ApplicationService\ApplicationService.csproj" />
     <ProjectReference Include="..\EFCore\EFCore.csproj" />
     <ProjectReference Include="..\Entity\Entity.csproj" />
+    <ProjectReference Include="..\Snackis\Snackis.csproj" />
   </ItemGroup>
 
 </Project>
