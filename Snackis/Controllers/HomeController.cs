@@ -1,3 +1,4 @@
+using Entity;
 using Microsoft.AspNetCore.Mvc;
 using Snackis.Models;
 using System.Diagnostics;
@@ -10,10 +11,19 @@ public class HomeController : Controller
         return View();
     }
 
+    [HttpGet("profile")]
+    public IActionResult Profile(Member member)
+    {
+        return View(member);
+    }
+
+    [HttpPost("profile")]
     public IActionResult Profile()
     {
         return View();
     }
+
+
     public IActionResult Info()
     {
         return View();
