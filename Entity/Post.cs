@@ -19,6 +19,7 @@ public class Post
     public int Reply { get; set; } = 0;
 
     public int? SubCategoryId { get; set; }
+    public int? MemberId { get; set; }
     public ICollection<SubPost>? SubPosts { get; set; }
 
 }

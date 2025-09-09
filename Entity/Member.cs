@@ -6,26 +6,39 @@ public class Member
 {
     public int Id { get; set; }
 
-    [Required]
+    // Some criteria for user registration
+    [Display(Name = "First name", Prompt = "Insert First name here...")]
+    [Required(ErrorMessage = "Must type in your First name")]
     public string? FirstName { get; set; }
-    [Required]
+    [Display(Name = "Last name", Prompt = "Insert Last name here...")]
+    [Required(ErrorMessage = "Must type in your Last name")]
     public string? LastName { get; set; }
-    [Required]
+    [Display(Name = "Birthday", Prompt = "Insert YYYY-MM-DD here...")]
+    [Required(ErrorMessage = "Must type in your Birtday")]
     public int? Age { get; set; }
 
-    [Required]
+    [Display(Name = "Username", Prompt = "Insert Username here...")]
+    [Required(ErrorMessage = "Must type in your Username")]
     public string? UserName { get; set; }
+    [EmailAddress(ErrorMessage = "Must be a legit Email-Address")]
+    [Display(Name = "Email", Prompt = "Insert Email-address here...")]
     [Required]
     public string? Email { get; set; }
-    [Required]
+    [Display(Name = "Password", Prompt = "Insert your Password here...")]
+    [Required(ErrorMessage = "Must type in a Password")]
     public string? Password { get; set; }
     
+    // Admin rights
     public bool IsAdmin { get; set; } = false;
 
-
+    // Information for the View on Profile
     public int TotalPosts { get; set; } = 0;
     public int TotalReply { get; set; } = 0;
     public int ProfileViews { get; set; } = 0;
+
+    // DB connections 
+    public ICollection<Post>? Posts { get; set; }
+    public ICollection<SubPost>? SubPosts { get; set; }
 
 
 }

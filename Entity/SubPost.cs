@@ -11,4 +11,6 @@ public class SubPost
     public string? Text { get; set; }
 
     public int? PostId { get; set; }
+    public int? MemberId { get; set; }
+
 }
