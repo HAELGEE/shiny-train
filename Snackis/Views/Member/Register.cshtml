@@ -1,0 +1,50 @@
+﻿@model Member
+@{
+    ViewData["Title"] = "Register";
+    
+}
+<h1></h1>
+
+<div>
+    <form asp-controller="Member" asp-action="Register">
+
+        <label asp-for="FirstName"></label>
+        <br />
+        <input type="text" asp-for="FirstName"></input>
+        <span asp-validation-for="FirstName"></span>
+        <br />
+
+        <label asp-for="LastName"></label>
+        <br />
+        <input type="text" asp-for="LastName"></input>
+        <span asp-validation-for="LastName"></span>
+        <br />
+
+        <label asp-for="Age"></label>
+        <br />
+        <input type="text" asp-for="Age"></input>
+        <span asp-validation-for="Age"></span>
+        <br />
+
+        <label asp-for="Email"></label>
+        <br />
+        <input type="text" asp-for="Email"></input>
+        <span asp-validation-for="Email" class="text-danger"></span>
+        <br />
+
+        <label asp-for="UserName"></label>
+        <br />
+        <input type="text" asp-for="UserName"></input>
+        <span asp-validation-for="UserName"></span>
+        <br />
+
+        <label asp-for="Password"></label>
+        <br />
+        <input type="password" asp-for="Password"></input>
+        <span asp-validation-for="Password"></span>
+        <br />
+
+        <br />
+        <button type="submit">Create</button>
+    </form>
+</div>

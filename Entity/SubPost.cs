@@ -10,6 +10,8 @@ public class SubPost
     public int Id { get; set; }
     public string? Text { get; set; }
 
+
+    // DB connections
     public int? PostId { get; set; }
     public int? MemberId { get; set; }
 
