@@ -30,7 +30,12 @@
                         </li>                        
                     </ul>
                 </div>
-                <div class="box right"></div>
+                <div class="box right">
+                    <label class="switch">
+                        <input type="checkbox" id="theme-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
             </div>
         </nav>
     </header>
@@ -46,6 +51,32 @@
         </div>
     </footer>
 
+    @* Toggle script för Darkmode och LightMode *@
+    <script>
+            const toggle = document.getElementById("theme-toggle");
+
+        toggle.addEventListener("change", () => {
+          if (toggle.checked) {
+            document.body.classList.add("dark-mode");
+            localStorage.setItem("theme", "dark");
+          } else {
+            document.body.classList.remove("dark-mode");
+            localStorage.setItem("theme", "light");
+          }
+        });
+
+                window.addEventListener("DOMContentLoaded", () => {
+          const savedTheme = localStorage.getItem("theme");
+
+          if (savedTheme === "dark") {
+            document.body.classList.add("dark-mode");
+            document.getElementById("theme-toggle").checked = true;
+          }
+        });
+
+    </script>
+
+    @* Script för Livechatts funktion *@
     <script>
         let connection = new signalR.HubConnectionBuilder()
                                     .withUrl("/chatHub").build();
@@ -68,7 +99,10 @@
         }).catch(function (err) {
             console.error(err.toString());
         });
+
+
     </script>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -1,3 +1,6 @@
+using EFCore;
+using Microsoft.EntityFrameworkCore;
+
 namespace Snackis;
 
 public class Program
@@ -5,6 +8,16 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.AddDbContext<MyDbContext>(options =>
+               options.UseSqlServer(builder.Configuration.GetConnectionString("MyDbContext"))
+               );
+
+        builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+
+
+
+
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();

@@ -1,4 +1,4 @@
-Ôªøhtml {
+html {
     font-size: 14px;
 }
 
@@ -42,7 +42,7 @@ nav {
 }
 
 .box {
-    flex: 1; /* alla tre f√•r samma bredd */
+    flex: 1; /* alla tre fÂr samma bredd */
 }
 
 .left, .middle, .right {
@@ -59,17 +59,17 @@ nav {
 
 /*Recent posts menu*/
 .recent-post-pinned {
-    position: absolute; /* placerar den relativt till n√§rmaste f√∂r√§lder med position: relative */
-    top: var(--navbar-height, 100px); /* justera s√• den hamnar direkt under navbaren */
+    position: absolute; /* placerar den relativt till n‰rmaste fˆr‰lder med position: relative */
+    top: var(--navbar-height, 100px); /* justera sÂ den hamnar direkt under navbaren */
     right: 80px;
     width: 30rem;
     height: 50rem;
-    background: #f2f2f2; /* bara f√∂r att se den */
+    background: #f2f2f2; /* bara fˆr att se den */
     border: 1px solid #ccc;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* D√∂ljer den under t.ex. 1200px */
+/* Dˆljer den under t.ex. 1200px */
 @media (max-width: 1600px) {
     .recent-post-pinned {
         display: none;
@@ -82,8 +82,8 @@ nav {
     justify-content: center;
 }
 
-/* switch Button */
-/* Sj√§lva switchen */
+/*switch Button*/
+/* Sj‰lva switchen */
 .switch {
     position: relative;
     display: inline-block;
@@ -113,7 +113,7 @@ nav {
     /* Knappen */
     .slider:before {
         position: absolute;
-        content: "‚òÄÔ∏è";
+        content: "??";
         Light mode ikon height: 22px;
         width: 22px;
         left: 2px;
@@ -127,56 +127,13 @@ nav {
         font-size: 14px;
     }
 
-/* N√§r den √§r p√• */
-
-
-/* Light mode */
-body {
-    background: #fff;
-    color: #000;
-}
-
-    /* Dark mode */
-    body.dark-mode {
-        background: #121212;
-        color: #f1f1f1;
-    }
-
-
-/* === Light mode (default) === */
-.navbar {
-    background: #fff;
-    color: #000;
-}
-
-.recent-post-pinned {
-    background: #f2f2f2;
-    color: #000;
-}
-
-/* === Dark mode === */
-body.dark-mode .navbar,
-body.dark-mode .navbar * {
-    color: #fff !important; /* Tvingar vit text */
-    background-color: #000 !important; 
-}
-
-body.dark-mode .footer,
-body.dark-mode .footer * {
-    color: #fff !important; /* Vit text i footer */
-}
-
-body.dark-mode .recent-post-pinned {
-    background: #1e1e1e; /* M√∂rkgr√• bakgrund */
-    color: #f5f5dc !important; /* Kr√§mvit text */
-}
+/* N‰r den ‰r pÂ */
 input:checked + .slider {
-    /*    background-color: #555;*/
-    background-color: dimgrey !important;
+    background-color: #555;
 }
 
     input:checked + .slider:before {
         transform: translateX(24px);
-        content: "üåô";
+        content: "??";
         Dark mode ikon
     }
