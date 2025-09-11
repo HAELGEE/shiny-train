@@ -19,6 +19,8 @@ public class Post
     public int Views { get; set; } = 0;
     public int Likes { get; set; } = 0;
     public int Reply { get; set; } = 0;
+    public DateTime? Created { get; set; } = DateTime.Now;
+
 
     // DB connections
     public int? SubCategoryId { get; set; }

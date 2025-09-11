@@ -11,17 +11,8 @@ public class HomeController : Controller
         return View();
     }
 
-    [HttpGet("profile")]
-    public IActionResult Profile(Member member)
-    {
-        return View(member);
-    }
+    
 
-    [HttpPost("profile")]
-    public IActionResult Profile()
-    {
-        return View();
-    }
 
 
     public IActionResult Info()

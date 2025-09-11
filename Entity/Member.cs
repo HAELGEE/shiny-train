@@ -41,6 +41,7 @@ public class Member
     public int TotalPosts { get; set; } = 0;
     public int TotalReply { get; set; } = 0;
     public int ProfileViews { get; set; } = 0;
+    public DateTime? RegisteryDate { get; set; } = DateTime.Now;    
 
     // DB connections 
     public ICollection<Post>? Posts { get; set; }

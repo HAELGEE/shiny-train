@@ -1,3 +1,5 @@
+using ApplicationService;
+using ApplicationService.Interface;
 using EFCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +16,9 @@ public class Program
                );
 
         builder.Services.AddScoped<IMemberRepository, MemberRepository>();
-
+        builder.Services.AddScoped<IMemberService, MemberService>();
+        builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+        builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 
 

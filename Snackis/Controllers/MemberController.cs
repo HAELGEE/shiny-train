@@ -7,12 +7,31 @@ using Microsoft.EntityFrameworkCore;
 namespace Snackis.Controllers;
 public class MemberController : Controller
 {
-    private readonly MyDbContext _context;
+    private readonly IMemberService _memberService;
 
-    public MemberController(MyDbContext context)
+    public MemberController(IMemberService memberService)
     {
-        _context = context;
+        _memberService = memberService;
     }
+
+    [HttpGet("profile")]
+    public IActionResult Profile(Member member)
+    {
+        if (ViewData["IsLoggedIn"] == "false")
+            return RedirectToAction(nameof(Register), "Member");
+
+
+        _memberService.GetOneMemberAsync(member.Id);
+        return View();
+    }
+
+    [HttpPost("profile")]
+    public IActionResult Profile()
+    {
+        return View();
+    }
+
+
 
     [HttpGet("Register")]
     public IActionResult Register()
@@ -23,23 +42,27 @@ public class MemberController : Controller
     [HttpPost("Register")]
     public async Task<IActionResult> Register(Member member)
     {
-        if (_context.Member.Any(m => m.Email == member.Email))
+        if (_memberService.GetMemberByEmailAsync(member.Email) != null)
         {
             ModelState.AddModelError("Email", "This email is already taken.");
             return View();
         }
 
-
         if (!ModelState.IsValid)  
             return View();
 
-
-
-        _context.Add(member);
-        await _context.SaveChangesAsync();
+        await _memberService.CreateMemberAsync(member);       
 
         return RedirectToAction(nameof(Index), "Home");
         
     }
+
+    [HttpGet("admin")]
+    public IActionResult Admin()
+    {
+        return View();
+    }
+
+    
 }
     

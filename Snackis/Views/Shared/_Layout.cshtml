@@ -1,6 +1,14 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html data-theme="light" lang="en">
 <head>
+    <script>
+        (function() {
+          const savedTheme = localStorage.getItem("theme");
+          if (savedTheme === "dark") {
+            document.documentElement.classList.add("dark-mode");
+          }
+        })();
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Snackis</title>
@@ -26,10 +34,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Profile">Profile</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="Profile">Profile</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="Register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="Admin">Admin</a>
                         </li>
                     </ul>
                 </div>
