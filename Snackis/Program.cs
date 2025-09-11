@@ -1,7 +1,10 @@
 using ApplicationService;
 using ApplicationService.Interface;
 using EFCore;
+using Entity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Snackis;
 
@@ -12,8 +15,10 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddDbContext<MyDbContext>(options =>
-               options.UseSqlServer(builder.Configuration.GetConnectionString("MyDbContext"))
+               options.UseSqlServer(builder.Configuration["Azure:DbKey"])
                );
+               
+
 
         builder.Services.AddScoped<IMemberRepository, MemberRepository>();
         builder.Services.AddScoped<IMemberService, MemberService>();
@@ -21,6 +26,7 @@ public class Program
         builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 
+        builder.Services.AddSession();
 
 
         // Add services to the container.
@@ -36,6 +42,7 @@ public class Program
             app.UseHsts();
         }
 
+        app.UseSession();
         app.UseHttpsRedirection();
         app.UseRouting();
 

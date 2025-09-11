@@ -1,9 +1,26 @@
-﻿@model Member
+﻿@model FullViewModel
 @{
     ViewData["Title"] = "Profile";
+    
 }
 <h1>@ViewData["Title"] Page</h1>
 
 <p>Here you see your information and to update them </p>
 
-@(Model.Age) 
+<p><b>First name: </b>@Model.Member.FirstName</p>
+<p><b>Last name: </b>@Model.Member.LastName</p>
+<p><b>Age: </b>@Model.Member.Age</p>
+<p><b>Email: </b>@Model.Member.Email</p>
+<br />
+<p><b>Username: </b>@Model.Member.UserName</p>
+<p><b>Views on profile: </b>@Model.Member.ProfileViews</p>
+<p><b>Registered: </b>@Model.Member.RegisteryDate</p>
+<br />
+<p><b>Total post from you: </b>@Model.Member.TotalPosts</p>
+<p><b>Total replies from you: </b>@Model.Member.TotalReply</p>
+
+<br />
+<br />
+<a asp-controller="Member" asp-action="">Update info</a>
+
+

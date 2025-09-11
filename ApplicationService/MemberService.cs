@@ -33,6 +33,11 @@ public class MemberService : IMemberService
     {
         return await _memberRepository.GetMemberByEmailAsync(email);
     }
+   public async Task<Member> GetMemberByUsernamePasswordAsync(string username, string password)
+    {
+        return await _memberRepository.GetMemberByUsernamePasswordAsync(username, password);
+    }
+
     public async Task UpdateMemberAsync(Member member)
     {
         await _memberRepository.UpdateMemberAsync(member);
