@@ -15,14 +15,14 @@ public class CategoryController : Controller
     }
 
 
-    [HttpGet("Admin/Create")]
+    [HttpGet("Create")]
     public IActionResult Create()
     {
         
         return View();
     }
 
-    [HttpPost("Admin/Create")]
+    [HttpPost("Create")]
     public async Task<IActionResult> Create(Category category)
     {
         if(!ModelState.IsValid) 

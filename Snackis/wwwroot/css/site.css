@@ -37,10 +37,6 @@ body {
     align-items: center; /* centrerar vertikalt */
 }
 
-nav {
-    /*    left: 9rem;*/
-}
-
 .box {
     flex: 1; /* alla tre får samma bredd */
 }
@@ -49,6 +45,10 @@ nav {
     display: flex;
     justify-content: center; /* centrerar horisontellt */
     align-items: center; /* centrerar vertikalt */
+}
+.middle{
+    flex:auto;
+    right:4rem;
 }
 
 .container {
@@ -181,4 +181,14 @@ input:checked + .slider {
         transform: translateX(24px);
         content: "🌙";
         Dark mode ikon
+    }
+
+.box-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem; 
+}
+    .box-right a {
+        text-decoration: none;
+        color: blue; 
     }

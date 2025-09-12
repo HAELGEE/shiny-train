@@ -1,12 +1,13 @@
-﻿@model Member
-@{
+﻿@{
     ViewData["Title"] = "Admin Page";
 }
 
 <div>
 
-    <button><a>Create Category</a></button><br />
-    <button><a asp-controller="Category" asp-action="Admin/Create">Create SubCategory</a></button>
+    <button><a style="color: black; text-decoration: none;" asp-controller="Category" asp-action="CreateCategory">Create Category</a></button>
+    <br />
+    <br />
+    <button><a style="color: black; text-decoration: none;" asp-controller="Category" asp-action="CreateSubCategory">Create SubCategory</a></button>
 @*
     <form asp-controller="Category" asp-action="Create">
 

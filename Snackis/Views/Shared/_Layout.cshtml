@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var userId = Context.Session.GetInt32("UserId");
+    var IsAdmin = Context.Session.GetInt32("UserId");
+    var userName = Context.Session.GetString("UserName");
+}
+
+<!DOCTYPE html>
 <html data-theme="light" lang="en">
 <head>
     <script>
@@ -23,10 +29,10 @@
             <div class="container">
                 <div class="box left">
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><h3>Snackis</h3></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>                    
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
                 </div>
                 <div class="box middle">
                     <ul class="navbar-nav flex-grow-1">
@@ -39,19 +45,29 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="Profile">Profile</a>
                         </li>
-                         @if (ViewBag.Member != null && Model.Member.IsAdmin)
-                        {<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="Admin">Admin</a>
-                        </li>}
+                        @if (!string.IsNullOrWhiteSpace(userName) && IsAdmin == 1)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="Admin">Admin</a>
+                            </li>
+                        }
                     </ul>
                 </div>
-                <div class="box right">
+                <div class="box-right">
                     <label class="switch">
                         <input type="checkbox" id="theme-toggle">
                         <span class="slider"></span>
-                        <br />
-                        @* <a href="member/signin">Sign In</a> *@
                     </label>
+
+                    @if (string.IsNullOrEmpty(userName))
+                        {
+                            <a asp-controller="Member" asp-action="Login">Sign In</a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Member" asp-action="Login">Sign Out</a>
+                        }
+                    
                 </div>
             </div>
         </nav>

@@ -1,0 +1,24 @@
+﻿@model Member
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div>
+
+    <form asp-controller="Member" asp-action="Login">
+        
+        <label asp-for="UserName"></label>
+        <br />
+        <input type="text" asp-for="UserName">
+        <span asp-validation-for="UserName"></span>
+        <br />
+
+        <label asp-for="Password"></label>
+        <br />
+        <input type="password" asp-for="Password" />
+        <span asp-validation-for="Password"></span>
+        <br />
+        <button type="submit">Login</button>
+    </form>
+
+</div>

@@ -1,6 +1,7 @@
 ﻿using ApplicationService.Interface;
 using EFCore;
 using Entity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,7 @@ public class MemberController : Controller
     {
         var userId = HttpContext.Session.GetInt32("UserId");
 
-        if (userId == null)
+        if (userId == null || userId == 0)
             return RedirectToAction(nameof(Register), "Member");
 
         FullViewModel viewModel = new FullViewModel();
@@ -57,6 +58,9 @@ public class MemberController : Controller
     [HttpPost("profile")]
     public IActionResult Profile(Member member)
     {
+        if(member.IsAdmin)
+            HttpContext.Session.SetInt32("IsAdmin" , 1) ; // To create a session variable to access the Admin page
+
         return View();
     }
 
@@ -85,9 +89,9 @@ public class MemberController : Controller
         HttpContext.Session.SetInt32("UserId", member.Id);
         HttpContext.Session.SetString("UserName", member.UserName);
 
-        return RedirectToAction(nameof(Index), "Home");
-        
+        return RedirectToAction(nameof(Index), "Home");        
     }
+
 
     [HttpGet("admin")]
     public async Task<IActionResult> Admin()
@@ -108,16 +112,27 @@ public class MemberController : Controller
         return View(member);
     }
 
-    [HttpGet("Member/SignIn")]
-    public IActionResult SignIn()
+    [HttpGet("Login")]
+    public IActionResult Login()
     {
+
+        var userName = HttpContext.Session.GetString("UserName");
+
+        if (!string.IsNullOrWhiteSpace(userName))
+        {
+            HttpContext.Session.SetString("UserName", "");
+            HttpContext.Session.SetInt32("UserId", 0);
+
+            return RedirectToAction(nameof(Index), "Home");
+        }
+
         return View();
     }
 
-    [HttpPost("Member/SignIn")]
-    public async Task<IActionResult> SignIn(string username, string password)
+    [HttpPost("Login")]
+    public async Task<IActionResult> Login(string UserName, string Password)
     {
-        var member = await _memberService.GetMemberByUsernamePasswordAsync(username, password);
+        var member = await _memberService.GetMemberByUsernamePasswordAsync(UserName, Password);
 
         if(member == null)
         {
@@ -125,11 +140,29 @@ public class MemberController : Controller
             return View();
         }
 
+        ViewData["UserId"] = member.Id;
+        ViewData["UserName"] = member.UserName;
         HttpContext.Session.SetInt32("UserId", member.Id);
         HttpContext.Session.SetString("UserName", member.UserName);
 
         return RedirectToAction(nameof(Profile), "Member");
     }
-    
+
+    [HttpGet("Update")]
+    public async Task<IActionResult> Update(int Id)
+    {
+        var member = await _memberService.GetOneMemberAsync(Id);
+
+        return View(member);
+    }
+
+    [HttpPost("Update")]
+    public async Task<IActionResult> Update(Member member)
+    {
+        if(!ModelState.IsValid)
+            return View(new { member });
+
+        return View();
+    }
 }
     
