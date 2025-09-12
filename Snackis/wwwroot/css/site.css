@@ -30,6 +30,14 @@ body {
     text-align: start;
 }
 
+/*Categories*/
+.CategoryStyle{
+    margin-left: 1rem;
+    border: solid, 5px solid red;
+}
+
+
+
 /*NAVBAR*/
 .navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 {
     display: flex;

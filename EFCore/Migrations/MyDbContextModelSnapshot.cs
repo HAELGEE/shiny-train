@@ -83,11 +83,11 @@ namespace EFCore.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
+                    b.HasIndex("UserName", "Email")
                         .IsUnique();
 
                     b.ToTable("Member");

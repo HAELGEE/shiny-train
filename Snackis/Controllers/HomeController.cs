@@ -1,3 +1,4 @@
+using EFCore;
 using Entity;
 using Microsoft.AspNetCore.Mvc;
 using Snackis.Models;
@@ -5,11 +6,29 @@ using System.Diagnostics;
 
 namespace Snackis.Controllers;
 public class HomeController : Controller
-{  
-    public IActionResult Index()
+{
+    private readonly IPostRepository _postRepository;
+    private readonly ICategoryRepository _categoryRepository;
+
+    public HomeController(IPostRepository postRepository, ICategoryRepository categoryRepository)
     {
-        //ViewData
-        return View();
+        _postRepository = postRepository;
+        _categoryRepository = categoryRepository;
+    }
+    //public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index()
+    {
+        //var recentPosts = await _postRepository.GettingAllRecentPostAsync();
+        //var allPosts = await _postRepository.GettingAllPostForSubCategoryAsync();
+        var categories = await _categoryRepository.GetAllCategoriesAsync();
+
+        var fullModel = new FullViewModel
+        {
+            //Posts = allPosts,            
+            Categorys = categories.ToList()
+        };
+
+        return View(fullModel);
     }
 
     

@@ -9,7 +9,7 @@ En Admin skall kunna lägga till fler Kategorier (Category)
 
 Man skall kunna registrera sig.
 
-Man skall kunna logga in.
+** Klar ** Man skall kunna logga in.
 
 Finnas en QR inloggnings kod.
 
@@ -24,7 +24,7 @@ Svara på andras inlägg med en Timestamp (där det första inlägget visas först)
 
 Det ska gå att hämta alla inlägg för en diskussion, med författare och datum, via API.
 
-Kunna ändra mellan Darkmode och Lightmode
+** Klar ** Kunna ändra mellan Darkmode och Lightmode
 
 /Blogg/Användare
 Kunna skapa inlägg
@@ -36,13 +36,13 @@ kunna tabort sina inlägg
 Kunna gilla inlägg
 
 /Konto
-Registrera sig
+** Klar ** Registrera sig
 
 Användaren ska också kunna ladda upp en bild på sig själv, som syns vid sidan om inlägget.
 
-Ändra uppgifter om sig själv samt byta lösenord.
+** Klar ** Ändra uppgifter om sig själv samt byta lösenord.
 
-Info ruta om sig själv
+** Klar ** Info ruta om sig själv
 
 Kalla på nytt lösenord om man glömt
 

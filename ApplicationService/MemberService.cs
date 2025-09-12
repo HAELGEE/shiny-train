@@ -1,6 +1,7 @@
 ﻿using ApplicationService.Interface;
 using EFCore;
 using Entity;
+using static QRCoder.PayloadGenerator;
 
 namespace ApplicationService;
 
@@ -28,6 +29,10 @@ public class MemberService : IMemberService
     public async Task<Member> GetOneMemberAsync(int id)
     {
         return await _memberRepository.GetOneMemberAsync(id);
+    }
+    public async Task<Member> GetMemberByUsernameAsync(string userName)
+    {
+        return await _memberRepository.GetMemberByUsernameAsync(userName);
     }
     public async Task<Member> GetMemberByEmailAsync(string email)
     {

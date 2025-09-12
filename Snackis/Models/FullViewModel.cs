@@ -1,12 +1,13 @@
-﻿namespace Entity;
+﻿using ApplicationService.Interface;
+
+namespace Entity;
 public class FullViewModel
 {
     public Member? Member { get; set; }
     public List<Category>? Categorys { get; set; } = new();
     public List<SubCategory>? SubCategorys { get; set; }
     public List<Post>? Posts { get; set; }
-    public List<Post>? RecentPosts { get; set; } = new();
-
     public List<SubPost>? SubPosts { get; set; }   
-   
+    //public IMemberService? MemberService { get; set; }
+    //public ICategoryService? Categorys { get; set; }
 }

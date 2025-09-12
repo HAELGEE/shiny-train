@@ -24,6 +24,8 @@ public class Program
         builder.Services.AddScoped<IMemberService, MemberService>();
         builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
         builder.Services.AddScoped<ICategoryService, CategoryService>();
+        builder.Services.AddScoped<IPostService, PostService>();
+        builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 
         builder.Services.AddSession();

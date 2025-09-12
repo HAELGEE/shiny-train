@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Entity;
 
-[Index(nameof(Email), IsUnique = true)]
+[Index(nameof(UserName), nameof(Email), IsUnique = true)]
 public class Member
 {
     public int Id { get; set; }
@@ -17,10 +17,11 @@ public class Member
     [Required(ErrorMessage = "Must type in your Last name")]
     public string? LastName { get; set; }
 
-    [Display(Name = "Birthday", Prompt = "Insert YYYY-MM-DD here...")]
+    [MaxLength(8)]
+    [Display(Name = "Birthday", Prompt = "Insert yyyymmdd here...")]
     [Required(ErrorMessage = "Must type in your Birtday")]
     public int? Age { get; set; }
-
+        
     [Display(Name = "Username", Prompt = "Insert Username here...")]
     [Required(ErrorMessage = "Must type in your Username")]
     public string? UserName { get; set; }

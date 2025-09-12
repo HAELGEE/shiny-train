@@ -22,7 +22,7 @@ public class MemberController : Controller
         var userId = HttpContext.Session.GetInt32("UserId");
 
         if (userId == null || userId == 0)
-            return RedirectToAction(nameof(Register), "Member");
+            return RedirectToAction(nameof(Login), "Member");
 
         FullViewModel viewModel = new FullViewModel();
         
@@ -82,6 +82,12 @@ public class MemberController : Controller
             return View();
         }
 
+        if (await _memberService.GetMemberByUsernameAsync(member.UserName) != null)
+        {
+            ModelState.AddModelError("UserName", "This Username is already taken.");
+            return View();
+        }
+
         if (!ModelState.IsValid)  
             return View();
 
@@ -115,7 +121,6 @@ public class MemberController : Controller
     [HttpGet("Login")]
     public IActionResult Login()
     {
-
         var userName = HttpContext.Session.GetString("UserName");
 
         if (!string.IsNullOrWhiteSpace(userName))
@@ -136,12 +141,10 @@ public class MemberController : Controller
 
         if(member == null)
         {
-            ModelState.AddModelError("", "Wrong Username or Password");
+            ModelState.AddModelError("Error", "Wrong Username or Password");
             return View();
         }
-
-        ViewData["UserId"] = member.Id;
-        ViewData["UserName"] = member.UserName;
+                
         HttpContext.Session.SetInt32("UserId", member.Id);
         HttpContext.Session.SetString("UserName", member.UserName);
 
@@ -157,12 +160,20 @@ public class MemberController : Controller
     }
 
     [HttpPost("Update")]
-    public async Task<IActionResult> Update(Member member)
+    public async Task<IActionResult> Update(int id, Member member)
     {
         if(!ModelState.IsValid)
-            return View(new { member });
+            return View();
 
-        return View();
+        //if (id != member.Id)        
+        //    return BadRequest("Id did not match the objekt");
+        
+
+        await _memberService.UpdateMemberAsync(member);
+
+        return RedirectToAction(nameof(Profile), "Member");
     }
+
+
 }
     

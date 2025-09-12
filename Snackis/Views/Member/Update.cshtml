@@ -2,3 +2,41 @@
 @{
     ViewData["Title"] = "Update Profile";
 }
+<div>
+    <form asp-controller="Member" asp-action="Update">
+       @* Hidden stuff *@
+        <input type="hidden" asp-for="UserName"></input>
+        <span asp-validation-for="UserName"></span>    
+        <input type="hidden" asp-for="Age"></input>
+        <span asp-validation-for="Age"></span>
+        <input type="hidden" asp-for="Email"></input>
+        <span asp-validation-for="Email"></span>
+        <input type="hidden" asp-for="Id"></input>
+        <span asp-validation-for="Id"></span>
+
+
+        <label asp-for="FirstName"></label>
+        <br />
+        <input type="text" asp-for="FirstName"></input>
+        <span asp-validation-for="FirstName"></span>
+        <br />
+
+        <label asp-for="LastName"></label>
+        <br />
+        <input type="text" asp-for="LastName"></input>
+        <span asp-validation-for="LastName"></span>
+        <br />       
+
+
+        <label asp-for="Password"></label>
+        <br />
+        <input type="password" asp-for="Password"></input>
+        <span asp-validation-for="Password"></span>
+        <br />
+
+        
+       
+        <br />
+        <button type="submit">Update</button>
+    </form>
+</div>

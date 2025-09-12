@@ -1,27 +1,34 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>    
+    <h1 class="display-4">Welcome</h1>
+    @* Here the categories lays *@
+    <div>
+       @if(Model.Categorys != null)
+            @foreach (var item in Model.Categorys)
+            {
+                <div class="CategoryStyle">
+                    <h3>
+                        @item.Name
+                    </h3>
+                </div>
+            }
+
+    </div>
 </div>
 
 @* All recent post here *@
 <div class="recent-post-pinned">
     <div class="recent-post-pinned-header">
-        <h3>Recent Posts:</h3>        
+        <h3>Recent Posts:</h3>
     </div>
-    <div>
-        @* <ul> *@
-            <div class="post-item">Inlägg 1</div>
-        <div class="post-item">Inlägg 2</div>
-        <div class="post-item">Inlägg 2</div>
-        <div class="post-item">Inlägg 2</div>
-        <div class="post-item">Inlägg 2</div>
-        <div class="post-item">Inlägg 2</div>
-        <div class="post-item">Inlägg 2</div>
-        <div class="post-item">Inlägg 2</div>
-        <div class="post-item">Inlägg 2</div>
-        @* </ul> *@
+    <div style="margin: 0.4rem;">
+        @* @foreach (var item in Model)
+        {
+            <p>@item.Post.Description - @item.Post.Created </p>
+        } *@
     </div>
 </div>
