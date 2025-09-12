@@ -59,7 +59,7 @@ public class MemberController : Controller
     public IActionResult Profile(Member member)
     {
         if(member.IsAdmin)
-            HttpContext.Session.SetInt32("IsAdmin" , 1) ; // To create a session variable to access the Admin page
+            HttpContext.Session.SetInt32("IsAdmin" , 1) ; //This is to create a session variable to access the Admin page
 
         return View();
     }
