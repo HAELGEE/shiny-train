@@ -4,9 +4,9 @@
 }
 <div>
     <form asp-controller="Member" asp-action="Update">
-       @* Hidden stuff *@
+        @* Hidden stuff *@
         <input type="hidden" asp-for="UserName"></input>
-        <span asp-validation-for="UserName"></span>    
+        <span asp-validation-for="UserName"></span>
         <input type="hidden" asp-for="Age"></input>
         <span asp-validation-for="Age"></span>
         <input type="hidden" asp-for="Email"></input>
@@ -25,7 +25,7 @@
         <br />
         <input type="text" asp-for="LastName"></input>
         <span asp-validation-for="LastName"></span>
-        <br />       
+        <br />
 
 
         <label asp-for="Password"></label>
@@ -34,9 +34,11 @@
         <span asp-validation-for="Password"></span>
         <br />
 
-        
-       
+
+
         <br />
-        <button type="submit">Update</button>
+        <div asp-validation-summary="All" class="text-danger" style="margin-top: 1rem;">
+            <button type="submit">Update</button>
+        </div>
     </form>
 </div>

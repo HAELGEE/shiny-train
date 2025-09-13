@@ -35,7 +35,6 @@ public class CategoryController : Controller
     public async Task<IActionResult> UpdateCategory(int id)
     {
         ViewBag.CategoryId = id;
-        //ViewData["categoryId"] = id;
         if (id != 0)
         {
             var fullModel = new Views
@@ -60,9 +59,6 @@ public class CategoryController : Controller
         if (!ModelState.IsValid)
             return View();
               
-
-        //Category updateCategory = category[0];
-
         await _categoryService.UpdateCategoryAsync(category);
 
         return RedirectToAction("Admin", "Member");
@@ -70,16 +66,19 @@ public class CategoryController : Controller
 
 
     [HttpGet("DeleteCategory")]
-    public IActionResult DeleteCategory()
+    public async Task<IActionResult> DeleteCategory()
     {
-        return View();
+        var fullModel = new Views
+        {
+            Categories = await _categoryService.GetAllCategoriesAsync()
+        };
+        return View(fullModel);
     }
 
     [HttpPost("DeleteCategory")]
-    public async Task<IActionResult> DeleteCategory(Category category)
+    public async Task<IActionResult> DeleteCategory(int id)
     {
-        if (!ModelState.IsValid)
-            return View();
+        Category category = await _categoryService.GetOneCategoriesAsync(id);
 
         await _categoryService.DeleteCategoryAsync(category);
 

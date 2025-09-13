@@ -17,7 +17,7 @@ public class Member
     [Required(ErrorMessage = "Must type in your Last name")]
     public string? LastName { get; set; }
 
-    [MaxLength(8)]
+    //[Range(0, 8, ErrorMessage = "Must be 8 digits long")]    
     [Display(Name = "Birthday", Prompt = "Insert yyyymmdd here...")]
     [Required(ErrorMessage = "Must type in your Birtday")]
     public int? Age { get; set; }

@@ -12,7 +12,7 @@
             <br />
             @foreach (var item in Model.Categories)
             {
-                <p>@item.Name <a asp-controller="Category" asp-action="DeleteCategory" asp-route-id="@item.Id">Delete</a></p>
+                <p>@item.Name <button asp-route-id="@item.Id">Delete</button></p>
             }
         }
     </form>
