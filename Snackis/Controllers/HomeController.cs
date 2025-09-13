@@ -18,13 +18,13 @@ public class HomeController : Controller
     //public async Task<IActionResult> Index()
     public async Task<IActionResult> Index()
     {
-        //var recentPosts = await _postRepository.GettingAllRecentPostAsync();
+        var recentPosts = await _postRepository.GettingAllRecentPostAsync();
         //var allPosts = await _postRepository.GettingAllPostForSubCategoryAsync();
         var categories = await _categoryRepository.GetAllCategoriesAsync();
 
         var fullModel = new FullViewModel
         {
-            //Posts = allPosts,            
+            //Posts = recentPosts.ToList(),
             Categorys = categories.ToList()
         };
 

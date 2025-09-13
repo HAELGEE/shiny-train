@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -7,13 +6,13 @@
     <h1 class="display-4">Welcome</h1>
     @* Here the categories lays *@
     <div>
-       @if(Model.Categorys != null)
+        @if (Model.Categorys != null)
             @foreach (var item in Model.Categorys)
             {
                 <div class="CategoryStyle">
-                    <h3>
+                    <h5>
                         @item.Name
-                    </h3>
+                    </h5>
                 </div>
             }
 
@@ -26,9 +25,12 @@
         <h3>Recent Posts:</h3>
     </div>
     <div style="margin: 0.4rem;">
-        @* @foreach (var item in Model)
+        @if (Model.Posts != null)
         {
-            <p>@item.Post.Description - @item.Post.Created </p>
-        } *@
+            @foreach (var item in Model)
+            {
+                <p>@item - @item.Posts.Created </p>
+            }
+        }
     </div>
 </div>

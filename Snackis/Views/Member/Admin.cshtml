@@ -3,12 +3,19 @@
 }
 
 <div>
-
-    <button><a style="color: black; text-decoration: none;" asp-controller="Category" asp-action="CreateCategory">Create Category</a></button>
+    <p>CRUD for Category</p>
+    <div>
+        <button><a style="color: black; text-decoration: none;" asp-controller="Category" asp-action="CreateCategory">Create Category</a></button>
+        <button><a style="color: darkred; text-decoration: none;" asp-controller="Category" asp-action="DeleteCategory">Delete Category</a></button>
+        <button><a style="color: forestgreen; text-decoration: none;" asp-controller="Category" asp-action="UpdateCategory">Update Category</a></button>
+    </div>
     <br />
     <br />
+    <p>CRUD for SubCategory</p>
     <button><a style="color: black; text-decoration: none;" asp-controller="Category" asp-action="CreateSubCategory">Create SubCategory</a></button>
-@*
+    <button><a style="color: darkred; text-decoration: none;" asp-controller="Category" asp-action="DeleteSubCategory">Delete SubCategory</a></button>
+    <button><a style="color: forestgreen; text-decoration: none;" asp-controller="Category" asp-action="UpdateSubCategory">Update SubCategory</a></button>
+    @*
     <form asp-controller="Category" asp-action="Create">
 
         <label asp-for="Name"></label>

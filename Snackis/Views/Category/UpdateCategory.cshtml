@@ -1,0 +1,40 @@
+﻿@model Views
+@{
+    ViewData["Title"] = "Update Category";
+}
+
+<div>
+    @if (ViewBag.CategoryId > 0)
+    {
+        <form asp-controller="Category" asp-action="UpdateCategory">
+
+        <p>Current name of Category: @Model.category.Name</p>
+        <label>Category name</label>
+        <br />
+        <input type="text" asp-for="category.Name" />
+        <span asp-validation-for="category.Name"></span>
+
+        <input type="hidden" asp-for="category.Id"></input>
+
+        <div asp-validation-summary="All" class="text-danger" style="margin-top: 1rem;">
+            <button type="submit">Update</button>
+        </div>
+        </form>
+
+    }
+    else
+    {
+        <form asp-controller="Category" asp-action="UpdateCategory" method="get">
+
+            @if (Model.Categories.Count() > 0)
+            {
+                <p>Wich Category name do you want to update?</p>
+                <br />
+                @foreach (var item in Model.Categories)
+                {
+                    <p>@item.Name <a asp-controller="Category" asp-action="UpdateCategory" asp-route-id="@item.Id">Update</a></p>
+                }
+            }
+        </form>
+    }
+</div>

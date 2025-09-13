@@ -1,0 +1,20 @@
+﻿@model Views
+@{
+    ViewData["Title"] = "Delete Category";
+}
+
+<div>
+    <form asp-controller="Category" asp-action="DeleteCategory">
+
+        @if (Model.Categories.Count() > 0)
+        {
+            <p>Wich Category name do you want to update?</p>
+            <br />
+            @foreach (var item in Model.Categories)
+            {
+                <p>@item.Name <a asp-controller="Category" asp-action="DeleteCategory" asp-route-id="@item.Id">Delete</a></p>
+            }
+        }
+    </form>
+
+</div>

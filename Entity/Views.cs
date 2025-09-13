@@ -1,12 +1,15 @@
 ﻿namespace Entity;
-public class FullViewModel
+public class Views
 {
     public Member? Member { get; set; }
-    public List<Category>? Categorys { get; set; } = new();
+    public Category? category { get; set; } = new();
+    public List<Category>? Categories { get; set; } = new();
     public List<SubCategory>? SubCategorys { get; set; }
     public List<Post>? Posts { get; set; }
     public List<Post>? RecentPosts { get; set; } = new();
 
     public List<SubPost>? SubPosts { get; set; }   
+
+
    
 }

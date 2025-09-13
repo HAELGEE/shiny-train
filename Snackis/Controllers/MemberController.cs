@@ -1,10 +1,6 @@
 ﻿using ApplicationService.Interface;
-using EFCore;
 using Entity;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Snackis.Controllers;
 public class MemberController : Controller
@@ -99,7 +95,7 @@ public class MemberController : Controller
     }
 
 
-    [HttpGet("admin")]
+    [HttpGet("Admin")]
     public async Task<IActionResult> Admin()
     {
         var userId = HttpContext.Session.GetInt32("UserId");
@@ -165,8 +161,7 @@ public class MemberController : Controller
         if(!ModelState.IsValid)
             return View();
 
-        //if (id != member.Id)        
-        //    return BadRequest("Id did not match the objekt");
+        member.Id = id;
         
 
         await _memberService.UpdateMemberAsync(member);
