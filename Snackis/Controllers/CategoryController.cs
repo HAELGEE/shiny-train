@@ -13,14 +13,14 @@ public class CategoryController : Controller
     }
 
 
-    [HttpGet("Create")]
-    public IActionResult Create()
+    [HttpGet("CreateCategory")]
+    public IActionResult CreateCategory()
     {
         return View();
     }
 
-    [HttpPost("Create")]
-    public async Task<IActionResult> Create(Category category)
+    [HttpPost("CreateCategory")]
+    public async Task<IActionResult> CreateCategory(Category category)
     {
         if (!ModelState.IsValid)
             return View();

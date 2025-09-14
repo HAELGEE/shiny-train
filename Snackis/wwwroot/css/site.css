@@ -30,13 +30,6 @@ body {
     text-align: start;
 }
 
-/*Categories*/
-.CategoryStyle{
-    margin-left: 1rem;
-    border: solid, 5px solid red;
-}
-
-
 
 /*NAVBAR*/
 .navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 {
@@ -171,6 +164,8 @@ body.dark-mode .navbar * {
     background-color: #000 !important; 
 }
 
+
+
 body.dark-mode .footer,
 body.dark-mode .footer * {
     color: #fff !important; /* Vit text i footer */
@@ -199,4 +194,75 @@ input:checked + .slider {
     .box-right a {
         text-decoration: none;
         color: blue; 
+    }
+
+
+
+/*Categories*/
+.CategoryBox {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+/* varje kategori */
+.CategoryStyle {
+    border: 1px solid #ccc;
+    background: #f0f0f0;
+    color: #000;
+    padding: 3px 5px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    position: relative;
+}
+
+    /* Hover-effekt */
+    .CategoryStyle:hover {
+        background: #e0e0e0;
+        border-color: #999;
+    }
+
+/* Subkategorier – dolda som standard */
+.SubcategoriesBox {
+    display: none;
+    flex-direction: column; /* gör så att de staplas i höjd */
+    margin-top: 8px;
+    gap: 6px;
+}
+
+/* När man hovrar över kategori → visa subkategorierna i en kolumn */
+.CategoryStyle:hover > .SubcategoriesBox {
+    display: flex;
+}
+
+/* Samma stil på subkategorierna */
+.SubcategoriesStyle {
+    border: 1px solid #ccc;
+    background: #f0f0f0;
+    color: #000;
+    padding: 3px 5px;
+    border-radius: 4px;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+    .SubcategoriesStyle:hover {
+        background: #e0e0e0;
+        border-color: #999;
+    }
+
+/* Dark mode */
+body.dark .CategoryStyle,
+body.dark .SubcategoriesStyle {
+    background: #333;
+    border-color: #555;
+    color: #fff;
+}
+
+    body.dark .CategoryStyle:hover,
+    body.dark .SubcategoriesStyle:hover {
+        background: #444;
+        border-color: #888;
     }

@@ -21,11 +21,13 @@ public class HomeController : Controller
         var recentPosts = await _postRepository.GettingAllRecentPostAsync();
         //var allPosts = await _postRepository.GettingAllPostForSubCategoryAsync();
         var categories = await _categoryRepository.GetAllCategoriesAsync();
+        var subCategories = await _categoryRepository.GetAllSubCategoriesAsync();   
 
         var fullModel = new FullViewModel
         {
             //Posts = recentPosts.ToList(),
-            Categorys = categories.ToList()
+            Categorys = categories.ToList(),
+            SubCategorys = subCategories.ToList()
         };
 
         return View(fullModel);

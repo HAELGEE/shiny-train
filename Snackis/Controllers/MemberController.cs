@@ -53,10 +53,7 @@ public class MemberController : Controller
 
     [HttpPost("profile")]
     public IActionResult Profile(Member member)
-    {
-        if(member.IsAdmin)
-            HttpContext.Session.SetInt32("IsAdmin" , 1) ; //This is to create a session variable to access the Admin page
-
+    {       
         return View();
     }
 
@@ -111,7 +108,8 @@ public class MemberController : Controller
         if(!member.IsAdmin)
             return RedirectToAction(nameof(Index), "Home");
 
-        return View(member);
+        return View();
+        //return View(member);
     }
 
     [HttpGet("Login")]
@@ -143,6 +141,9 @@ public class MemberController : Controller
                 
         HttpContext.Session.SetInt32("UserId", member.Id);
         HttpContext.Session.SetString("UserName", member.UserName);
+
+        if (member.IsAdmin)
+            HttpContext.Session.SetInt32("IsAdmin", 1); //This is to create a session variable to access the Admin page
 
         return RedirectToAction(nameof(Profile), "Member");
     }

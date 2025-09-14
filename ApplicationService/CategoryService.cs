@@ -21,6 +21,10 @@ public class CategoryService : ICategoryService
     {
         return await _categoryRepository.GetAllCategoriesAsync();
     }
+    public async Task<List<SubCategory>> GetAllSubCategoriesAsync()
+    {
+        return await _categoryRepository.GetAllSubCategoriesAsync();
+    }
     public async Task CreateCategoryAsync(Category category)
     {
         await _categoryRepository.CreateCategoryAsync(category);        

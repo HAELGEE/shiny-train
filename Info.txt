@@ -1,13 +1,17 @@
-Category = Huvudkategorien, tex "Datorer"
-SubCategory = Underkategori tex "Grafikkort"
-Post = Inlägget i SubCategory tex, "Mitt grafikkort blir varmt"
-SubPost = Ett svar ifrån en post tex "Har du kollat fläkten? osv.."
+** Klar ** Category = Huvudkategorien, tex "Datorer"
+** Klar ** SubCategory = Underkategori tex "Grafikkort"
+** Klar ** Post = Inlägget i SubCategory tex, "Mitt grafikkort blir varmt"
+** Klar ** SubPost = Ett svar ifrån en post tex "Har du kollat fläkten? osv.."
+---------------------------------------------------------------------------------------------------------------------
 
 
 /Bloggen
-En Admin skall kunna lägga till fler Kategorier (Category)
+---------------------------------------------------------------------------------------------------------------------
+** Klar ** En Admin skall kunna lägga till fler Kategorier (Category)
 
-Man skall kunna registrera sig.
+En Admin skall kunna lägga till fler SubKategorier (SubCategory)
+
+** Klar ** Man skall kunna registrera sig.
 
 ** Klar ** Man skall kunna logga in.
 
@@ -25,8 +29,11 @@ Svara på andras inlägg med en Timestamp (där det första inlägget visas först)
 Det ska gå att hämta alla inlägg för en diskussion, med författare och datum, via API.
 
 ** Klar ** Kunna ändra mellan Darkmode och Lightmode
+---------------------------------------------------------------------------------------------------------------------
 
 /Blogg/Användare
+---------------------------------------------------------------------------------------------------------------------
+
 Kunna skapa inlägg
 
 Kunna redigera sina inlägg
@@ -34,8 +41,11 @@ Kunna redigera sina inlägg
 kunna tabort sina inlägg
 
 Kunna gilla inlägg
+---------------------------------------------------------------------------------------------------------------------
 
 /Konto
+---------------------------------------------------------------------------------------------------------------------
+
 ** Klar ** Registrera sig
 
 Användaren ska också kunna ladda upp en bild på sig själv, som syns vid sidan om inlägget.
@@ -47,3 +57,4 @@ Användaren ska också kunna ladda upp en bild på sig själv, som syns vid sidan om
 Kalla på nytt lösenord om man glömt
 
 Kunna chatta med andra Live!
+---------------------------------------------------------------------------------------------------------------------

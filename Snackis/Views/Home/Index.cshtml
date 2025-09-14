@@ -1,21 +1,37 @@
-﻿@{
+﻿@model FullViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     @* Here the categories lays *@
-    <div>
+    <div class="CategoryBox">
         @if (Model.Categorys != null)
+        {
             @foreach (var item in Model.Categorys)
             {
                 <div class="CategoryStyle">
                     <h5>
                         @item.Name
                     </h5>
+
+                    <div class="SubcategoriesBox">
+
+                        @if (Model.SubCategorys != null)
+                        {
+                            foreach (var sub in Model.SubCategorys.Where(s => s.CategoryId == item.Id)) // A check to grab those SubCategories from right category
+                            {
+                                <div class="SubcategoriesStyle">
+                                    <h5>@sub.Name</h5>
+                                </div>
+                            }
+                        }
+
+                    </div>
                 </div>
             }
-
+        }
     </div>
 </div>
 
@@ -25,12 +41,12 @@
         <h3>Recent Posts:</h3>
     </div>
     <div style="margin: 0.4rem;">
-        @if (Model.Posts != null)
+        @* @if (Model.Posts != null)
         {
             @foreach (var item in Model)
             {
                 <p>@item - @item.Posts.Created </p>
             }
-        }
+        } *@
     </div>
 </div>

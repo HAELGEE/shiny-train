@@ -19,6 +19,9 @@ public class CategoryRepository : ICategoryRepository
     public async Task<List<Category>> GetAllCategoriesAsync() => await _context.Category.ToListAsync();
     public async Task<Category> GetOneCategoriesAsync(int id) => await _context.Category.Where(x => x.Id == id).SingleOrDefaultAsync();
 
+    public async Task<List<SubCategory>> GetAllSubCategoriesAsync() => await _context.SubCategory.ToListAsync();
+
+
     public async Task CreateCategoryAsync(Category category)
     {
         _context.Category.Add(category);
