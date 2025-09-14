@@ -1,6 +1,7 @@
 ﻿using ApplicationService.Interface;
 using EFCore;
 using Entity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,7 @@ public class CategoryService : ICategoryService
     {
         return await _categoryRepository.GetAllCategoriesAsync();
     }
-    public async Task<List<SubCategory>> GetAllSubCategoriesAsync()
-    {
-        return await _categoryRepository.GetAllSubCategoriesAsync();
-    }
+    
     public async Task CreateCategoryAsync(Category category)
     {
         await _categoryRepository.CreateCategoryAsync(category);        
@@ -41,6 +39,32 @@ public class CategoryService : ICategoryService
     public async Task DeleteCategoryAsync(Category category)
     {
         await _categoryRepository.DeleteCategoryAsync(category);
+    }
+
+
+    // SubCategory
+    public async Task<List<SubCategory>> GetAllSubCategoriesAsync()
+    {
+        return await _categoryRepository.GetAllSubCategoriesAsync();
+    }
+    public async Task<SubCategory> GetOneSubCategoriesAsync(int id)
+    {
+        return await _categoryRepository.GetOneSubCategoriesAsync(id);
+    }
+
+    public async Task CreateSubCategoryAsync(SubCategory SubCategory)
+    {        
+        await _categoryRepository.CreateSubCategoryAsync(SubCategory);
+    }
+
+    public async Task UpdateSubCategoryAsync(SubCategory SubCategory)
+    {
+        await _categoryRepository.UpdateSubCategoryAsync(SubCategory);
+    }
+
+    public async Task DeleteSubCategoryAsync(SubCategory SubCategory)
+    {
+        await _categoryRepository.DeleteSubCategoryAsync(SubCategory);
     }
 
 }

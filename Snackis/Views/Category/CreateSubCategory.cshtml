@@ -1,20 +1,42 @@
-﻿@model Category
+﻿@model Views
 @{
-    ViewData["Title"] = "Add Category";
+    ViewData["Title"] = "Add SubCategory";
 }
 
 <div>
+    @if (ViewBag.CreateSubcategory > 0)
+    {
+        <form asp-controller="Category" asp-action="CreateSubCategory">
 
-    <form asp-controller="Category" asp-action="Create">
+            <p>Current name of Category: @Model.category.Name - @Model.category.Id</p>
 
-        <label asp-for="Name"></label>
-        <br />
-        <input type="text" asp-for="Name" />
-        <span asp-validation-for="Name"></span>
-        <br />
-        <div asp-validation-summary="All" class="text-danger" style="margin-top: 1rem;">
-            <button type="submit">Create</button>
-        </div>
-    </form>
+            <input type="hidden" asp-for="SubCategory.CategoryId" value="@Model.category.Id" />
 
+            <label asp-for="SubCategory.Name"></label>
+            <br />
+            <input type="text" asp-for="SubCategory.Name" />
+            <span asp-validation-for="SubCategory.Name"></span>
+
+            <br />
+            <div asp-validation-summary="All" class="text-danger" style="margin-top: 1rem;">
+                <button type="submit">Create</button>
+            </div>
+        </form>
+    }
+    else
+    {
+        <form asp-controller="Category" asp-action="CreateSubCategory" method="get">
+
+            @if (Model.Categories.Count() > 0)
+            {
+                <br />
+                <p>In wich Category do you want to create a new Subcategory?</p>
+                @foreach (var category in Model.Categories)
+                {
+                    <p>@category.Name <a asp-controller="Category" asp-action="CreateSubCategory" asp-route-id="@category.Id">Create</a></p>
+
+                }
+            }
+        </form>
+    }
 </div>

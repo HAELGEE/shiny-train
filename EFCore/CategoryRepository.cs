@@ -16,10 +16,11 @@ public class CategoryRepository : ICategoryRepository
         _context = context;
     }
 
+
+    // Category
     public async Task<List<Category>> GetAllCategoriesAsync() => await _context.Category.ToListAsync();
     public async Task<Category> GetOneCategoriesAsync(int id) => await _context.Category.Where(x => x.Id == id).SingleOrDefaultAsync();
 
-    public async Task<List<SubCategory>> GetAllSubCategoriesAsync() => await _context.SubCategory.ToListAsync();
 
 
     public async Task CreateCategoryAsync(Category category)
@@ -37,6 +38,28 @@ public class CategoryRepository : ICategoryRepository
     public async Task DeleteCategoryAsync(Category category)
     {
         _context.Category.Remove(category);
+        await _context.SaveChangesAsync();
+    }
+
+    // Subcategory
+    public async Task<List<SubCategory>> GetAllSubCategoriesAsync() => await _context.SubCategory.ToListAsync();
+    public async Task<SubCategory> GetOneSubCategoriesAsync(int id) => await _context.SubCategory.Where(x => x.Id == id).SingleOrDefaultAsync(); 
+
+    public async Task CreateSubCategoryAsync(SubCategory SubCategory)
+    {
+        _context.SubCategory.Add(SubCategory);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateSubCategoryAsync(SubCategory SubCategory)
+    {
+        _context.SubCategory.Update(SubCategory);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteSubCategoryAsync(SubCategory SubCategory)
+    {
+        _context.SubCategory.Remove(SubCategory);
         await _context.SaveChangesAsync();
     }
 }

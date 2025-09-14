@@ -1,20 +1,21 @@
-﻿@model Category
+﻿@model Views
 @{
-    ViewData["Title"] = "Delete Category";
+    ViewData["Title"] = "Delete SubCategory";
 }
 
 <div>
 
-    <form asp-controller="Category" asp-action="Delete">
+    <form asp-controller="Category" asp-action="DeleteSubCategory">
 
-        <label asp-for="Name"></label>
-        <br />
-        <input type="text" asp-for="Name" />
-        <span asp-validation-for="Name"></span>
-        <br />
-        <div asp-validation-summary="All" class="text-danger" style="margin-top: 1rem;">
-            <button type="submit">Delete</button>
-        </div>
+        @if (Model.SubCategories.Count() > 0)
+        {
+            <p>Wich SubCategory do you want to Delete?</p>
+            <br />
+            @foreach (var item in Model.SubCategories)
+            {
+                <p>@item.Name <button asp-route-id="@item.Id">Delete</button></p>
+            }
+        }
     </form>
 
 </div>

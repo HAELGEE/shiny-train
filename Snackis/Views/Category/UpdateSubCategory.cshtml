@@ -1,20 +1,41 @@
-﻿@model Category
+﻿@model Views
 @{
-    ViewData["Title"] = "Update Category";
+    ViewData["Title"] = "Update SubCategory";
 }
 
 <div>
+    @if (ViewBag.SubCategoryId > 0)
+    {
+        <form asp-controller="Category" asp-action="UpdateSubCategory">
 
-    <form asp-controller="Category" asp-action="Update">
+            <p>Current name of SubCategory: @Model.SubCategory.Name</p>
+            <label>SubCategory name</label>
+            <br />
+            <input type="text" asp-for="SubCategory.Name" />
+            <span asp-validation-for="SubCategory.Name"></span>
+            
+            <input type="hidden" asp-for="SubCategory.Id" />
+            <input type="hidden" asp-for="SubCategory.CategoryId" asp-route-id="@Model.category.Id" />
 
-        <label asp-for="Name"></label>
-        <br />
-        <input type="text" asp-for="Name" />
-        <span asp-validation-for="Name"></span>
-        <br />
-        <div asp-validation-summary="All" class="text-danger" style="margin-top: 1rem;">
-            <button type="submit">Update</button>
-        </div>
-    </form>
+            <div asp-validation-summary="All" class="text-danger" style="margin-top: 1rem;">
+                <button type="submit">Update</button>
+            </div>
+        </form>
 
+    }
+    else
+    {
+        <form asp-controller="Category" asp-action="UpdateSubCategory" method="get">
+
+            @if (Model.SubCategories.Count() > 0)
+            {
+                <p>Wich SubCategory name do you want to update?</p>
+                <br />
+                @foreach (var item in Model.SubCategories)
+                {
+                    <p>@item.Name <a asp-controller="Category" asp-action="UpdateSubCategory" asp-route-id="@item.Id">Update</a></p>
+                }
+            }
+        </form>
+    }
 </div>

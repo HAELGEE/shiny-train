@@ -8,17 +8,17 @@
     {
         <form asp-controller="Category" asp-action="UpdateCategory">
 
-        <p>Current name of Category: @Model.category.Name</p>
-        <label>Category name</label>
-        <br />
-        <input type="text" asp-for="category.Name" />
-        <span asp-validation-for="category.Name"></span>
+            <p>Current name of Category: @Model.category.Name</p>
+            <label>Category name</label>
+            <br />
+            <input type="text" asp-for="category.Name" />
+            <span asp-validation-for="category.Name"></span>
 
-        <input type="hidden" asp-for="category.Id"></input>
+            <input type="hidden" asp-for="category.Id"></input>
 
-        <div asp-validation-summary="All" class="text-danger" style="margin-top: 1rem;">
-            <button type="submit">Update</button>
-        </div>
+            <div asp-validation-summary="All" class="text-danger" style="margin-top: 1rem;">
+                <button type="submit">Update</button>
+            </div>
         </form>
 
     }

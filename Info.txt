@@ -4,6 +4,11 @@
 ** Klar ** SubPost = Ett svar ifrån en post tex "Har du kollat fläkten? osv.."
 ---------------------------------------------------------------------------------------------------------------------
 
+!!!! Måste fixa min Metod för kontroll om admin, så man håller det DRY !!!!
+!!!! Måste fixa min Metod för kontroll om admin, så man håller det DRY !!!!
+!!!! Måste fixa min Metod för kontroll om admin, så man håller det DRY !!!!
+!!!! Måste fixa min Metod för kontroll om admin, så man håller det DRY !!!!
+
 
 /Bloggen
 ---------------------------------------------------------------------------------------------------------------------
