@@ -72,8 +72,8 @@ body {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* Döljer den under t.ex. 1200px */
-@media (max-width: 1600px) {
+
+@media (max-width: 1750px) {
     .recent-post-pinned {
         display: none;
     }
@@ -205,6 +205,12 @@ input:checked + .slider {
     gap: 10px;
     flex-wrap: wrap;
     align-items: flex-start;
+    border: 1px solid #333;
+    padding: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    font-weight: bold;
+    
 }
 
 /* varje kategori */
@@ -216,7 +222,7 @@ input:checked + .slider {
     border-radius: 6px;
     cursor: pointer;
     transition: background 0.2s, border-color 0.2s;
-    position: relative;
+    position: relative;    
 }
 
     /* Hover-effekt */
@@ -229,13 +235,29 @@ input:checked + .slider {
 .SubcategoriesBox {
     display: none;
     flex-direction: column; /* gör så att de staplas i höjd */
-    margin-top: 8px;
     gap: 6px;
+
+    position: absolute; /*gör att de inte påverkar containerns höjd */
+    top: 100%; /* lägg under knappen */
+    left: 0;
+    background: #f5f5f5;
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 5px;
+    min-width: 80px;    
+    z-index: 100;
+}
+
+.SubcategoriesStyle a {
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+    color: black;
 }
 
 /* När man hovrar över kategori → visa subkategorierna i en kolumn */
 .CategoryStyle:hover > .SubcategoriesBox {
-    display: flex;
+    display: flex;    
 }
 
 /* Samma stil på subkategorierna */
@@ -246,11 +268,18 @@ input:checked + .slider {
     padding: 3px 5px;
     border-radius: 4px;
     transition: background 0.2s, border-color 0.2s;
+    top: 100%;
+    left: 0;
+    padding: 5px;
+    z-index: 10;
+    min-width: 80px;
+    height: 38px;
 }
 
     .SubcategoriesStyle:hover {
         background: #e0e0e0;
         border-color: #999;
+        display: block;
     }
 
 /* Dark mode */
@@ -265,4 +294,59 @@ body.dark .SubcategoriesStyle {
     body.dark .SubcategoriesStyle:hover {
         background: #444;
         border-color: #888;
+    }
+
+.posts {
+    border: 1px solid #333;
+    padding: 15px;
+    max-width: 70rem; /* max bredd på stora skärmar */
+    width: 70rem; /* Gör bredare */
+    margin: 0 auto; /* Centrerar */
+    box-sizing: border-box;
+}
+
+.post {
+    border: 1px solid #aaa;
+    padding: 10px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Viktigt: fyller hela bredden av .posts */
+    box-sizing: border-box;
+    flex-wrap: wrap; /* gör att innehållet bryter rad på små skärmar */
+}
+
+@media (max-width: 2300px) {
+    .post .post-meta {
+        display: none;
+        width: 45rem;
+    }
+}
+
+@media (max-width: 2300px) {
+    .posts {        
+        width: 35rem;
+    }
+}
+
+.post-content {
+    flex: 1; /* låter texten ta så mycket plats som behövs */
+    min-width: 200px; /* förhindrar att den blir för liten */
+}
+
+/* Metadata */
+.post-meta {
+    display: flex;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #555;
+    flex-shrink: 0; /* krymper inte bort */
+    flex-wrap: wrap; /* radbryt på små skärmar */
+}
+
+    .post-meta span {
+        border: 1px solid #ccc;
+        padding: 2px 6px;
+        border-radius: 4px;
     }

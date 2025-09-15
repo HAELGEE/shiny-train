@@ -17,22 +17,50 @@
                     </h5>
 
                     <div class="SubcategoriesBox">
-
                         @if (Model.SubCategorys != null)
                         {
                             foreach (var sub in Model.SubCategorys.Where(s => s.CategoryId == item.Id)) // A check to grab those SubCategories from right category
                             {
                                 <div class="SubcategoriesStyle">
-                                    <h5>@sub.Name</h5>
+                                    <p>@sub.Name</p>
                                 </div>
                             }
                         }
-
                     </div>
                 </div>
             }
         }
     </div>
+
+    <div class="posts">
+        <div class="post">
+            <div class="post-content">
+                <p>
+                    How to speed up computer <a href="#">By HAELGE</a> - 2025-09-09 16:44:35
+                </p>
+            </div>
+            <div class="post-meta">
+                <span>3 Likes</span>
+                <span>3 Views</span>
+                <span>0 Replies</span>
+            </div>
+        </div>
+
+        <div class="post">
+            <div class="post-content">
+                <p>
+                    How sleep better <a href="#">By Elsa</a> - 2025-09-10 10:13:37
+                </p>
+            </div>
+            <div class="post-meta">
+                <span>3 Likes</span>
+                <span>3 Views</span>
+                <span>0 Replies</span>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 @* All recent post here *@

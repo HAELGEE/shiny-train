@@ -27,6 +27,6 @@ public class PostRepository : IPostRepository
         await _context.Post            
             .Include(p => p.SubPosts)
             .Take(10)
-            .OrderByDescending(x => x.Created)
+            .OrderByDescending(x => x.Reply)
             .ToListAsync();
 }
