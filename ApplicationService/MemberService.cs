@@ -47,7 +47,10 @@ public class MemberService : IMemberService
     {
         await _memberRepository.UpdateMemberAsync(member);
     }
-
+    public async Task UpdateProfileViewsAsync(int id)
+    {
+        await _memberRepository.UpdateProfileViewsAsync(id);
+    }
 
 
 

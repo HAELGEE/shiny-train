@@ -33,31 +33,27 @@
     </div>
 
     <div class="posts">
-        <div class="post">
-            <div class="post-content">
-                <p>
-                    How to speed up computer <a href="#">By HAELGE</a> - 2025-09-09 16:44:35
-                </p>
+        @foreach (var item in Model.Posts)
+        {
+            <div class="post">
+                <div class="post-content">
+                    <p style="margin-bottom: -1px;">
+                        @* <form asp-controller="Member" asp-action="Profile/{id}"> *@
+                        <a asp-controller="Post" asp-action="ReadPost" asp-route-id="@item.Id" style="text-decoration: none;">@item.Description</a>
+                        <b>By</b> 
+                        <a asp-controller="Member" asp-action="Guest" asp-route-id="@item.Member.Id">@item.Member.UserName</a>
+                        - 
+                        <b>@item.Created</b>
+                        @* </form> *@
+                    </p>
+                </div>
+                <div class="post-meta">
+                    <span>@item.Likes Likes</span>
+                    <span>@item.Views Views</span>
+                    <span>@item.Reply Replies</span>
+                </div>
             </div>
-            <div class="post-meta">
-                <span>6 Likes</span>
-                <span>69 Views</span>
-                <span>9 Replies</span>
-            </div>
-        </div>
-
-        <div class="post">
-            <div class="post-content">
-                <p>
-                    How sleep better <a href="#">By Elsa</a> - 2025-09-10 10:13:37
-                </p>
-            </div>
-            <div class="post-meta">
-                <span>3 Likes</span>
-                <span>3 Views</span>
-                <span>0 Replies</span>
-            </div>
-        </div>
+        }
     </div>
 
 

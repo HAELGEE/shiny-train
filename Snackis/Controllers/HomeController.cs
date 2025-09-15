@@ -9,23 +9,36 @@ public class HomeController : Controller
 {
     private readonly IPostRepository _postRepository;
     private readonly ICategoryRepository _categoryRepository;
+    private readonly IMemberRepository _memberRepository;
 
-    public HomeController(IPostRepository postRepository, ICategoryRepository categoryRepository)
+    public HomeController(IPostRepository postRepository, ICategoryRepository categoryRepository, IMemberRepository memberRepository)
     {
         _postRepository = postRepository;
         _categoryRepository = categoryRepository;
+        _memberRepository = memberRepository;
     }
     //public async Task<IActionResult> Index()
     public async Task<IActionResult> Index()
     {
-        var recentPosts = await _postRepository.GettingAllRecentPostAsync();
+        var recentPosts = await _postRepository.Getting10RecentPostByReplyAsync();
         //var allPosts = await _postRepository.GettingAllPostForSubCategoryAsync();
         var categories = await _categoryRepository.GetAllCategoriesAsync();
-        var subCategories = await _categoryRepository.GetAllSubCategoriesAsync();   
+        var subCategories = await _categoryRepository.GetAllSubCategoriesAsync();
+
+
+        var members = await _memberRepository.GetAllMembersAsync();
+
+        var posts = new List<Post>();
+
+        foreach (var member in members)
+        {
+            var addToPost = await _postRepository.GettingAll25RecentPostsAsync(member.Id);
+            posts.AddRange(addToPost);
+        }
 
         var fullModel = new FullViewModel
         {
-            //Posts = recentPosts.ToList(),
+            Posts = posts,
             Categorys = categories.ToList(),
             SubCategorys = subCategories.ToList()
         };
@@ -33,7 +46,7 @@ public class HomeController : Controller
         return View(fullModel);
     }
 
-    
+
 
 
 

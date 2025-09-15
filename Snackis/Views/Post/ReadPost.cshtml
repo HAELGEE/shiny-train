@@ -1,0 +1,40 @@
+﻿@model Views
+@{
+    ViewData["Title"] = "Update SubPost";
+}
+
+<div class="posts">
+
+    <div class="post">
+        <div class="post-content">
+            <div style="display:flex;">
+                <h3>@Model.Post.Description</h3>
+
+                <p style="margin-left: 3rem; margin-top: 0.5rem;">Created by: @Model.Post.Member.UserName - @Model.Post.Created</p>
+            </div>
+
+            <p style="margin-top: 1.5rem; margin-left: 1.5rem;">
+                @Model.Post.Text
+            </p>
+        </div>
+    </div>
+
+    @if (Model.SubPosts != null)
+    {
+        @foreach (var item in Model.SubPosts)
+        {
+            <div class="post">
+                <div class="post-content">
+
+                <div>
+                    <p>Created by: @item.Member.UserName - @item.Created</p>
+                </div>
+                <br />
+                <p style="margin-left: 1.5rem; margin-top: -1rem;">@item.Text</p>
+
+                </div>
+            </div>
+        }
+    }
+
+</div>

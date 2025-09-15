@@ -35,4 +35,14 @@ public class MemberRepository : IMemberRepository
         _dbContext.Add(member);
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task UpdateProfileViewsAsync(int id)
+    {
+        var member = new Member();
+        member = await GetOneMemberAsync(id);
+
+        member.ProfileViews++;
+
+        await _dbContext.SaveChangesAsync();
+    }
 }

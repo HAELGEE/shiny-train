@@ -29,6 +29,8 @@ Svara på andras inlägg med en Timestamp (där det första inlägget visas först)
 Det ska gå att hämta alla inlägg för en diskussion, med författare och datum, via API.
 
 ** Klar ** Kunna ändra mellan Darkmode och Lightmode
+
+Fixa ett träd där det flyttas höger för varje svar. <-- Om jag hinner och Orkar
 ---------------------------------------------------------------------------------------------------------------------
 
 /Blogg/Användare

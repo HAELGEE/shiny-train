@@ -21,9 +21,9 @@ public class MemberController : Controller
             return RedirectToAction(nameof(Login), "Member");
 
         FullViewModel viewModel = new FullViewModel();
-        
+
         var member = await _memberService.GetOneMemberAsync((int)userId);
-        
+
         if (member != null)
         {
             ViewBag.Member = member;
@@ -51,13 +51,44 @@ public class MemberController : Controller
         return View(viewModel);
     }
 
+
+
     [HttpPost("profile")]
     public IActionResult Profile(Member member)
-    {       
-        return View();
+    {
+        return View(member);
     }
 
+    [HttpGet("Guest")]
+    public async Task<IActionResult> Guest(int id)
+    {
+        var member = await _memberService.GetOneMemberAsync(id);
 
+        if (member != null)
+        {
+
+            await _memberService.UpdateProfileViewsAsync(member.Id);
+
+            int? birthDateInt = member.Age;
+            DateTime birthDate = DateTime.ParseExact(
+                birthDateInt.ToString(),
+                "yyyymmdd",
+                System.Globalization.CultureInfo.InvariantCulture
+                );
+
+            DateTime today = DateTime.Today;
+
+            int age = today.Year - birthDate.Year;
+
+            if (birthDate.Date > today.AddYears(-age))
+                age--;
+
+            member.Age = age;
+
+        }
+
+        return View(member);
+    }
 
     [HttpGet("Register")]
     public IActionResult Register()
@@ -68,7 +99,7 @@ public class MemberController : Controller
     [HttpPost("Register")]
     public async Task<IActionResult> Register(Member member)
     {
-        
+
         if (await _memberService.GetMemberByEmailAsync(member.Email) != null)
         {
             ModelState.AddModelError("Email", "This email is already taken.");
@@ -81,14 +112,14 @@ public class MemberController : Controller
             return View();
         }
 
-        if (!ModelState.IsValid)  
+        if (!ModelState.IsValid)
             return View();
 
         await _memberService.CreateMemberAsync(member);
         HttpContext.Session.SetInt32("UserId", member.Id);
         HttpContext.Session.SetString("UserName", member.UserName);
 
-        return RedirectToAction(nameof(Index), "Home");        
+        return RedirectToAction(nameof(Index), "Home");
     }
 
 
@@ -101,11 +132,11 @@ public class MemberController : Controller
             return RedirectToAction(nameof(Index), "Home");
 
         var member = await _memberService.GetOneMemberAsync((int)userId);
-        
-        if(member == null)
+
+        if (member == null)
             return RedirectToAction(nameof(Index), "Home");
 
-        if(!member.IsAdmin)
+        if (!member.IsAdmin)
             return RedirectToAction(nameof(Index), "Home");
 
         return View();
@@ -133,12 +164,12 @@ public class MemberController : Controller
     {
         var member = await _memberService.GetMemberByUsernamePasswordAsync(UserName, Password);
 
-        if(member == null)
+        if (member == null)
         {
             ModelState.AddModelError("Error", "Wrong Username or Password");
             return View();
         }
-                
+
         HttpContext.Session.SetInt32("UserId", member.Id);
         HttpContext.Session.SetString("UserName", member.UserName);
 
@@ -159,11 +190,11 @@ public class MemberController : Controller
     [HttpPost("Update")]
     public async Task<IActionResult> Update(int id, Member member)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return View();
 
         member.Id = id;
-        
+
 
         await _memberService.UpdateMemberAsync(member);
 
@@ -172,4 +203,3 @@ public class MemberController : Controller
 
 
 }
-    

@@ -25,6 +25,7 @@ public class Post
     // DB connections
     public int? SubCategoryId { get; set; }
     public int? MemberId { get; set; }
+    public Member? Member { get; set; }
     public ICollection<SubPost>? SubPosts { get; set; }
 
 }
