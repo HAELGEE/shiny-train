@@ -37,16 +37,19 @@ public class Member
     
     // Admin rights
     public bool IsAdmin { get; set; } = false;
+    public int? Reports { get; set; } = 0;
 
     // Information for the View on Profile
     public int TotalPosts { get; set; } = 0;
     public int TotalReply { get; set; } = 0;
+    public int TotalLikes { get; set; } = 0;
     public int ProfileViews { get; set; } = 0;
     public DateTime? RegisteryDate { get; set; } = DateTime.Now;    
 
     // DB connections 
     public ICollection<Post>? Posts { get; set; }
     public ICollection<SubPost>? SubPosts { get; set; }
+    public ICollection<Likes>? Likes { get; set; }
 
 
 }

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Views
+@{
     ViewData["Title"] = "Admin Page";
 }
 
@@ -15,15 +16,21 @@
     <button><a style="color: black; text-decoration: none;" asp-controller="Category" asp-action="CreateSubCategory">Create SubCategory</a></button>
     <button><a style="color: darkred; text-decoration: none;" asp-controller="Category" asp-action="DeleteSubCategory">Delete SubCategory</a></button>
     <button><a style="color: forestgreen; text-decoration: none;" asp-controller="Category" asp-action="UpdateSubCategory">Update SubCategory</a></button>
-    @*
-    <form asp-controller="Category" asp-action="Create">
+    <br />
+    <br />
+    <br />
+    <h5>Reports</h5>
 
-        <label asp-for="Name"></label>
-        <input asp-for="Name" />
-        <span asp-validation-for="Name"></span>
-        <br />
+    @if (Model.Posts != null)
+    {
+        @foreach (var post in Model.Posts)
+        {
+            <p>                
+                    <a asp-controller="Post" asp-action="ReadPost" asp-route-id="@post.Id">@post.Description</a>
+                <a asp-controller="Post" asp-action="DeletePost" asp-route-id="@post.Id" style="margin-left: 2rem;">DELETE</a>
+                
+            </p>
+        }
+    }
 
-        <br />
-        <button type="submit"></button>
-    </form>*@
 </div> 

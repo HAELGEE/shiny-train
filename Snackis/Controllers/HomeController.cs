@@ -29,6 +29,7 @@ public class HomeController : Controller
         var members = await _memberRepository.GetAllMembersAsync();
 
         var posts = new List<Post>();
+        
 
         foreach (var member in members)
         {

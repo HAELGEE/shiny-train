@@ -14,6 +14,10 @@ public class PostService : IPostService
     }
 
     // Post
+    public async Task<List<Post>> GetAllReportsAsync()
+    {
+        return await _postRepository.GetAllReportsAsync();
+    }
     public async Task<Post> GetOnePostAsync(int id)
     {
         return await _postRepository.GetOnePostAsync(id);
@@ -49,8 +53,12 @@ public class PostService : IPostService
     {
         await _postRepository.CreateSubPostAsync(subPost);
     }
-    public async Task DeleteSubPostAsync(SubPost subPost)
+    public async Task DeleteSubPostAsync(int id)
     {
-        await _postRepository.DeleteSubPostAsync(subPost);
+        await _postRepository.DeleteSubPostAsync(id);
+    }
+    public async Task<SubPost> GetOneSubPostAsync(int id)
+    {
+        return await _postRepository.GetOneSubPostAsync(id);
     }
 }

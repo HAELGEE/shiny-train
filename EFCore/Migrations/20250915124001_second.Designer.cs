@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250915101650_hej")]
-    partial class hej
+    [Migration("20250915124001_second")]
+    partial class second
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,6 +78,12 @@ namespace EFCore.Migrations
                     b.Property<DateTime?>("RegisteryDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("Reports")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalLikes")
+                        .HasColumnType("int");
+
                     b.Property<int>("TotalPosts")
                         .HasColumnType("int");
 
@@ -119,6 +125,9 @@ namespace EFCore.Migrations
 
                     b.Property<int>("Reply")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("Reported")
+                        .HasColumnType("bit");
 
                     b.Property<int?>("SubCategoryId")
                         .HasColumnType("int");
@@ -178,6 +187,9 @@ namespace EFCore.Migrations
                     b.Property<int?>("PostId")
                         .HasColumnType("int");
 
+                    b.Property<bool?>("Reported")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
@@ -212,13 +224,15 @@ namespace EFCore.Migrations
 
             modelBuilder.Entity("Entity.SubPost", b =>
                 {
-                    b.HasOne("Entity.Member", null)
+                    b.HasOne("Entity.Member", "Member")
                         .WithMany("SubPosts")
                         .HasForeignKey("MemberId");
 
                     b.HasOne("Entity.Post", null)
                         .WithMany("SubPosts")
                         .HasForeignKey("PostId");
+
+                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("Entity.Category", b =>

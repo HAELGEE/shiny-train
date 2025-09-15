@@ -15,7 +15,13 @@ public class PostRepository : IPostRepository
     {
         _context = context;
     }
+
     // Post
+    public async Task<List<Post>> GetAllReportsAsync() => await _context.Post
+        .Where(p => p.Reported == true)
+        .Include(p => p.Member)
+        .ToListAsync();
+
     public async Task<Post> GetOnePostAsync(int id) => await _context.Post
         .Where(p => p.Id == id)
         .Include(p => p.Member)
@@ -50,13 +56,14 @@ public class PostRepository : IPostRepository
         await _context.SaveChangesAsync();
     }
     public async Task DeletePostAsync(Post post)
-    {
+    {        
         _context.Post.Remove(post);
         await _context.SaveChangesAsync();
     }
 
     // Subpost
 
+    public async Task<SubPost> GetOneSubPostAsync(int id) => await _context.SubPost.Where(sp => sp.Id == id).SingleOrDefaultAsync();
     public async Task<List<SubPost>> GettingSubPostFromPostByIdAsync(int id) => await _context.SubPost
         .Where(sp => sp.PostId == id)
         .Include(sp => sp.Member)
@@ -67,9 +74,12 @@ public class PostRepository : IPostRepository
         _context.SubPost.Add(subPost);
         await _context.SaveChangesAsync();
     }
-    public async Task DeleteSubPostAsync(SubPost subPost)
+    public async Task DeleteSubPostAsync(int id)
     {
+        var subPost = await GetOneSubPostAsync(id);
+
         _context.SubPost.Remove(subPost);
         await _context.SaveChangesAsync();
     }
+
 }

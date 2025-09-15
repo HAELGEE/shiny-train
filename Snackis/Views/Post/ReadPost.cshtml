@@ -10,7 +10,13 @@
             <div style="display:flex;">
                 <h3>@Model.Post.Description</h3>
 
-                <p style="margin-left: 3rem; margin-top: 0.5rem;">Created by: @Model.Post.Member.UserName - @Model.Post.Created</p>
+                <p style="margin-left: 3rem; margin-top: 0.5rem;">
+                    Created by:
+                    <b>
+                        <a asp-controller="Member" asp-action="Guest" asp-route-id="@Model.Post.Member.Id">@Model.Post.Member.UserName</a>                        
+                    </b>
+                    - @Model.Post.Created
+                </p>
             </div>
 
             <p style="margin-top: 1.5rem; margin-left: 1.5rem;">
@@ -26,11 +32,19 @@
             <div class="post">
                 <div class="post-content">
 
-                <div>
-                    <p>Created by: @item.Member.UserName - @item.Created</p>
-                </div>
-                <br />
-                <p style="margin-left: 1.5rem; margin-top: -1rem;">@item.Text</p>
+                    <div>
+                        <p>
+                            Created by:
+
+                            <b>
+                                <a asp-controller="Member" asp-action="Guest" asp-route-id="@item.Member.Id">@item.Member.UserName</a>
+                            </b>                          
+                            
+                            - @item.Created
+                            </p>
+                    </div>
+                    <br />
+                    <p style="margin-left: 1.5rem; margin-top: -1rem;">@item.Text</p>
 
                 </div>
             </div>

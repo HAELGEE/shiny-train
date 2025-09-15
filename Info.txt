@@ -30,6 +30,8 @@ Det ska gå att hämta alla inlägg för en diskussion, med författare och datum, vi
 
 ** Klar ** Kunna ändra mellan Darkmode och Lightmode
 
+Man skall bara öka antalet "Views on profile" 1 gång per profil. Skapa en View tabell!!!!
+
 Fixa ett träd där det flyttas höger för varje svar. <-- Om jag hinner och Orkar
 ---------------------------------------------------------------------------------------------------------------------
 
@@ -43,6 +45,8 @@ Kunna redigera sina inlägg
 kunna tabort sina inlägg
 
 Kunna gilla inlägg
+
+Kunna anmälla stötande Inlägg
 ---------------------------------------------------------------------------------------------------------------------
 
 /Konto
@@ -59,4 +63,13 @@ Användaren ska också kunna ladda upp en bild på sig själv, som syns vid sidan om
 Kalla på nytt lösenord om man glömt
 
 Kunna chatta med andra Live!
+---------------------------------------------------------------------------------------------------------------------
+
+/Admin
+---------------------------------------------------------------------------------------------------------------------
+
+Kunna kolla anmälda inlägg
+
+Kunna ge varning till Användare
+
 ---------------------------------------------------------------------------------------------------------------------

@@ -1,4 +1,5 @@
 ﻿using ApplicationService.Interface;
+using EFCore;
 using Entity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,10 +7,12 @@ namespace Snackis.Controllers;
 public class MemberController : Controller
 {
     private readonly IMemberService _memberService;
+    private readonly IPostRepository _postRepository;
 
-    public MemberController(IMemberService memberService)
+    public MemberController(IMemberService memberService, IPostRepository postRepository)
     {
         _memberService = memberService;
+        _postRepository = postRepository;
     }
 
     [HttpGet("profile")]
@@ -62,6 +65,15 @@ public class MemberController : Controller
     [HttpGet("Guest")]
     public async Task<IActionResult> Guest(int id)
     {
+        var userId = HttpContext.Session.GetInt32("UserId");
+
+        if (userId == null || userId == 0)
+            return RedirectToAction(nameof(Login), "Member");
+
+        if (userId == id)
+            return RedirectToAction(nameof(Profile), "Member");
+
+
         var member = await _memberService.GetOneMemberAsync(id);
 
         if (member != null)
@@ -139,8 +151,15 @@ public class MemberController : Controller
         if (!member.IsAdmin)
             return RedirectToAction(nameof(Index), "Home");
 
-        return View();
-        //return View(member);
+        var posts = await _postRepository.GetAllReportsAsync();
+
+
+        var view = new Views
+        {
+            Posts = posts,
+        };
+
+        return View(view);        
     }
 
     [HttpGet("Login")]

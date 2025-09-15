@@ -13,7 +13,6 @@ public class MemberRepository : IMemberRepository
         _dbContext = dbContext;
     }
 
-
     public async Task<List<Member>> GetAllMembersAsync() => await _dbContext.Member.OrderBy(m => m.UserName).ToListAsync();
     public async Task<Member> GetOneMemberAsync(int id) => await _dbContext.Member.Where(m => m.Id == id).SingleOrDefaultAsync();
     public async Task<Member> GetMemberByUsernameAsync(string userName) => await _dbContext.Member.Where(m => m.UserName == userName).SingleOrDefaultAsync();

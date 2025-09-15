@@ -9,6 +9,8 @@ public class SubPost
 {
     public int Id { get; set; }
     public string? Text { get; set; }
+    public bool? Reported { get; set; } = false;
+
     public DateTime? Created { get; set; } = DateTime.Now;
 
 

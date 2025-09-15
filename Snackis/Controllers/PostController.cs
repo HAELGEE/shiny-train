@@ -31,5 +31,24 @@ public class PostController : Controller
 
         return View(view);
     }
-    
+    [HttpGet("DeletePost")]
+    public async Task<IActionResult> DeletePost(int id)
+    {
+        if (id != 0)
+        {
+            var post = await _postRepository.GetOnePostAsync(id);
+            await _postRepository.DeletePostAsync(post);
+            return RedirectToAction("Admin", "Member");
+        }
+
+            return View();
+    }
+
+    //[HttpPost("DeletePost")]
+    //public async Task<IActionResult> DeletePost(Post post)
+    //{
+
+    //}
+
+
 }
