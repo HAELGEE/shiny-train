@@ -39,8 +39,7 @@ public class CategoryController : Controller
     [HttpGet("CreateCategory")]
     public async Task<IActionResult> CreateCategory()
     {
-        
-        if(await CheckAdmin())
+        if (await CheckAdmin())
             return RedirectToAction(nameof(Index), "Home");
 
         return View();
@@ -51,6 +50,14 @@ public class CategoryController : Controller
     {
         if (!ModelState.IsValid)
             return View();
+
+        var temp = await _categoryService.GetOneByNameCategoriesAsync(category.Name);
+
+        if (temp != null)
+        {
+            ModelState.AddModelError("Name", "This Name is already taken.");
+            return View();
+        }
 
         await _categoryService.CreateCategoryAsync(category);
 
@@ -70,7 +77,7 @@ public class CategoryController : Controller
         {
             var fullModel = new Views
             {
-               category = await _categoryService.GetOneCategoriesAsync(id)
+                category = await _categoryService.GetOneCategoriesAsync(id)
             };
             return View(fullModel);
         }
@@ -87,12 +94,27 @@ public class CategoryController : Controller
     [HttpPost("UpdateCategory")]
     public async Task<IActionResult> UpdateCategory(Category category)
     {
+
         if (!ModelState.IsValid)
             return View();
 
         if (await CheckAdmin())
             return RedirectToAction(nameof(Index), "Home");
 
+        var temp = await _categoryService.GetOneByNameCategoriesAsync(category.Name);
+
+        if (temp != null)
+        {
+            ViewBag.CategoryId = category.Id;
+
+            var fullModel = new Views
+            {
+                Categories = await _categoryService.GetAllCategoriesAsync()
+            };
+
+            ModelState.AddModelError("Name", "This Name is already taken.");
+            return View(fullModel);
+        }
 
         await _categoryService.UpdateCategoryAsync(category);
 
@@ -149,7 +171,7 @@ public class CategoryController : Controller
         {
             var fullModel = new Views
             {
-               Categories = await _categoryService.GetAllCategoriesAsync()
+                Categories = await _categoryService.GetAllCategoriesAsync()
             };
             return View(fullModel);
         }
@@ -160,6 +182,22 @@ public class CategoryController : Controller
     {
         if (!ModelState.IsValid)
             return View();
+
+        var temp = await _categoryService.GetOneByNameSubCategoriesAsync(subCategory.Name);
+
+        if (temp != null)
+        {
+            ViewBag.CreateSubcategory = subCategory.CategoryId;
+            var category = await _categoryService.GetOneCategoriesAsync((int)subCategory.CategoryId);
+
+            var fullModel = new Views
+            {
+                category = category,
+            };
+
+            ModelState.AddModelError("Name", "This Name is already taken.");
+            return View(fullModel);
+        }
 
         await _categoryService.CreateSubCategoryAsync(subCategory);
 
@@ -204,6 +242,20 @@ public class CategoryController : Controller
         if (await CheckAdmin())
             return RedirectToAction(nameof(Index), "Home");
 
+        var temp = await _categoryService.GetOneByNameSubCategoriesAsync(subCategory.Name);
+
+        if (temp != null)
+        {
+            ViewBag.SubCategoryId = subCategory.Id;
+
+            var fullModel = new Views
+            {
+                SubCategories = await _categoryService.GetAllSubCategoriesAsync()
+            };
+
+            ModelState.AddModelError("Name", "This Name is already taken.");
+            return View(fullModel);
+        }
 
         await _categoryService.UpdateSubCategoryAsync(subCategory);
 

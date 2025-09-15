@@ -31,6 +31,10 @@ public class CategoryService : ICategoryService
     {
         return await _categoryRepository.GetOneCategoriesAsync(id);
     }
+    public async Task<Category> GetOneByNameCategoriesAsync(string name)
+    {
+        return await _categoryRepository.GetOneByNameCategoriesAsync(name);
+    }
 
     public async Task UpdateCategoryAsync(Category category)
     {
@@ -50,6 +54,10 @@ public class CategoryService : ICategoryService
     public async Task<SubCategory> GetOneSubCategoriesAsync(int id)
     {
         return await _categoryRepository.GetOneSubCategoriesAsync(id);
+    }
+    public async Task<SubCategory> GetOneByNameSubCategoriesAsync(string name)
+    {
+        return await _categoryRepository.GetOneByNameSubCategoriesAsync(name);
     }
 
     public async Task CreateSubCategoryAsync(SubCategory SubCategory)

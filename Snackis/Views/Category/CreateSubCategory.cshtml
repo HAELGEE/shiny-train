@@ -8,7 +8,7 @@
     {
         <form asp-controller="Category" asp-action="CreateSubCategory">
 
-            <p>Current name of Category: @Model.category.Name - @Model.category.Id</p>
+            <p>Current name of Category: @Model.category.Name</p>
 
             <input type="hidden" asp-for="SubCategory.CategoryId" value="@Model.category.Id" />
 

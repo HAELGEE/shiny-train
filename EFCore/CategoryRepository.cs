@@ -20,6 +20,7 @@ public class CategoryRepository : ICategoryRepository
     // Category
     public async Task<List<Category>> GetAllCategoriesAsync() => await _context.Category.ToListAsync();
     public async Task<Category> GetOneCategoriesAsync(int id) => await _context.Category.Where(x => x.Id == id).SingleOrDefaultAsync();
+    public async Task<Category> GetOneByNameCategoriesAsync(string name) => await _context.Category.Where(x => x.Name == name).SingleOrDefaultAsync();
 
 
 
@@ -44,6 +45,7 @@ public class CategoryRepository : ICategoryRepository
     // Subcategory
     public async Task<List<SubCategory>> GetAllSubCategoriesAsync() => await _context.SubCategory.ToListAsync();
     public async Task<SubCategory> GetOneSubCategoriesAsync(int id) => await _context.SubCategory.Where(x => x.Id == id).SingleOrDefaultAsync(); 
+    public async Task<SubCategory> GetOneByNameSubCategoriesAsync(string name) => await _context.SubCategory.Where(x => x.Name == name).SingleOrDefaultAsync(); 
 
     public async Task CreateSubCategoryAsync(SubCategory SubCategory)
     {
