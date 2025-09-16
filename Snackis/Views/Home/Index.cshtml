@@ -22,7 +22,7 @@
                             foreach (var sub in Model.SubCategorys.Where(s => s.CategoryId == item.Id)) // A check to grab those SubCategories from right category
                             {
                                 <div class="SubcategoriesStyle">
-                                    <p>@sub.Name</p>
+                                    <p><a asp-controller="Category" asp-action="Subcategory" asp-route-id="@sub.Id">@sub.Name</a></p>
                                 </div>
                             }
                         }
@@ -46,7 +46,7 @@
                     </p>
                 </div>
                 <div class="post-meta">
-                    <span>@item.Likes Likes</span>
+                    <span>@item.Like Likes</span>
                     <span>@item.Views Views</span>
                     <span>@item.Reply Replies</span>
                 </div>
@@ -57,18 +57,18 @@
 
 </div>
 
-@* All recent post here *@
+@* Top 10 post by reply here *@
 <div class="recent-post-pinned">
     <div class="recent-post-pinned-header">
-        <h3>Recent Posts:</h3>
+        <h3>Top Posts:</h3>
     </div>
     <div style="margin: 0.4rem;">
-        @* @if (Model.Posts != null)
+        @if (Model.Top10Posts != null)
         {
-            @foreach (var item in Model)
+            @foreach (var item in Model.Top10Posts)
             {
-                <p>@item - @item.Posts.Created </p>
+                <p><a asp-controller="Post" asp-action="ReadPost" asp-route-id="@item.Id">@item.Description</a> - @item.Created </p>
             }
-        } *@
+        }
     </div>
 </div>

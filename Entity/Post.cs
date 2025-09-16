@@ -10,14 +10,16 @@ public class Post
 {
     public int Id { get; set; }
 
+    [Display(Name = "Description", Prompt = "Insert description here...")]
     [Required]
     public string? Description { get; set; } // What the Post is about (short description)
 
+    [Display(Name = "Text", Prompt = "Insert text here...")]
     [Required]
     public string? Text { get; set; }   // Text (information about the context)
 
     public int Views { get; set; } = 0;
-    //public int Likes { get; set; } = 0;
+    public int Like { get; set; } = 0;
     public int Reply { get; set; } = 0;
     public bool? Reported { get; set; } = false;
     public DateTime? Created { get; set; } = DateTime.Now;

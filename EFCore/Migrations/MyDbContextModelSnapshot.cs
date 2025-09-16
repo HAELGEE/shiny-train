@@ -127,6 +127,9 @@ namespace EFCore.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Like")
+                        .HasColumnType("int");
+
                     b.Property<int?>("MemberId")
                         .HasColumnType("int");
 

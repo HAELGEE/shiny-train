@@ -1,18 +1,21 @@
 ﻿using ApplicationService;
 using ApplicationService.Interface;
+using EFCore;
 using Entity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Snackis.Controllers;
 public class CategoryController : Controller
 {
-    private readonly ICategoryService _categoryService;
+    private readonly ICategoryRepository _categoryRepository;
     private readonly IMemberService _memberService;
+    private readonly IPostRepository _postRepository;
 
-    public CategoryController(ICategoryService categoryService, IMemberService memberService)
+    public CategoryController(ICategoryRepository categoryRepository, IMemberService memberService, IPostRepository postRepository)
     {
-        _categoryService = categoryService;
+        _categoryRepository = categoryRepository;
         _memberService = memberService;
+        _postRepository = postRepository;
     }
 
     async Task<bool> CheckAdmin()
@@ -36,6 +39,25 @@ public class CategoryController : Controller
     }
 
     // Category CRUD
+    [HttpGet("Subcategory")]
+    public async Task<IActionResult> Subcategory(int id)
+    {
+        var subCategory = await _categoryRepository.GetOneSubCategoriesAsync(id);
+        var posts = await _postRepository.GettingAllPostForSubCategoryAsync(id);
+        
+
+        var view = new Views
+        {
+            SubCategory =  subCategory,
+            Posts = posts,
+        };
+
+        return View(view);
+    }
+
+
+
+
     [HttpGet("CreateCategory")]
     public async Task<IActionResult> CreateCategory()
     {
@@ -51,7 +73,7 @@ public class CategoryController : Controller
         if (!ModelState.IsValid)
             return View();
 
-        var temp = await _categoryService.GetOneByNameCategoriesAsync(category.Name);
+        var temp = await _categoryRepository.GetOneByNameCategoriesAsync(category.Name);
 
         if (temp != null)
         {
@@ -59,7 +81,7 @@ public class CategoryController : Controller
             return View();
         }
 
-        await _categoryService.CreateCategoryAsync(category);
+        await _categoryRepository.CreateCategoryAsync(category);
 
         return RedirectToAction("Admin", "Member");
     }
@@ -77,7 +99,7 @@ public class CategoryController : Controller
         {
             var fullModel = new Views
             {
-                category = await _categoryService.GetOneCategoriesAsync(id)
+                category = await _categoryRepository.GetOneCategoriesAsync(id)
             };
             return View(fullModel);
         }
@@ -85,7 +107,7 @@ public class CategoryController : Controller
         {
             var fullModel = new Views
             {
-                Categories = await _categoryService.GetAllCategoriesAsync()
+                Categories = await _categoryRepository.GetAllCategoriesAsync()
             };
             return View(fullModel);
         }
@@ -101,7 +123,7 @@ public class CategoryController : Controller
         if (await CheckAdmin())
             return RedirectToAction(nameof(Index), "Home");
 
-        var temp = await _categoryService.GetOneByNameCategoriesAsync(category.Name);
+        var temp = await _categoryRepository.GetOneByNameCategoriesAsync(category.Name);
 
         if (temp != null)
         {
@@ -109,14 +131,14 @@ public class CategoryController : Controller
 
             var fullModel = new Views
             {
-                Categories = await _categoryService.GetAllCategoriesAsync()
+                Categories = await _categoryRepository.GetAllCategoriesAsync()
             };
 
             ModelState.AddModelError("Name", "This Name is already taken.");
             return View(fullModel);
         }
 
-        await _categoryService.UpdateCategoryAsync(category);
+        await _categoryRepository.UpdateCategoryAsync(category);
 
         return RedirectToAction("Admin", "Member");
     }
@@ -130,7 +152,7 @@ public class CategoryController : Controller
 
         var fullModel = new Views
         {
-            Categories = await _categoryService.GetAllCategoriesAsync()
+            Categories = await _categoryRepository.GetAllCategoriesAsync()
         };
         return View(fullModel);
     }
@@ -138,9 +160,9 @@ public class CategoryController : Controller
     [HttpPost("DeleteCategory")]
     public async Task<IActionResult> DeleteCategory(int id)
     {
-        Category category = await _categoryService.GetOneCategoriesAsync(id);
+        Category category = await _categoryRepository.GetOneCategoriesAsync(id);
 
-        await _categoryService.DeleteCategoryAsync(category);
+        await _categoryRepository.DeleteCategoryAsync(category);
 
         return RedirectToAction("Admin", "Member");
     }
@@ -154,12 +176,12 @@ public class CategoryController : Controller
         if (await CheckAdmin())
             return RedirectToAction(nameof(Index), "Home");
 
-        var categories = await _categoryService.GetAllCategoriesAsync();
+        var categories = await _categoryRepository.GetAllCategoriesAsync();
 
 
         if (id != 0)
         {
-            var category = await _categoryService.GetOneCategoriesAsync(id);
+            var category = await _categoryRepository.GetOneCategoriesAsync(id);
 
             var fullModel = new Views
             {
@@ -171,7 +193,7 @@ public class CategoryController : Controller
         {
             var fullModel = new Views
             {
-                Categories = await _categoryService.GetAllCategoriesAsync()
+                Categories = await _categoryRepository.GetAllCategoriesAsync()
             };
             return View(fullModel);
         }
@@ -183,12 +205,12 @@ public class CategoryController : Controller
         if (!ModelState.IsValid)
             return View();
 
-        var temp = await _categoryService.GetOneByNameSubCategoriesAsync(subCategory.Name);
+        var temp = await _categoryRepository.GetOneByNameSubCategoriesAsync(subCategory.Name);
 
         if (temp != null)
         {
             ViewBag.CreateSubcategory = subCategory.CategoryId;
-            var category = await _categoryService.GetOneCategoriesAsync((int)subCategory.CategoryId);
+            var category = await _categoryRepository.GetOneCategoriesAsync((int)subCategory.CategoryId);
 
             var fullModel = new Views
             {
@@ -199,7 +221,7 @@ public class CategoryController : Controller
             return View(fullModel);
         }
 
-        await _categoryService.CreateSubCategoryAsync(subCategory);
+        await _categoryRepository.CreateSubCategoryAsync(subCategory);
 
         return RedirectToAction("Admin", "Member");
     }
@@ -215,7 +237,7 @@ public class CategoryController : Controller
         ViewBag.SubCategoryId = id;
         if (id != 0)
         {
-            var subCategory = await _categoryService.GetOneSubCategoriesAsync(id);
+            var subCategory = await _categoryRepository.GetOneSubCategoriesAsync(id);
 
             var fullModel = new Views
             {
@@ -227,7 +249,7 @@ public class CategoryController : Controller
         {
             var fullModel = new Views
             {
-                SubCategories = await _categoryService.GetAllSubCategoriesAsync()
+                SubCategories = await _categoryRepository.GetAllSubCategoriesAsync()
             };
             return View(fullModel);
         }
@@ -242,7 +264,7 @@ public class CategoryController : Controller
         if (await CheckAdmin())
             return RedirectToAction(nameof(Index), "Home");
 
-        var temp = await _categoryService.GetOneByNameSubCategoriesAsync(subCategory.Name);
+        var temp = await _categoryRepository.GetOneByNameSubCategoriesAsync(subCategory.Name);
 
         if (temp != null)
         {
@@ -250,14 +272,14 @@ public class CategoryController : Controller
 
             var fullModel = new Views
             {
-                SubCategories = await _categoryService.GetAllSubCategoriesAsync()
+                SubCategories = await _categoryRepository.GetAllSubCategoriesAsync()
             };
 
             ModelState.AddModelError("Name", "This Name is already taken.");
             return View(fullModel);
         }
 
-        await _categoryService.UpdateSubCategoryAsync(subCategory);
+        await _categoryRepository.UpdateSubCategoryAsync(subCategory);
 
         return RedirectToAction("Admin", "Member");
     }
@@ -271,7 +293,7 @@ public class CategoryController : Controller
 
         var fullModel = new Views
         {
-            SubCategories = await _categoryService.GetAllSubCategoriesAsync()
+            SubCategories = await _categoryRepository.GetAllSubCategoriesAsync()
         };
         return View(fullModel);
     }
@@ -279,9 +301,9 @@ public class CategoryController : Controller
     [HttpPost("DeleteSubCategory")]
     public async Task<IActionResult> DeleteSubCategory(int id)
     {
-        SubCategory subCategory = await _categoryService.GetOneSubCategoriesAsync(id);
+        SubCategory subCategory = await _categoryRepository.GetOneSubCategoriesAsync(id);
 
-        await _categoryService.DeleteSubCategoryAsync(subCategory);
+        await _categoryRepository.DeleteSubCategoryAsync(subCategory);
 
         return RedirectToAction("Admin", "Member");
     }

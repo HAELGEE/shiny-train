@@ -4,6 +4,7 @@
 ** Klar ** SubPost = Ett svar ifrån en post tex "Har du kollat fläkten? osv.."
 ---------------------------------------------------------------------------------------------------------------------
 
+Insperation ifrån flashback
 
 /Bloggen
 ---------------------------------------------------------------------------------------------------------------------
@@ -38,15 +39,15 @@ Fixa ett träd där det flyttas höger för varje svar. <-- Om jag hinner och Orkar
 /Blogg/Användare
 ---------------------------------------------------------------------------------------------------------------------
 
-Kunna skapa inlägg
+** KLAR ** Kunna skapa inlägg
 
-Kunna redigera sina inlägg
+** KLAR ** Kunna redigera sina inlägg
 
-kunna tabort sina inlägg
+** KLAR ** kunna ta bort sina inlägg
 
 Kunna gilla inlägg
 
-Kunna anmälla stötande Inlägg
+** KLAR ** Kunna anmälla stötande Inlägg
 ---------------------------------------------------------------------------------------------------------------------
 
 /Konto
@@ -68,8 +69,10 @@ Kunna chatta med andra Live!
 /Admin
 ---------------------------------------------------------------------------------------------------------------------
 
-Kunna kolla anmälda inlägg
+Kunna kolla anmälda inlägg och eventuellt ändra till Ickestötande om det bara är någon som tyckte det var kul att anmälla
 
 Kunna ge varning till Användare
+
+Kunna sätta andra som Admin
 
 ---------------------------------------------------------------------------------------------------------------------

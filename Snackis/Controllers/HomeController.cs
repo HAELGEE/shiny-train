@@ -24,7 +24,7 @@ public class HomeController : Controller
         //var allPosts = await _postRepository.GettingAllPostForSubCategoryAsync();
         var categories = await _categoryRepository.GetAllCategoriesAsync();
         var subCategories = await _categoryRepository.GetAllSubCategoriesAsync();
-
+        var top10 = await _postRepository.Getting10RecentPostByReplyAsync();
 
         var members = await _memberRepository.GetAllMembersAsync();
 
@@ -41,7 +41,9 @@ public class HomeController : Controller
         {
             Posts = posts,
             Categorys = categories.ToList(),
-            SubCategorys = subCategories.ToList()
+            SubCategorys = subCategories.ToList(),
+            Top10Posts = top10
+
         };
 
         return View(fullModel);

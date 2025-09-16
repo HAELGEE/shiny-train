@@ -316,7 +316,7 @@ body.dark .SubcategoriesStyle {
     flex-wrap: wrap; /* gör att innehållet bryter rad på små skärmar */
 }
 
-@media (max-width: 2300px) {
+@media (max-width: 2100px) {
     .post .post-meta {
         display: none;
         width: 45rem;
@@ -325,10 +325,15 @@ body.dark .SubcategoriesStyle {
 
 @media (max-width: 2300px) {
     .posts {        
+        width: 60rem;
+    }
+
+}
+@media (max-width: 2100px) {
+    .posts {
         width: 35rem;
     }
 }
-
 .post-content {
     flex: 1; /* låter texten ta så mycket plats som behövs */
     min-width: 200px; /* förhindrar att den blir för liten */

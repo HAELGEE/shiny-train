@@ -12,6 +12,9 @@ public interface IPostRepository
     Task<List<Post>> Getting10RecentPostByReplyAsync();
     Task CreatePostAsync(Post post);
     Task DeletePostAsync(Post post);
+    Task UpdatePostAsync(Post post);
+    Task ReportPostAsync(int id);
+
 
     // SubPost
     Task<List<SubPost>> GettingSubPostFromPostByIdAsync(int id);

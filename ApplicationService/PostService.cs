@@ -43,6 +43,15 @@ public class PostService : IPostService
     {
         await _postRepository.DeletePostAsync(post);
     }
+    public async Task UpdatePostAsync(Post post)
+    {
+        await _postRepository.UpdatePostAsync(post);
+    }
+    public async Task ReportPostAsync(int id)
+    {
+        await _postRepository.ReportPostAsync(id);
+    }
+
 
     // Subpost
     public async Task<List<SubPost>> GettingSubPostFromPostById(int id)

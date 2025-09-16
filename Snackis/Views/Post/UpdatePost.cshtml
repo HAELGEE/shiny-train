@@ -1,19 +1,30 @@
 ﻿@model Post
 @{
-    ViewData["Title"] = "Update Post";
+    ViewData["Title"] = "Create Post";
+
 }
 
 <div>
+    <form asp-controller="Post" asp-action="CreatePost">
 
-    <form asp-controller="Post" asp-action="UpdatePost">
+        <input type="hidden" asp-for="SubCategoryId" />
+        <input type="hidden" asp-for="MemberId" />
 
-      @*   <label asp-for="Name"></label>
-        <input type="text" asp-for="Name" />
-        <span asp-validation-for="Name"></span>
+        <label asp-for="Description"></label><br />
+        <input type="text" asp-for="Description" style="width: 20rem; " />
+        <span asp-validation-for="Description"></span>
         <br />
-        <div asp-validation-summary="All" class="text-danger" style="margin-top: 1rem;">
-            <button type="submit">Create</button>
-        </div> *@
-    </form>
+        <br />
 
+        <label asp-for="Text"></label><br />
+        <textarea asp-for="Text" style="width: 20rem; height: 5rem;"></textarea>
+        <span asp-validation-for="Text"></span>
+
+        <br />
+
+        <div asp-validation-summary="All" class="text-danger" style="margin-top: 1rem;">
+            <button type="submit">Update</button>
+        </div>
+
+    </form>
 </div>

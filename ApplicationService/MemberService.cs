@@ -51,7 +51,14 @@ public class MemberService : IMemberService
     {
         await _memberRepository.UpdateProfileViewsAsync(id);
     }
-
+    public async Task UpdateProfilePostCounterAsync(int id)
+    {
+        await _memberRepository.UpdateProfilePostCounterAsync(id);
+    }
+    public async Task UpdateProfileReplyCounterAsync(int id)
+    {
+        await _memberRepository.UpdateProfileReplyCounterAsync(id);
+    }
 
 
 }

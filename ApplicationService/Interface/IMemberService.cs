@@ -13,4 +13,6 @@ public interface IMemberService
     Task<Member> GetMemberByUsernamePasswordAsync(string username, string password);
     Task UpdateMemberAsync(Member member);
     Task UpdateProfileViewsAsync(int id);
+    Task UpdateProfilePostCounterAsync(int id);
+    Task UpdateProfileReplyCounterAsync(int id);
 }

@@ -44,4 +44,22 @@ public class MemberRepository : IMemberRepository
 
         await _dbContext.SaveChangesAsync();
     }
+    public async Task UpdateProfilePostCounterAsync(int id)
+    {
+        var member = new Member();
+        member = await GetOneMemberAsync(id);
+
+        member.TotalPosts++;
+
+        await _dbContext.SaveChangesAsync();
+    }
+    public async Task UpdateProfileReplyCounterAsync(int id)
+    {
+        var member = new Member();
+        member = await GetOneMemberAsync(id);
+
+        member.TotalReply++;
+
+        await _dbContext.SaveChangesAsync();
+    }
 }

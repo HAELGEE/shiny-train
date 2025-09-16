@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250915124001_second")]
-    partial class second
+    [Migration("20250916122441_first")]
+    partial class first
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,19 @@ namespace EFCore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
+                });
+
+            modelBuilder.Entity("Entity.Likes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Likes");
                 });
 
             modelBuilder.Entity("Entity.Member", b =>
@@ -117,7 +130,7 @@ namespace EFCore.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Likes")
+                    b.Property<int>("Like")
                         .HasColumnType("int");
 
                     b.Property<int?>("MemberId")
@@ -202,6 +215,36 @@ namespace EFCore.Migrations
                     b.ToTable("SubPost");
                 });
 
+            modelBuilder.Entity("LikesMember", b =>
+                {
+                    b.Property<int>("LikesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MembersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LikesId", "MembersId");
+
+                    b.HasIndex("MembersId");
+
+                    b.ToTable("LikesMember");
+                });
+
+            modelBuilder.Entity("LikesPost", b =>
+                {
+                    b.Property<int>("LikesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PostsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LikesId", "PostsId");
+
+                    b.HasIndex("PostsId");
+
+                    b.ToTable("LikesPost");
+                });
+
             modelBuilder.Entity("Entity.Post", b =>
                 {
                     b.HasOne("Entity.Member", "Member")
@@ -233,6 +276,36 @@ namespace EFCore.Migrations
                         .HasForeignKey("PostId");
 
                     b.Navigation("Member");
+                });
+
+            modelBuilder.Entity("LikesMember", b =>
+                {
+                    b.HasOne("Entity.Likes", null)
+                        .WithMany()
+                        .HasForeignKey("LikesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.Member", null)
+                        .WithMany()
+                        .HasForeignKey("MembersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LikesPost", b =>
+                {
+                    b.HasOne("Entity.Likes", null)
+                        .WithMany()
+                        .HasForeignKey("LikesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.Post", null)
+                        .WithMany()
+                        .HasForeignKey("PostsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Entity.Category", b =>

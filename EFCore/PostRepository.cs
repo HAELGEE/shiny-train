@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EFCore;
+
 public class PostRepository : IPostRepository
 {
     private readonly MyDbContext _context;
@@ -27,10 +28,10 @@ public class PostRepository : IPostRepository
         .Include(p => p.Member)
         .Include(p => p.SubPosts)
         .SingleOrDefaultAsync();
-    
-    public async Task<List<Post>> GettingAll25RecentPostsAsync(int memberId) => 
+
+    public async Task<List<Post>> GettingAll25RecentPostsAsync(int memberId) =>
         await _context.Post
-        .Where(p => p.MemberId == memberId)  
+        .Where(p => p.MemberId == memberId)
         .Include(p => p.Member)
         .OrderByDescending(p => p.Created)
         .Take(25)
@@ -39,12 +40,13 @@ public class PostRepository : IPostRepository
     public async Task<List<Post>> GettingAllPostForSubCategoryAsync(int categoryId) =>
         await _context.Post
             .Where(x => x.SubCategoryId == categoryId)
-            .Include(p => p.SubPosts)            
+            .Include(p => p.SubPosts)
+        .Include(p => p.Member)
             .OrderByDescending(x => x.Created)
             .ToListAsync();
 
     public async Task<List<Post>> Getting10RecentPostByReplyAsync() =>
-        await _context.Post            
+        await _context.Post
             .Include(p => p.SubPosts)
             .Take(10)
             .OrderByDescending(x => x.Reply)
@@ -56,8 +58,26 @@ public class PostRepository : IPostRepository
         await _context.SaveChangesAsync();
     }
     public async Task DeletePostAsync(Post post)
-    {        
+    {
         _context.Post.Remove(post);
+        await _context.SaveChangesAsync();
+    }
+    public async Task UpdatePostAsync(Post post)
+    {
+        _context.Update(post);
+        await _context.SaveChangesAsync();
+    }
+    public async Task ReportPostAsync(int id)
+    {
+        var post = await GetOnePostAsync(id);
+        var member = await _context.Member.Where(m => m.Id == post.MemberId).SingleOrDefaultAsync();
+
+        if (post.Reported == false)
+        {
+            post.Reported = true;
+            member.Reports++;
+        }
+
         await _context.SaveChangesAsync();
     }
 

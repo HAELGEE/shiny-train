@@ -4,11 +4,21 @@
 }
 
 <div class="posts">
+    @if (Context.Session.GetInt32("UserId") == Model.Post.MemberId)
+    {
+		<a asp-controller="Post" asp-action="UpdatePost" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color: lightblue; color:black;">Update</button></a>
+        <a asp-controller="Post" asp-action="Delete" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color: lightcoral; color:black;">Delete</button></a>
+    }
+    @if (Context.Session.GetInt32("UserId") > 0)
+    {
+        <a asp-controller="Post" asp-action="Report" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color:lightskyblue; color:black;">Report</button></a>
 
+    }
     <div class="post">
+
         <div class="post-content">
             <div style="display:flex;">
-                <h3>@Model.Post.Description</h3>
+                <h3><a asp-controller="Category" asp-action="SubCategory" asp-route-id="@Model.SubCategory.Id">@Model.SubCategory.Name</a>/@Model.Post.Description</h3>
 
                 <p style="margin-left: 3rem; margin-top: 0.5rem;">
                     Created by:
@@ -30,6 +40,7 @@
         @foreach (var item in Model.SubPosts)
         {
             <div class="post">
+                
                 <div class="post-content">
 
                     <div>

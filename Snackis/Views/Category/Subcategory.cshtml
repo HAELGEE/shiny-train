@@ -1,0 +1,44 @@
+﻿@model Views
+@{
+    ViewData["Title"] = "SubCategory";    
+}
+
+<div>
+    <div style="display:flex; justify-content: center;">
+
+    <h4>@Model.SubCategory.Name</h4>
+
+    </div>
+
+    <hr />
+    @if (Context.Session.GetInt32("UserId") > 0)
+    {
+        <a asp-controller="Post" asp-action="CreatePost" asp-route-id="@Model.SubCategory.Id">
+            <button style="margin-bottom: 1rem;">
+                Create Post
+            </button>
+        </a>
+    }
+    @if (Model.Posts != null)
+    {
+        @foreach (var item in Model.Posts)
+        {
+            <div class="post">
+                <div class="post-content" style="margin-right: 2rem;">
+                    <p style="margin-bottom: -1px;">
+                        <a asp-controller="Post" asp-action="ReadPost" asp-route-id="@item.Id" style="text-decoration: none;">@item.Description</a>
+                        <b>By</b>
+                         <a asp-controller="Member" asp-action="Guest" asp-route-id="@item.Member.Id">@item.Member.UserName</a> 
+                        -
+                        <b>@item.Created</b>
+                    </p>
+                </div>
+                <div class="post-meta">
+                    <span>@item.Like Likes</span>
+                    <span>@item.Views Views</span>
+                    <span>@item.Reply Replies</span>
+                </div>
+            </div>
+        }
+    }
+</div>
