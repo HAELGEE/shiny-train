@@ -2,6 +2,7 @@
 public class Views
 {
     public Member? Member { get; set; }
+    public List<Member>? Members { get; set; }
     public Category? category { get; set; } = new();
     public List<Category>? Categories { get; set; } = new();
     public SubCategory? SubCategory { get; set; } = new();

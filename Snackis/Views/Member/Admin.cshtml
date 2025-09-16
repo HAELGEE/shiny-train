@@ -1,36 +1,48 @@
 ﻿@model Views
 @{
-    ViewData["Title"] = "Admin Page";
+	ViewData["Title"] = "Admin Page";
 }
 
 <div>
-    <p>CRUD for Category</p>
-    <div>
-        <button><a style="color: black; text-decoration: none;" asp-controller="Category" asp-action="CreateCategory">Create Category</a></button>
-        <button><a style="color: darkred; text-decoration: none;" asp-controller="Category" asp-action="DeleteCategory">Delete Category</a></button>
-        <button><a style="color: forestgreen; text-decoration: none;" asp-controller="Category" asp-action="UpdateCategory">Update Category</a></button>
-    </div>
-    <br />
-    <br />
-    <p>CRUD for SubCategory</p>
-    <button><a style="color: black; text-decoration: none;" asp-controller="Category" asp-action="CreateSubCategory">Create SubCategory</a></button>
-    <button><a style="color: darkred; text-decoration: none;" asp-controller="Category" asp-action="DeleteSubCategory">Delete SubCategory</a></button>
-    <button><a style="color: forestgreen; text-decoration: none;" asp-controller="Category" asp-action="UpdateSubCategory">Update SubCategory</a></button>
-    <br />
-    <br />
-    <br />
-    <h5>Reports</h5>
+	<p>CRUD for Category</p>
+	<div>
+		<button><a style="color: black; text-decoration: none;" asp-controller="Category" asp-action="CreateCategory">Create Category</a></button>
+		<button><a style="color: darkred; text-decoration: none;" asp-controller="Category" asp-action="DeleteCategory">Delete Category</a></button>
+		<button><a style="color: forestgreen; text-decoration: none;" asp-controller="Category" asp-action="UpdateCategory">Update Category</a></button>
+	</div>
+	<br />
+	<br />
+	<p>CRUD for SubCategory</p>
+	<button><a style="color: black; text-decoration: none;" asp-controller="Category" asp-action="CreateSubCategory">Create SubCategory</a></button>
+	<button><a style="color: darkred; text-decoration: none;" asp-controller="Category" asp-action="DeleteSubCategory">Delete SubCategory</a></button>
+	<button><a style="color: forestgreen; text-decoration: none;" asp-controller="Category" asp-action="UpdateSubCategory">Update SubCategory</a></button>
+	<br />
+	<br />
+	<br />
+	<h5>Reports</h5>
 
-    @if (Model.Posts != null)
-    {
-        @foreach (var post in Model.Posts)
-        {
-            <p>                
-                    <a asp-controller="Post" asp-action="ReadPost" asp-route-id="@post.Id">@post.Description</a>
-                <a asp-controller="Post" asp-action="DeletePost" asp-route-id="@post.Id" style="margin-left: 2rem;">DELETE</a>
-                
-            </p>
-        }
-    }
+	@if (Model.Posts != null)
+	{
+		@foreach (var post in Model.Posts)
+		{
+			<p>
+				Post wich being reported: 
+				<a asp-controller="Post" asp-action="ReadPost" asp-route-id="@post.Id" style="margin-right: 1rem;">@post.Description</a>
+				reporting member id:
+				@foreach (var member in Model.Members)
+				{
+					if (post.MemberId == member.Id)
+					{
+						@member.Id
+						
+					}
+				}
+
+
+				<a asp-controller="Post" asp-action="DeletePost" asp-route-id="@post.Id" style="margin-left: 2rem;">DELETE</a>
+
+			</p>
+		}
+	}
 
 </div> 

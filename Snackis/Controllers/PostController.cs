@@ -66,6 +66,11 @@ public class PostController : Controller
     [HttpGet("DeletePost")]
     public async Task<IActionResult> DeletePost(int id)
     {
+        bool isAdmin = await CheckAdmin();
+
+        if (isAdmin)
+            return RedirectToAction("Index", "Home");
+
         if (id != 0)
         {
             var post = await _postRepository.GetOnePostAsync(id);
@@ -80,6 +85,14 @@ public class PostController : Controller
     [HttpGet("Delete")]
     public async Task<IActionResult> Delete(int id)
     {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        var postCheck = await _postRepository.GetOnePostAsync(id);
+
+        if(userId != postCheck.MemberId)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
         if (id != 0)
         {
             var post = await _postRepository.GetOnePostAsync(id);

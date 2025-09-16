@@ -22,6 +22,7 @@ public class Post
     public int Like { get; set; } = 0;
     public int Reply { get; set; } = 0;
     public bool? Reported { get; set; } = false;
+    public int? ReporterId { get; set; }
     public DateTime? Created { get; set; } = DateTime.Now;
 
 

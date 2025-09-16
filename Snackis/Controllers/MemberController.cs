@@ -152,11 +152,12 @@ public class MemberController : Controller
             return RedirectToAction(nameof(Index), "Home");
 
         var posts = await _postRepository.GetAllReportsAsync();
-
+        var members = await _memberService.GetAllMembersAsync();
 
         var view = new Views
         {
             Posts = posts,
+            Members = members,
         };
 
         return View(view);        
