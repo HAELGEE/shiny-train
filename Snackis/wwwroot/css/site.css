@@ -327,7 +327,6 @@ body.dark .SubcategoriesStyle {
     .posts {        
         width: 60rem;
     }
-
 }
 @media (max-width: 2100px) {
     .posts {
@@ -360,11 +359,31 @@ body.dark .SubcategoriesStyle {
     justify-content:space-evenly;
            
 }
-    .three-in-row > div:first-child {
-        /*flex: 1;*/ /* gör så att de delar på bredden */
+    .three-in-row > div:first-child {       
         margin-right:20rem;
     }
-    .three-in-row > div:last-child {
-        /*flex: 1;*/ /* gör så att de delar på bredden */
+    .three-in-row > div:last-child {        
         margin-left: 20rem;
     }
+
+.button-to-right{
+    margin-left: 9rem;
+}
+@media (max-width: 2300px) {
+    .button-to-right {
+        margin-left: 4rem;
+    }
+}
+@media (max-width: 2100px) {
+    .button-to-right {
+        margin-left: 0rem;
+    }
+}
+
+.textarea-styling {
+    display: flex;
+    flex: auto;
+    min-height: 8.5rem; 
+    max-height: 8.5rem; 
+    padding: 1rem;
+}

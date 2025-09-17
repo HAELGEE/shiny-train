@@ -89,5 +89,17 @@
 			</div>
 		}
 	}
+	
 
+	<br />
+	<form>
+	<div style="display: flex; flex-direction: column;">
+		<div style="display: flex; justify-content: center;">
+			<div class="post" style="width: 50rem; height: 10rem;">
+				<textarea class="textarea-styling"></textarea>
+			</div>
+		</div>
+		<a as-controller="Post" asp-action="Post" asp-route-id="@Model.Post.Id"><button class="button-to-right">Reply</button></a>
+	</div>
+	</form>
 </div>
