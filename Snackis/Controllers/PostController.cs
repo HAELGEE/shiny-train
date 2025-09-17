@@ -153,13 +153,16 @@ public class PostController : Controller
         {
             return RedirectToAction("Login", "Member");
         }
+        var post = await _postService.GetOnePostAsync(id);
+       
 
-        return View(await _postService.GetOnePostAsync(id));
+        return View(post);
     }
 
     [HttpPost("UpdatePost")]
     public async Task<IActionResult> UpdatePost(Post post)
-    {
+    {        
+
         await _postService.UpdatePostAsync(post);
 
         return RedirectToAction(nameof(ReadPost), new { Id = post.Id });
