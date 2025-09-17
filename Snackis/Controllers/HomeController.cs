@@ -6,6 +6,7 @@ using Snackis.Models;
 using System.Diagnostics;
 
 namespace Snackis.Controllers;
+
 public class HomeController : Controller
 {
     private readonly IPostService _postService;
@@ -29,18 +30,12 @@ public class HomeController : Controller
 
         var members = await _memberService.GetAllMembersAsync();
 
-        var posts = new List<Post>();
-        
+        var addToPost = await _postService.GettingAll25RecentPostsAsync();
 
-        foreach (var member in members)
-        {
-            var addToPost = await _postService.GettingAll25RecentPostsAsync(member.Id);
-            posts.AddRange(addToPost);
-        }
 
         var fullModel = new FullViewModel
         {
-            Posts = posts,
+            Posts = addToPost,
             Categorys = categories.ToList(),
             SubCategorys = subCategories.ToList(),
             Top10Posts = top10

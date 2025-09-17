@@ -27,13 +27,13 @@
 		}
 	}
 	<div class="post">
-		<div class="post-content">
-			<div style="display:flex;">
+		<div>
+			<div style="flex-direction:column; justify-items: center;">
 				<div>
 					<img src="@Model.Post.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
 				</div>
 				<div>
-					<p style="margin-left: 3rem; margin-top: 0.5rem;">
+					<p>
 						Created by:
 						<b>
 							<a asp-controller="Member" asp-action="Guest" asp-route-id="@Model.Post.Member.Id">@Model.Post.Member.UserName</a>
@@ -45,13 +45,17 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="post-content">
 			<div>
-				<div>
+				<div style="display: flex; height: 1rem; justify-content:center;">
 					<h5><a asp-controller="Category" asp-action="SubCategory" asp-route-id="@Model.SubCategory.Id">@Model.SubCategory.Name</a>/@Model.Post.Description</h5>
 				</div>
-				<div>
-					<p style="margin-top: 1.5rem; margin-left: 1.5rem;">
+
+				<hr />
+
+				<div style="height: 9rem;">
+					<p style="margin-top: 1.5rem;">
 						@Model.Post.Text
 					</p>
 				</div>

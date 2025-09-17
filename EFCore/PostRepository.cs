@@ -31,12 +31,11 @@ public class PostRepository : IPostRepository
         .Include(p => p.ReporterIds)
         .SingleOrDefaultAsync();
 
-    public async Task<List<Post>> GettingAll25RecentPostsAsync(int memberId) =>
+    public async Task<List<Post>> GettingAll25RecentPostsAsync() =>
         await _context.Post
-        .Where(p => p.MemberId == memberId)
-        .Include(p => p.Member)
-        .OrderByDescending(p => p.Created)
         .Take(25)
+        .OrderByDescending(p => p.Created)
+        .Include(p => p.Member)
         .ToListAsync();
 
     public async Task<List<Post>> GettingAllPostForSubCategoryAsync(int categoryId) =>
