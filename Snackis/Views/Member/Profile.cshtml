@@ -4,8 +4,11 @@
     
 }
 <h1>@ViewData["Title"] Page</h1>
+<br />
 
-<p>Here you see your information and to update them </p>
+<img src="@Model.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
+<br />
+<br />
 
 <p><b>First name: </b>@Model.Member.FirstName</p>
 <p><b>Last name: </b>@Model.Member.LastName</p>

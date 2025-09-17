@@ -8,10 +8,12 @@ public class Views
     public SubCategory? SubCategory { get; set; } = new();
     public List<SubCategory>? SubCategories { get; set; }
 
+    public List<Member>? Admins { get; set; } = new();
+    public Member? Admin { get; set; } = new();
     public Post? Post { get; set; }
 
     public List<Post>? Posts { get; set; }
-
+    
     public List<Post>? RecentPosts { get; set; } = new();
 
     public SubPost? SubPost { get; set; }

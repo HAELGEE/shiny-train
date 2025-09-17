@@ -4,6 +4,7 @@ using EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250916171126_first")]
+    partial class first
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,6 +42,19 @@ namespace EFCore.Migrations
                     b.ToTable("Category");
                 });
 
+            modelBuilder.Entity("Entity.Likes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Likes");
+                });
+
             modelBuilder.Entity("Entity.Member", b =>
                 {
                     b.Property<int>("Id")
@@ -61,18 +77,11 @@ namespace EFCore.Migrations
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsOwner")
-                        .HasColumnType("bit");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProfileImagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -142,9 +151,6 @@ namespace EFCore.Migrations
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TotalReports")
-                        .HasColumnType("int");
 
                     b.Property<int>("Views")
                         .HasColumnType("int");
@@ -235,6 +241,36 @@ namespace EFCore.Migrations
                     b.ToTable("SubPost");
                 });
 
+            modelBuilder.Entity("LikesMember", b =>
+                {
+                    b.Property<int>("LikesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MembersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LikesId", "MembersId");
+
+                    b.HasIndex("MembersId");
+
+                    b.ToTable("LikesMember");
+                });
+
+            modelBuilder.Entity("LikesPost", b =>
+                {
+                    b.Property<int>("LikesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PostsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LikesId", "PostsId");
+
+                    b.HasIndex("PostsId");
+
+                    b.ToTable("LikesPost");
+                });
+
             modelBuilder.Entity("Entity.Post", b =>
                 {
                     b.HasOne("Entity.Member", "Member")
@@ -253,7 +289,7 @@ namespace EFCore.Migrations
             modelBuilder.Entity("Entity.Reports", b =>
                 {
                     b.HasOne("Entity.Member", "Member")
-                        .WithMany("ReportedPosts")
+                        .WithMany("Reported")
                         .HasForeignKey("MemberId");
 
                     b.HasOne("Entity.Post", "Post")
@@ -285,6 +321,36 @@ namespace EFCore.Migrations
                     b.Navigation("Member");
                 });
 
+            modelBuilder.Entity("LikesMember", b =>
+                {
+                    b.HasOne("Entity.Likes", null)
+                        .WithMany()
+                        .HasForeignKey("LikesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.Member", null)
+                        .WithMany()
+                        .HasForeignKey("MembersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LikesPost", b =>
+                {
+                    b.HasOne("Entity.Likes", null)
+                        .WithMany()
+                        .HasForeignKey("LikesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.Post", null)
+                        .WithMany()
+                        .HasForeignKey("PostsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Entity.Category", b =>
                 {
                     b.Navigation("SubCategories");
@@ -294,7 +360,7 @@ namespace EFCore.Migrations
                 {
                     b.Navigation("Posts");
 
-                    b.Navigation("ReportedPosts");
+                    b.Navigation("Reported");
 
                     b.Navigation("SubPosts");
                 });

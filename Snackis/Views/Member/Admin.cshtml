@@ -1,6 +1,7 @@
 ﻿@model Views
 @{
 	ViewData["Title"] = "Admin Page";
+	ViewBag.counter = 0;
 }
 
 <div>
@@ -25,23 +26,19 @@
 	{
 		@foreach (var post in Model.Posts)
 		{
-			<p>
-				Post wich being reported: 
-				<a asp-controller="Post" asp-action="ReadPost" asp-route-id="@post.Id" style="margin-right: 1rem;">@post.Description</a>
-				reporting member id:
-				@foreach (var member in Model.Members)
-				{
-					if (post.MemberId == member.Id)
-					{
-						@member.Id
-						
-					}
-				}
+			@if (post.Reported == true)
+			{
+				<p>
+					Post wich being reported:
+					<a asp-controller="Post" asp-action="ReadPost" asp-route-id="@post.Id" style="margin-right: 1rem;">@post.Description</a>
+					
+					Total reports: @post.TotalReports
+					
+			
+					<a asp-controller="Post" asp-action="DeletePost" asp-route-id="@post.Id" style="margin-left: 2rem;">DELETE</a>
 
-
-				<a asp-controller="Post" asp-action="DeletePost" asp-route-id="@post.Id" style="margin-left: 2rem;">DELETE</a>
-
-			</p>
+				</p>
+			}
 		}
 	}
 

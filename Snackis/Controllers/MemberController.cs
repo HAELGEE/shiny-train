@@ -4,16 +4,32 @@ using Entity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Snackis.Controllers;
+
 public class MemberController : Controller
 {
     private readonly IMemberService _memberService;
-    private readonly IPostRepository _postRepository;
+    private readonly IPostService _postService;
 
-    public MemberController(IMemberService memberService, IPostRepository postRepository)
+    public MemberController(IMemberService memberService, IPostService postService)
     {
         _memberService = memberService;
-        _postRepository = postRepository;
+        _postService = postService;
     }
+
+    async Task<bool> IsAdmin()
+    {
+        var members = await _memberService.GetAdminMembersAsync();
+        bool adminCheck = false;
+        foreach (var member in members)
+        {
+            if (member.IsAdmin == true)
+            {
+                adminCheck = true; break;
+            }
+        }
+        return adminCheck;
+    }
+
 
     [HttpGet("profile")]
     public async Task<IActionResult> Profile()
@@ -54,7 +70,18 @@ public class MemberController : Controller
         return View(viewModel);
     }
 
+    [HttpPost("MakeAdmin")]
+    public async Task<IActionResult> MakeAdmin(Member member)
+    {
+        var isAdminCheck = await IsAdmin();
 
+        if(isAdminCheck)
+        {
+            await _memberService.UpdateMemberAdminrightsAsync(member.Id, member.IsAdmin);
+        }
+
+        return RedirectToAction(nameof(Guest), new { id = member.Id });
+    }
 
     [HttpPost("profile")]
     public IActionResult Profile(Member member)
@@ -98,8 +125,33 @@ public class MemberController : Controller
             member.Age = age;
 
         }
+        var view = new Views
+        {
+            Member = member            
+        };
 
-        return View(member);
+        Member? admin = null;
+        if (await _memberService.GetAdminMemberAsync((int)HttpContext.Session.GetInt32("UserId")!) != null)
+        {
+            admin = await _memberService.GetAdminMemberAsync((int)HttpContext.Session.GetInt32("UserId")!);
+
+            view.Admin = admin;
+        }
+
+        return View(view);
+    }
+
+    [HttpGet("memberWarning")]
+    public async Task<IActionResult> memberWarning(int id)
+    {
+        bool isAdmin = await IsAdmin();
+
+        if (!isAdmin)
+            return RedirectToAction(nameof(Index), "Home");
+
+        await _memberService.UpdateReportsForMemberAsync(id);
+
+        return RedirectToAction(nameof(Guest), "Member", new { Id = id });
     }
 
     [HttpGet("Register")]
@@ -151,8 +203,21 @@ public class MemberController : Controller
         if (!member.IsAdmin)
             return RedirectToAction(nameof(Index), "Home");
 
-        var posts = await _postRepository.GetAllReportsAsync();
+        var posts = await _postService.GetAllReportsAsync();
         var members = await _memberService.GetAllMembersAsync();
+
+        var reports = await _memberService.GettingAllReportsAsync();
+
+        foreach (var post in posts)
+        {
+            foreach (var report in reports)
+            {
+                if (post.Id == report.PostId)
+                {
+                    post.TotalReports++;
+                }
+            }
+        }
 
         var view = new Views
         {
@@ -160,7 +225,7 @@ public class MemberController : Controller
             Members = members,
         };
 
-        return View(view);        
+        return View(view);
     }
 
     [HttpGet("Login")]
@@ -195,6 +260,8 @@ public class MemberController : Controller
 
         if (member.IsAdmin)
             HttpContext.Session.SetInt32("IsAdmin", 1); //This is to create a session variable to access the Admin page
+        else
+            HttpContext.Session.SetInt32("IsAdmin", 0); //This is to create a session variable to access the Admin page
 
         return RedirectToAction(nameof(Profile), "Member");
     }

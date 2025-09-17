@@ -8,10 +8,12 @@ namespace ApplicationService;
 public class MemberService : IMemberService
 {
     private readonly IMemberRepository _memberRepository;
+    private readonly IReportsRepository _reportsRepository;
 
-    public MemberService(IMemberRepository memberRepository)
+    public MemberService(IMemberRepository memberRepository, IReportsRepository reportsRepository)
     {
         _memberRepository = memberRepository;
+        _reportsRepository = reportsRepository;
     }
 
     public async Task CreateMemberAsync(Member member)
@@ -34,6 +36,14 @@ public class MemberService : IMemberService
     {
         return await _memberRepository.GetMemberByUsernameAsync(userName);
     }
+    public async Task<List<Member>> GetAdminMembersAsync()
+    {
+        return await _memberRepository.GetAdminMembersAsync();
+    }
+    public async Task<Member> GetAdminMemberAsync(int id)
+    {
+        return await _memberRepository.GetAdminMemberAsync(id);
+    }
     public async Task<Member> GetMemberByEmailAsync(string email)
     {
         return await _memberRepository.GetMemberByEmailAsync(email);
@@ -47,9 +57,17 @@ public class MemberService : IMemberService
     {
         await _memberRepository.UpdateMemberAsync(member);
     }
+    public async Task UpdateMemberAdminrightsAsync(int id, bool isAdmin)
+    {
+        await _memberRepository.UpdateMemberAdminrightsAsync(id, isAdmin);
+    }
     public async Task UpdateProfileViewsAsync(int id)
     {
         await _memberRepository.UpdateProfileViewsAsync(id);
+    }
+    public async Task UpdateReportsForMemberAsync(int id)
+    {
+       await _memberRepository.UpdateReportsForMemberAsync(id);
     }
     public async Task UpdateProfilePostCounterAsync(int id)
     {
@@ -60,5 +78,13 @@ public class MemberService : IMemberService
         await _memberRepository.UpdateProfileReplyCounterAsync(id);
     }
 
-
+    // Reports
+    public async Task<List<Reports>> GettingAllReportsAsync()
+    {
+        return await _reportsRepository.GettingAllReportsAsync();
+    }
+    public async Task DeleteReportsAsync(Reports reports)
+    {
+        await _reportsRepository.DeleteReportsAsync(reports);
+    }
 }

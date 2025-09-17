@@ -1,14 +1,16 @@
 ﻿@model Post
 @{
-    ViewData["Title"] = "Create Post";
+    ViewData["Title"] = "Update Post";
 
 }
 
 <div>
-    <form asp-controller="Post" asp-action="CreatePost">
+    <form asp-controller="Post" asp-action="UpdatePost">
 
         <input type="hidden" asp-for="SubCategoryId" />
         <input type="hidden" asp-for="MemberId" />
+        <input type="hidden" asp-for="Id" />
+
 
         <label asp-for="Description"></label><br />
         <input type="text" asp-for="Description" style="width: 20rem; " />

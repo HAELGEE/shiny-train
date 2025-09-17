@@ -37,6 +37,7 @@ public class Member
     
     // Admin rights
     public bool IsAdmin { get; set; } = false;
+    public bool IsOwner { get; set; } = false;
     public int? Reports { get; set; } = 0;
 
     // Information for the View on Profile
@@ -45,11 +46,13 @@ public class Member
     public int TotalLikes { get; set; } = 0;
     public int ProfileViews { get; set; } = 0;
     public DateTime? RegisteryDate { get; set; } = DateTime.Now;    
+    public string ProfileImagePath {get; set; } = "/uploads/standardProfile.png";
 
     // DB connections 
+    public ICollection<Reports>? ReportedPosts { get; set; }
     public ICollection<Post>? Posts { get; set; }
     public ICollection<SubPost>? SubPosts { get; set; }
-    public ICollection<Likes>? Likes { get; set; }
+    //public ICollection<Likes>? Likes { get; set; }
 
 
 }

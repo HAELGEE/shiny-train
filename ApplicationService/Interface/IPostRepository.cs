@@ -13,7 +13,7 @@ public interface IPostRepository
     Task CreatePostAsync(Post post);
     Task DeletePostAsync(Post post);
     Task UpdatePostAsync(Post post);
-    Task ReportPostAsync(int id);
+    Task ReportPostAsync(int id, int reporterId);
 
 
     // SubPost

@@ -26,6 +26,7 @@ public class Program
         builder.Services.AddScoped<ICategoryService, CategoryService>();
         builder.Services.AddScoped<IPostService, PostService>();
         builder.Services.AddScoped<IPostRepository, PostRepository>();
+        builder.Services.AddScoped<IReportsRepository, ReportsRepository>();
 
 
         builder.Services.AddSession();
@@ -47,6 +48,7 @@ public class Program
         app.UseSession();
         app.UseHttpsRedirection();
         app.UseRouting();
+        app.UseStaticFiles();
 
         app.UseAuthorization();
 

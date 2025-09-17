@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250916150311_second")]
-    partial class second
+    [Migration("20250916182552_firstt23")]
+    partial class firstt23
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,19 +40,6 @@ namespace EFCore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("Entity.Likes", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Likes");
                 });
 
             modelBuilder.Entity("Entity.Member", b =>
@@ -152,6 +139,9 @@ namespace EFCore.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TotalReports")
+                        .HasColumnType("int");
+
                     b.Property<int>("Views")
                         .HasColumnType("int");
 
@@ -162,6 +152,29 @@ namespace EFCore.Migrations
                     b.HasIndex("SubCategoryId");
 
                     b.ToTable("Post");
+                });
+
+            modelBuilder.Entity("Entity.Reports", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PostId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("Entity.SubCategory", b =>
@@ -218,47 +231,34 @@ namespace EFCore.Migrations
                     b.ToTable("SubPost");
                 });
 
-            modelBuilder.Entity("LikesMember", b =>
-                {
-                    b.Property<int>("LikesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MembersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LikesId", "MembersId");
-
-                    b.HasIndex("MembersId");
-
-                    b.ToTable("LikesMember");
-                });
-
-            modelBuilder.Entity("LikesPost", b =>
-                {
-                    b.Property<int>("LikesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PostsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LikesId", "PostsId");
-
-                    b.HasIndex("PostsId");
-
-                    b.ToTable("LikesPost");
-                });
-
             modelBuilder.Entity("Entity.Post", b =>
                 {
                     b.HasOne("Entity.Member", "Member")
                         .WithMany("Posts")
                         .HasForeignKey("MemberId");
 
-                    b.HasOne("Entity.SubCategory", null)
+                    b.HasOne("Entity.SubCategory", "SubCategory")
                         .WithMany("Posts")
                         .HasForeignKey("SubCategoryId");
 
                     b.Navigation("Member");
+
+                    b.Navigation("SubCategory");
+                });
+
+            modelBuilder.Entity("Entity.Reports", b =>
+                {
+                    b.HasOne("Entity.Member", "Member")
+                        .WithMany("ReportedPosts")
+                        .HasForeignKey("MemberId");
+
+                    b.HasOne("Entity.Post", "Post")
+                        .WithMany("ReporterIds")
+                        .HasForeignKey("PostId");
+
+                    b.Navigation("Member");
+
+                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("Entity.SubCategory", b =>
@@ -281,36 +281,6 @@ namespace EFCore.Migrations
                     b.Navigation("Member");
                 });
 
-            modelBuilder.Entity("LikesMember", b =>
-                {
-                    b.HasOne("Entity.Likes", null)
-                        .WithMany()
-                        .HasForeignKey("LikesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entity.Member", null)
-                        .WithMany()
-                        .HasForeignKey("MembersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("LikesPost", b =>
-                {
-                    b.HasOne("Entity.Likes", null)
-                        .WithMany()
-                        .HasForeignKey("LikesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entity.Post", null)
-                        .WithMany()
-                        .HasForeignKey("PostsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Entity.Category", b =>
                 {
                     b.Navigation("SubCategories");
@@ -320,11 +290,15 @@ namespace EFCore.Migrations
                 {
                     b.Navigation("Posts");
 
+                    b.Navigation("ReportedPosts");
+
                     b.Navigation("SubPosts");
                 });
 
             modelBuilder.Entity("Entity.Post", b =>
                 {
+                    b.Navigation("ReporterIds");
+
                     b.Navigation("SubPosts");
                 });
 

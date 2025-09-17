@@ -21,12 +21,14 @@ public class PostRepository : IPostRepository
     public async Task<List<Post>> GetAllReportsAsync() => await _context.Post
         .Where(p => p.Reported == true)
         .Include(p => p.Member)
+        .Include(p => p.ReporterIds)
         .ToListAsync();
 
     public async Task<Post> GetOnePostAsync(int id) => await _context.Post
         .Where(p => p.Id == id)
         .Include(p => p.Member)
         .Include(p => p.SubPosts)
+        .Include(p => p.ReporterIds)
         .SingleOrDefaultAsync();
 
     public async Task<List<Post>> GettingAll25RecentPostsAsync(int memberId) =>
@@ -58,7 +60,7 @@ public class PostRepository : IPostRepository
         await _context.SaveChangesAsync();
     }
     public async Task DeletePostAsync(Post post)
-    {
+    {        
         _context.Post.Remove(post);
         await _context.SaveChangesAsync();
     }
@@ -67,18 +69,34 @@ public class PostRepository : IPostRepository
         _context.Update(post);
         await _context.SaveChangesAsync();
     }
-    public async Task ReportPostAsync(int id)
+    public async Task ReportPostAsync(int postId, int reporterId)
     {
-        var post = await GetOnePostAsync(id);
+        var post = await GetOnePostAsync(postId);
         var member = await _context.Member.Where(m => m.Id == post.MemberId).SingleOrDefaultAsync();
+        bool check = false;
 
-        if (post.Reported == false)
+        foreach (var report in post.ReporterIds)
         {
-            post.Reported = true;
-            member.Reports++;
+            if (report.MemberId == reporterId)
+            {
+                check = true; break;
+            }
         }
 
-        await _context.SaveChangesAsync();
+        if (!check)
+        {
+            post.Reported = true;
+
+            var report = new Reports
+            {
+                MemberId = reporterId,
+                PostId = postId,
+            };
+
+            _context.Reports.Add(report);
+            _context.Update(post);
+            await _context.SaveChangesAsync();
+        }        
     }
 
     // Subpost

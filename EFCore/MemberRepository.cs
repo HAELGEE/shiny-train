@@ -16,12 +16,22 @@ public class MemberRepository : IMemberRepository
     public async Task<List<Member>> GetAllMembersAsync() => await _dbContext.Member.OrderBy(m => m.UserName).ToListAsync();
     public async Task<Member> GetOneMemberAsync(int id) => await _dbContext.Member.Where(m => m.Id == id).SingleOrDefaultAsync();
     public async Task<Member> GetMemberByUsernameAsync(string userName) => await _dbContext.Member.Where(m => m.UserName == userName).SingleOrDefaultAsync();
+    public async Task<List<Member>> GetAdminMembersAsync() => await _dbContext.Member.Where(m => m.IsAdmin == true).ToListAsync();
+    public async Task<Member> GetAdminMemberAsync(int id) => await _dbContext.Member.Where(m => m.IsAdmin == true && m.Id == id).SingleOrDefaultAsync();
     public async Task<Member> GetMemberByEmailAsync(string email) => await _dbContext.Member.Where(m => m.Email == email).SingleOrDefaultAsync();
     public async Task<Member> GetMemberByUsernamePasswordAsync(string username, string password) => await _dbContext.Member.Where(m => m.UserName == username && m.Password == password).FirstOrDefaultAsync();
     public async Task UpdateMemberAsync(Member member)
     {       
         _dbContext.Member.Update(member);
         await _dbContext.SaveChangesAsync();        
+    }
+    public async Task UpdateMemberAdminrightsAsync(int id, bool isAdmin)
+    {
+        var member = await GetOneMemberAsync(id);
+
+        member.IsAdmin = isAdmin;
+        
+        await _dbContext.SaveChangesAsync();
     }
     public async Task DeleteMemberAsync(Member member)
     {
@@ -41,6 +51,15 @@ public class MemberRepository : IMemberRepository
         member = await GetOneMemberAsync(id);
 
         member.ProfileViews++;
+
+        await _dbContext.SaveChangesAsync();
+    }
+    public async Task UpdateReportsForMemberAsync(int id)
+    {
+        var member = new Member();
+        member = await GetOneMemberAsync(id);
+
+        member.Reports++;
 
         await _dbContext.SaveChangesAsync();
     }

@@ -23,7 +23,7 @@ public class PostService : IPostService
         return await _postRepository.GetOnePostAsync(id);
     }
 
-    public async Task<List<Post>> GettingAll100RecentPosts(int memberId)
+    public async Task<List<Post>> GettingAll25RecentPostsAsync(int memberId)
     {
         return await _postRepository.GettingAll25RecentPostsAsync(memberId);
     }
@@ -47,14 +47,14 @@ public class PostService : IPostService
     {
         await _postRepository.UpdatePostAsync(post);
     }
-    public async Task ReportPostAsync(int id)
+    public async Task ReportPostAsync(int id, int reporterId)
     {
-        await _postRepository.ReportPostAsync(id);
+        await _postRepository.ReportPostAsync(id, reporterId);
     }
 
 
     // Subpost
-    public async Task<List<SubPost>> GettingSubPostFromPostById(int id)
+    public async Task<List<SubPost>> GettingSubPostFromPostByIdAsync(int id)
     {
         return await _postRepository.GettingSubPostFromPostByIdAsync(id);
     }

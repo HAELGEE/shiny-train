@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250916122441_first")]
-    partial class first
+    [Migration("20250917093756_adminRights")]
+    partial class adminRights
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,19 +42,6 @@ namespace EFCore.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("Entity.Likes", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Likes");
-                });
-
             modelBuilder.Entity("Entity.Member", b =>
                 {
                     b.Property<int>("Id")
@@ -77,11 +64,18 @@ namespace EFCore.Migrations
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsOwner")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileImagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -142,12 +136,18 @@ namespace EFCore.Migrations
                     b.Property<bool?>("Reported")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("ReporterId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("SubCategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TotalReports")
+                        .HasColumnType("int");
 
                     b.Property<int>("Views")
                         .HasColumnType("int");
@@ -159,6 +159,29 @@ namespace EFCore.Migrations
                     b.HasIndex("SubCategoryId");
 
                     b.ToTable("Post");
+                });
+
+            modelBuilder.Entity("Entity.Reports", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PostId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("Entity.SubCategory", b =>
@@ -215,47 +238,34 @@ namespace EFCore.Migrations
                     b.ToTable("SubPost");
                 });
 
-            modelBuilder.Entity("LikesMember", b =>
-                {
-                    b.Property<int>("LikesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MembersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LikesId", "MembersId");
-
-                    b.HasIndex("MembersId");
-
-                    b.ToTable("LikesMember");
-                });
-
-            modelBuilder.Entity("LikesPost", b =>
-                {
-                    b.Property<int>("LikesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PostsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LikesId", "PostsId");
-
-                    b.HasIndex("PostsId");
-
-                    b.ToTable("LikesPost");
-                });
-
             modelBuilder.Entity("Entity.Post", b =>
                 {
                     b.HasOne("Entity.Member", "Member")
                         .WithMany("Posts")
                         .HasForeignKey("MemberId");
 
-                    b.HasOne("Entity.SubCategory", null)
+                    b.HasOne("Entity.SubCategory", "SubCategory")
                         .WithMany("Posts")
                         .HasForeignKey("SubCategoryId");
 
                     b.Navigation("Member");
+
+                    b.Navigation("SubCategory");
+                });
+
+            modelBuilder.Entity("Entity.Reports", b =>
+                {
+                    b.HasOne("Entity.Member", "Member")
+                        .WithMany("ReportedPosts")
+                        .HasForeignKey("MemberId");
+
+                    b.HasOne("Entity.Post", "Post")
+                        .WithMany("ReporterIds")
+                        .HasForeignKey("PostId");
+
+                    b.Navigation("Member");
+
+                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("Entity.SubCategory", b =>
@@ -278,36 +288,6 @@ namespace EFCore.Migrations
                     b.Navigation("Member");
                 });
 
-            modelBuilder.Entity("LikesMember", b =>
-                {
-                    b.HasOne("Entity.Likes", null)
-                        .WithMany()
-                        .HasForeignKey("LikesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entity.Member", null)
-                        .WithMany()
-                        .HasForeignKey("MembersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("LikesPost", b =>
-                {
-                    b.HasOne("Entity.Likes", null)
-                        .WithMany()
-                        .HasForeignKey("LikesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entity.Post", null)
-                        .WithMany()
-                        .HasForeignKey("PostsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Entity.Category", b =>
                 {
                     b.Navigation("SubCategories");
@@ -317,11 +297,15 @@ namespace EFCore.Migrations
                 {
                     b.Navigation("Posts");
 
+                    b.Navigation("ReportedPosts");
+
                     b.Navigation("SubPosts");
                 });
 
             modelBuilder.Entity("Entity.Post", b =>
                 {
+                    b.Navigation("ReporterIds");
+
                     b.Navigation("SubPosts");
                 });
 

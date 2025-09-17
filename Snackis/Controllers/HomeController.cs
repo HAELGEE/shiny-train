@@ -1,3 +1,4 @@
+using ApplicationService.Interface;
 using EFCore;
 using Entity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,33 +8,33 @@ using System.Diagnostics;
 namespace Snackis.Controllers;
 public class HomeController : Controller
 {
-    private readonly IPostRepository _postRepository;
-    private readonly ICategoryRepository _categoryRepository;
-    private readonly IMemberRepository _memberRepository;
+    private readonly IPostService _postService;
+    private readonly ICategoryService _categoryService;
+    private readonly IMemberService _memberService;
 
-    public HomeController(IPostRepository postRepository, ICategoryRepository categoryRepository, IMemberRepository memberRepository)
+    public HomeController(IPostService postService, ICategoryService categoryService, IMemberService memberService)
     {
-        _postRepository = postRepository;
-        _categoryRepository = categoryRepository;
-        _memberRepository = memberRepository;
+        _postService = postService;
+        _categoryService = categoryService;
+        _memberService = memberService;
     }
     //public async Task<IActionResult> Index()
     public async Task<IActionResult> Index()
     {
-        var recentPosts = await _postRepository.Getting10RecentPostByReplyAsync();
+        var recentPosts = await _postService.Getting10RecentPostByReplyAsync();
         //var allPosts = await _postRepository.GettingAllPostForSubCategoryAsync();
-        var categories = await _categoryRepository.GetAllCategoriesAsync();
-        var subCategories = await _categoryRepository.GetAllSubCategoriesAsync();
-        var top10 = await _postRepository.Getting10RecentPostByReplyAsync();
+        var categories = await _categoryService.GetAllCategoriesAsync();
+        var subCategories = await _categoryService.GetAllSubCategoriesAsync();
+        var top10 = await _postService.Getting10RecentPostByReplyAsync();
 
-        var members = await _memberRepository.GetAllMembersAsync();
+        var members = await _memberService.GetAllMembersAsync();
 
         var posts = new List<Post>();
         
 
         foreach (var member in members)
         {
-            var addToPost = await _postRepository.GettingAll25RecentPostsAsync(member.Id);
+            var addToPost = await _postService.GettingAll25RecentPostsAsync(member.Id);
             posts.AddRange(addToPost);
         }
 

@@ -1,65 +1,89 @@
 ﻿@model Views
 @{
-    ViewData["Title"] = "Update SubPost";
+	ViewData["Title"] = "Update SubPost";
+	bool checkIfTrue = false;
 }
 
 <div class="posts">
-    @if (Context.Session.GetInt32("UserId") == Model.Post.MemberId)
-    {
+	@if (Context.Session.GetInt32("UserId") == Model.Post.MemberId)
+	{
 		<a asp-controller="Post" asp-action="UpdatePost" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color: lightblue; color:black;">Update</button></a>
-        <a asp-controller="Post" asp-action="Delete" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color: lightcoral; color:black;">Delete</button></a>
-    }
-    @if (Context.Session.GetInt32("UserId") > 0)
-    {
-        <a asp-controller="Post" asp-action="Report" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color:lightskyblue; color:black;">Report</button></a>
+		<a asp-controller="Post" asp-action="Delete" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color: lightcoral; color:black;">Delete</button></a>
+	}
+	@if (Context.Session.GetInt32("UserId") > 0)
+	{
+		@foreach (var report in Model.Post.ReporterIds)
+		{
+			@if (report.MemberId == Context.Session.GetInt32("UserId"))
+			{
+				checkIfTrue = true;
+			}
+		}
+		@if (!checkIfTrue)
+		{
+			<a asp-controller="Post" asp-action="Report" asp-route-id="@Model.Post.Id" asp-route-reporterId="@Context.Session.GetInt32("UserId")">
+				<button type="submit" style="background-color:lightskyblue; color:black;">Report</button>
+			</a>
+		}
+	}
+	<div class="post">
+		<div class="post-content">
+			<div style="display:flex;">
+				<div>
+					<img src="@Model.Post.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
+				</div>
+				<div>
+					<p style="margin-left: 3rem; margin-top: 0.5rem;">
+						Created by:
+						<b>
+							<a asp-controller="Member" asp-action="Guest" asp-route-id="@Model.Post.Member.Id">@Model.Post.Member.UserName</a>
+						</b>
+					</p>
+				</div>
+				<div>
+					@Model.Post.Created
+				</div>
+			</div>
+		</div>
+		<div class="post-content">
+			<div>
+				<div>
+					<h5><a asp-controller="Category" asp-action="SubCategory" asp-route-id="@Model.SubCategory.Id">@Model.SubCategory.Name</a>/@Model.Post.Description</h5>
+				</div>
+				<div>
+					<p style="margin-top: 1.5rem; margin-left: 1.5rem;">
+						@Model.Post.Text
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    }
-    <div class="post">
+	@if (Model.SubPosts != null)
+	{
+		@foreach (var item in Model.SubPosts)
+		{
+			<div class="post">
 
-        <div class="post-content">
-            <div style="display:flex;">
-                <h3><a asp-controller="Category" asp-action="SubCategory" asp-route-id="@Model.SubCategory.Id">@Model.SubCategory.Name</a>/@Model.Post.Description</h3>
+				<div class="post-content">
 
-                <p style="margin-left: 3rem; margin-top: 0.5rem;">
-                    Created by:
-                    <b>
-                        <a asp-controller="Member" asp-action="Guest" asp-route-id="@Model.Post.Member.Id">@Model.Post.Member.UserName</a>                        
-                    </b>
-                    - @Model.Post.Created
-                </p>
-            </div>
+					<div>
+						<p>
+							Created by:
 
-            <p style="margin-top: 1.5rem; margin-left: 1.5rem;">
-                @Model.Post.Text
-            </p>
-        </div>
-    </div>
+							<b>
+								<a asp-controller="Member" asp-action="Guest" asp-route-id="@item.Member.Id">@item.Member.UserName</a>
+							</b>
 
-    @if (Model.SubPosts != null)
-    {
-        @foreach (var item in Model.SubPosts)
-        {
-            <div class="post">
-                
-                <div class="post-content">
+							- @item.Created
+						</p>
+					</div>
+					<br />
+					<p style="margin-left: 1.5rem; margin-top: -1rem;">@item.Text</p>
 
-                    <div>
-                        <p>
-                            Created by:
-
-                            <b>
-                                <a asp-controller="Member" asp-action="Guest" asp-route-id="@item.Member.Id">@item.Member.UserName</a>
-                            </b>                          
-                            
-                            - @item.Created
-                            </p>
-                    </div>
-                    <br />
-                    <p style="margin-left: 1.5rem; margin-top: -1rem;">@item.Text</p>
-
-                </div>
-            </div>
-        }
-    }
+				</div>
+			</div>
+		}
+	}
 
 </div>

@@ -354,3 +354,17 @@ body.dark .SubcategoriesStyle {
         padding: 2px 6px;
         border-radius: 4px;
     }
+
+.three-in-row{
+    display: flex;    
+    justify-content:space-evenly;
+           
+}
+    .three-in-row > div:first-child {
+        /*flex: 1;*/ /* gör så att de delar på bredden */
+        margin-right:20rem;
+    }
+    .three-in-row > div:last-child {
+        /*flex: 1;*/ /* gör så att de delar på bredden */
+        margin-left: 20rem;
+    }

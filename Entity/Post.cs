@@ -23,14 +23,18 @@ public class Post
     public int Reply { get; set; } = 0;
     public bool? Reported { get; set; } = false;
     public int? ReporterId { get; set; }
+    public int? TotalReports { get; set; } = 0;
+
     public DateTime? Created { get; set; } = DateTime.Now;
 
 
     // DB connections
     public int? SubCategoryId { get; set; }
+    public SubCategory? SubCategory { get; set; }
     public int? MemberId { get; set; }
     public Member? Member { get; set; }
     public ICollection<SubPost>? SubPosts { get; set; }
-    public ICollection<Likes>? Likes { get; set; }
+    //public ICollection<Likes>? Likes { get; set; }
+    public ICollection<Reports>? ReporterIds { get; set; }
 
 }

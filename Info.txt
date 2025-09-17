@@ -18,9 +18,11 @@ Insperation ifrån flashback
 
 Finnas en QR inloggnings kod.
 
-Skapa inlägg, där senaste inlägget visas först.
+** KLAR ** Skapa inlägg, där senaste inlägget visas först.
 
-Använda sig av bilder i sina post
+** KLAR ** Använda sig av bilder i sina post
+
+        Använda sig av bilder i sina SubPost
 
 Vid post så skall ett Fula ord Filter finnas för att kolla igenom och ersättas med ****
 eller vi skapelse att den säger till att det inte går att använda
@@ -48,6 +50,8 @@ Fixa ett träd där det flyttas höger för varje svar. <-- Om jag hinner och Orkar
 Kunna gilla inlägg
 
 ** KLAR ** Kunna anmälla stötande Inlägg
+
+** KLAR ** Om någon har reportat ett inlägg som stötande så sparas det i databasen, Man skall rensa det om man själv tar bort det inlägget 
 ---------------------------------------------------------------------------------------------------------------------
 
 /Konto
@@ -69,10 +73,12 @@ Kunna chatta med andra Live!
 /Admin
 ---------------------------------------------------------------------------------------------------------------------
 
-Kunna kolla anmälda inlägg och eventuellt ändra till Ickestötande om det bara är någon som tyckte det var kul att anmälla
+Kunna kolla anmälda inlägg och eventuellt ändra till Ickestötande om det bara är någon som tyckte det var kul att anmäla
 
-Kunna ge varning till Användare
+** KLAR ** Kunna ge varning till Användare
 
-Kunna sätta andra som Admin
+Kunna sätta Bans på användare beroende på hur många reports dom fått på sig
+
+** KLAR ** Kunna sätta andra som Admin
 
 ---------------------------------------------------------------------------------------------------------------------

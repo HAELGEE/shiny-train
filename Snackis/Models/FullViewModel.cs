@@ -9,4 +9,6 @@ public class FullViewModel
     public List<Post>? Posts { get; set; }
     public List<Post>? Top10Posts { get; set; }
     public List<SubPost>? SubPosts { get; set; }    
+
+
 }

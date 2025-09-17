@@ -5,24 +5,18 @@
 namespace EFCore.Migrations
 {
     /// <inheritdoc />
-    public partial class second : Migration
+    public partial class first : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "ReporterId",
-                table: "Post",
-                type: "int",
-                nullable: true);
+
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "ReporterId",
-                table: "Post");
+
         }
     }
 }

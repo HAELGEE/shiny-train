@@ -16,4 +16,6 @@ public class MyDbContext : DbContext
     public DbSet<SubCategory> SubCategory { get; set; }
     public DbSet<Post> Post { get; set; }
     public DbSet<SubPost> SubPost { get; set; }
+    public DbSet<Reports> Reports { get; set; }
+    //public DbSet<Likes> Likes { get; set; }
 }

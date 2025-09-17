@@ -5,25 +5,25 @@
 namespace EFCore.Migrations
 {
     /// <inheritdoc />
-    public partial class first : Migration
+    public partial class ter : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "Like",
-                table: "Post",
-                type: "int",
+            migrationBuilder.AddColumn<string>(
+                name: "ProfileImagePath",
+                table: "Member",
+                type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: "");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Like",
-                table: "Post");
+                name: "ProfileImagePath",
+                table: "Member");
         }
     }
 }
