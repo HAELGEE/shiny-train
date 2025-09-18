@@ -50,6 +50,12 @@ body {
 .middle{
     flex:auto;
     right:4rem;
+    margin-left: 8rem;
+}
+@media (max-width: 767px) {
+    .middle {
+        margin-left: 4rem;
+    }
 }
 
 .container {
@@ -368,6 +374,7 @@ body.dark .SubcategoriesStyle {
 
 .button-to-right{
     margin-left: 9rem;
+    width: 5rem;
 }
 @media (max-width: 2300px) {
     .button-to-right {

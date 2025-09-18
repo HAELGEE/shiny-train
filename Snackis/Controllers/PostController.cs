@@ -167,4 +167,18 @@ public class PostController : Controller
 
         return RedirectToAction(nameof(ReadPost), new { Id = post.Id });
     }
+
+    [HttpGet("CreateSubPost")]
+    public async Task<IActionResult> CreateSubPost(int id)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+        {
+            return RedirectToAction("Login", "Member");
+        }
+        
+
+
+        return RedirectToAction(nameof(ReadPost), new { Id = id });
+    }
 }

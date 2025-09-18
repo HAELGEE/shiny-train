@@ -90,16 +90,23 @@
 		}
 	}
 	
+	@if (Context.Session.GetInt32("UserId") > 0)
+	{
+		<br />
+		<form asp-controller="Post" asp-action="CreateSubPost" asp-route-id="@Model.Post.Id">
 
-	<br />
-	<form>
-	<div style="display: flex; flex-direction: column;">
-		<div style="display: flex; justify-content: center;">
-			<div class="post" style="width: 50rem; height: 10rem;">
-				<textarea class="textarea-styling"></textarea>
+			<input type="hidden" asp-route-id="@Model.Post.Id"/>
+
+			<div style="display: flex; flex-direction: column;">
+				<div style="display: flex; justify-content: center;">
+					<div class="post" style="width: 50rem; height: 10rem;">
+
+						<textarea class="textarea-styling"></textarea>
+
+					</div>
+				</div>
+				<button type="submit" class="button-to-right">Reply</button>
 			</div>
-		</div>
-		<a as-controller="Post" asp-action="Post" asp-route-id="@Model.Post.Id"><button class="button-to-right">Reply</button></a>
-	</div>
-	</form>
+		</form>
+	}
 </div>
