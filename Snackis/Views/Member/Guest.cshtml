@@ -3,40 +3,45 @@
 	ViewData["Title"] = "Guest";
 }
 <div class="three-in-row">
-	<div>
-	</div>
-	<div>
-		<h1>@ViewData["Title"] Page</h1>
+	<div style="display: flex; width: 20rem;"></div>
 
-		<p>Here you see your information and to update them </p>
+	<div style="display: flex; flex-direction:column; align-items:center; width: 80%;">
+		<h1>@ViewData["Title"] Page</h1>
+		<br />
+
+		<img src="@Model.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
+		<br />
+		<br />
 
 		<p><b>First name: </b>@Model.Member.FirstName</p>
 		<p><b>Last name: </b>@Model.Member.LastName</p>
 		<p><b>Age: </b>@Model.Member.Age</p>
-		<p><b>Email: </b>@Model.Member.Email</p>
+		<p><b>Email: </b></p>
+		<p style="margin-top: -1rem;">@Model.Member.Email</p>
 		<br />
 		<p><b>Username: </b>@Model.Member.UserName</p>
 		<p><b>Views on profile: </b>@Model.Member.ProfileViews</p>
-		<p><b>Member since: </b>@Model.Member.RegisteryDate</p>
+		<p><b>Member since: </b></p>
+		<p style="margin-top: -1rem;">@Model.Member.RegisteryDate</p>
 		<br />
 		<p><b>Total post: </b>@Model.Member.TotalPosts</p>
 		<p><b>Total replies: </b>@Model.Member.TotalReply</p>
 	</div>
 
-	<div>
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
+	<div style="display: flex; width: 20rem; flex-direction:column;">
 		@if (Model.Admin != null)
 		{
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
 
 			if (Model.Admin.Id == Context.Session.GetInt32("UserId"))
 			{
 				<p>Warnings on profile: @Model.Member.Reports</p>
-				<a asp-controller="Member" asp-action="memberWarning" asp-route-id="@Model.Member.Id"><button type="Submit">Warn Member</button></a>
+				<a asp-controller="Member" asp-action="memberWarning" asp-route-id="@Model.Member.Id"><button type="Submit" style="width: 8rem;">Warn Member</button></a>
 
 			}
 			if (Model.Admin.IsOwner)
