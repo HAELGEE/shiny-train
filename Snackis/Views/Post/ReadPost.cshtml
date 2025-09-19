@@ -1,112 +1,123 @@
 ﻿@model Views
 @{
-	ViewData["Title"] = "Update SubPost";
-	bool checkIfTrue = false;
+    ViewData["Title"] = "Update SubPost";
+    bool checkIfTrue = false;
+
 }
 
 <div class="posts">
-	@if (Context.Session.GetInt32("UserId") == Model.Post.MemberId)
-	{
-		<a asp-controller="Post" asp-action="UpdatePost" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color: lightblue; color:black;">Update</button></a>
-		<a asp-controller="Post" asp-action="Delete" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color: lightcoral; color:black;">Delete</button></a>
-	}
-	@if (Context.Session.GetInt32("UserId") > 0)
-	{
-		@foreach (var report in Model.Post.ReporterIds)
-		{
-			@if (report.MemberId == Context.Session.GetInt32("UserId"))
-			{
-				checkIfTrue = true;
-			}
-		}
-		@if (!checkIfTrue)
-		{
-			<a asp-controller="Post" asp-action="Report" asp-route-id="@Model.Post.Id" asp-route-reporterId="@Context.Session.GetInt32("UserId")">
-				<button type="submit" style="background-color:lightskyblue; color:black;">Report</button>
-			</a>
-		}
-	}
-	<div class="post">
-		<div>
-			<div style="flex-direction:column; justify-items: center;">
-				<div>
-					<img src="@Model.Post.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
-				</div>
-				<div>
-					<p>
-						Created by:
-						<b>
-							<a asp-controller="Member" asp-action="Guest" asp-route-id="@Model.Post.Member.Id">@Model.Post.Member.UserName</a>
-						</b>
-					</p>
-				</div>
-				<div>
-					@Model.Post.Created
-				</div>
-			</div>
-		</div>
+    @if (Context.Session.GetInt32("UserId") == Model.Post.MemberId)
+    {
+        <a asp-controller="Post" asp-action="UpdatePost" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color: lightblue; color:black;">Update</button></a>
+        <a asp-controller="Post" asp-action="Delete" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color: lightcoral; color:black;">Delete</button></a>
+    }
+    @if (Context.Session.GetInt32("UserId") > 0)
+    {
+        @foreach (var report in Model.Post.ReporterIds)
+        {
+            @if (report.MemberId == Context.Session.GetInt32("UserId"))
+            {
+                checkIfTrue = true;
+            }
+        }
+        @if (!checkIfTrue)
+        {
+            <a asp-controller="Post" asp-action="Report" asp-route-id="@Model.Post.Id" asp-route-reporterId="@Context.Session.GetInt32("UserId")">
+                <button type="submit" style="background-color:lightskyblue; color:black;">Report</button>
+            </a>
+        }
+    }
+    <div class="post">
+        <div>
+            <div style="flex-direction:column; justify-items: center;">
+                <div>
+                    <img src="@Model.Post.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
+                </div>
+                <div>
+                    <p>
+                        Created by:
+                        <b>
+                            <a asp-controller="Member" asp-action="Guest" asp-route-id="@Model.Post.Member.Id">@Model.Post.Member.UserName</a>
+                        </b>
+                    </p>
+                </div>
+                <div>
+                    @Model.Post.Created
+                </div>
+            </div>
+        </div>
 
-		<div class="post-content">
-			<div>
-				<div style="display: flex; height: 1rem; justify-content:center;">
-					<h5><a asp-controller="Category" asp-action="SubCategory" asp-route-id="@Model.SubCategory.Id">@Model.SubCategory.Name</a>/@Model.Post.Description</h5>
-				</div>
+        <div class="post-content">
+            <div>
+                <div style="display: flex; height: 1rem; justify-content:center;">
+                    <h5><a asp-controller="Category" asp-action="SubCategory" asp-route-id="@Model.SubCategory.Id">@Model.SubCategory.Name</a>/@Model.Post.Description</h5>
+                </div>
 
-				<hr />
+                <hr />
 
-				<div style="height: 9rem;">
-					<p style="margin-top: 1.5rem;">
-						@Model.Post.Text
-					</p>
-				</div>
-			</div>
-		</div>
-	</div>
+                <div style="height: 9rem;">
+                    <p style="margin-top: 1.5rem; margin-left: 2rem;">
+                        @Model.Post.Text
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	@if (Model.SubPosts != null)
-	{
-		@foreach (var item in Model.SubPosts)
-		{
-			<div class="post">
+    @if (Model.SubPosts != null)
+    {
+        @foreach (var item in Model.SubPosts)
+        {
+            <div class="post"">
+                <div>
+                    <div style="flex: 1; flex-direction:column; justify-items: center;">
+                        <div>
+                            <img src="@Model.Post.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
+                        </div>
+                        <div>
+                            <p>
+                                Created by:
+                                <b>
+                                    <a asp-controller="Member" asp-action="Guest" asp-route-id="@item.MemberId">@item.Member.UserName</a>
+                                </b>
+                            </p>
+                        </div>
+                        <div>
+                            @item.Created                            
+                        </div>
+                    </div>
+                </div>
 
-				<div class="post-content">
+                <div class="post-content">
 
-					<div>
-						<p>
-							Created by:
+                    
+                    <br />
+                    <p style="margin-left: 2rem; margin-top: -6rem;">@item.Text</p>
 
-							<b>
-								<a asp-controller="Member" asp-action="Guest" asp-route-id="@item.Member.Id">@item.Member.UserName</a>
-							</b>
+                </div>
+            </div>
+        }
+    }
 
-							- @item.Created
-						</p>
-					</div>
-					<br />
-					<p style="margin-left: 1.5rem; margin-top: -1rem;">@item.Text</p>
+    @if (Context.Session.GetInt32("UserId") > 0)
+    {
+        <br />
+        <form asp-controller="Post" asp-action="CreateSubPost">
 
-				</div>
-			</div>
-		}
-	}
-	
-	@if (Context.Session.GetInt32("UserId") > 0)
-	{
-		<br />
-		<form asp-controller="Post" asp-action="CreateSubPost" asp-route-id="@Model.Post.Id">
+            <input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
+            <input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")">
 
-			<input type="hidden" asp-route-id="@Model.Post.Id"/>
+            <div style="display: flex; flex-direction: column;">
+                <div style="display: flex; justify-content: center;">
+                    <div class="post" style="width: 50rem; height: 10rem;">
 
-			<div style="display: flex; flex-direction: column;">
-				<div style="display: flex; justify-content: center;">
-					<div class="post" style="width: 50rem; height: 10rem;">
 
-						<textarea class="textarea-styling"></textarea>
+                        <textarea class="textarea-styling" asp-for="@Model.SubPost.Text"></textarea>
 
-					</div>
-				</div>
-				<button type="submit" class="button-to-right">Reply</button>
-			</div>
-		</form>
-	}
+                    </div>
+                </div>
+                <button type="submit" class="button-to-right">Reply</button>
+            </div>
+        </form>
+    }
 </div>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,9 @@ namespace Entity;
 public class SubPost
 {
     public int Id { get; set; }
+
+    [Display(Name = "Reply text", Prompt = "Insert text here...")]
+    [Required(ErrorMessage = "Must type in text to reply")]
     public string? Text { get; set; }
     public bool? Reported { get; set; } = false;
 

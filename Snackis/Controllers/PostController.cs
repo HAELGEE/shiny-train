@@ -44,12 +44,14 @@ public class PostController : Controller
     {
         var post = await _postService.GetOnePostAsync(id);
         var subPosts = await _postService.GettingSubPostFromPostByIdAsync(post.Id);
+        var subPost = new SubPost();
 
         var subCategory = await _categoryService.GetOneSubCategoriesAsync((int)post.SubCategoryId!);
 
         var view = new Views {
             Post = post,
             SubPosts = subPosts,
+            SubPost= subPost,           
             SubCategory = subCategory,
         };
 
@@ -155,7 +157,7 @@ public class PostController : Controller
         }
         var post = await _postService.GetOnePostAsync(id);
        
-
+        
         return View(post);
     }
 
@@ -168,8 +170,8 @@ public class PostController : Controller
         return RedirectToAction(nameof(ReadPost), new { Id = post.Id });
     }
 
-    [HttpGet("CreateSubPost")]
-    public async Task<IActionResult> CreateSubPost(int id)
+    [HttpPost("CreateSubPost")]
+    public async Task<IActionResult> CreateSubPost(SubPost subPost)
     {
         var userId = HttpContext.Session.GetInt32("UserId");
         if (userId == null)
@@ -177,8 +179,8 @@ public class PostController : Controller
             return RedirectToAction("Login", "Member");
         }
         
+        await _postService.CreateSubPostAsync(subPost);
 
-
-        return RedirectToAction(nameof(ReadPost), new { Id = id });
+        return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId });
     }
 }
