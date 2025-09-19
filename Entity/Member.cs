@@ -48,7 +48,9 @@ public class Member
     public DateTime? RegisteryDate { get; set; } = DateTime.Now;    
     public string ProfileImagePath {get; set; } = "/uploads/standardProfile.png";
 
+
     // DB connections 
+    public ICollection<View>? Views { get; set; }
     public ICollection<Reports>? ReportedPosts { get; set; }
     public ICollection<Post>? Posts { get; set; }
     public ICollection<SubPost>? SubPosts { get; set; }

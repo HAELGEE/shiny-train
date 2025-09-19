@@ -14,6 +14,10 @@ public interface IPostRepository
     Task DeletePostAsync(Post post);
     Task UpdatePostAsync(Post post);
     Task ReportPostAsync(int id, int reporterId);
+    Task UpdatePostReplyCounterAsync(int id);
+    Task UpdatePostViewsCounterAsync(int postId, int memberId);
+  
+
 
 
     // SubPost
@@ -21,6 +25,7 @@ public interface IPostRepository
     Task CreateSubPostAsync(SubPost subPost);
     Task DeleteSubPostAsync(SubPost subPost);
     Task<SubPost> GetOneSubPostAsync(int id);
+    Task UpdateSubPostAsync(SubPost subPost);
 
 
 }

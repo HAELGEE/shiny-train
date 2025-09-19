@@ -59,7 +59,7 @@ public class PostRepository : IPostRepository
         await _context.SaveChangesAsync();
     }
     public async Task DeletePostAsync(Post post)
-    {        
+    {
         _context.Post.Remove(post);
         await _context.SaveChangesAsync();
     }
@@ -71,7 +71,7 @@ public class PostRepository : IPostRepository
     public async Task ReportPostAsync(int postId, int reporterId)
     {
         var post = await GetOnePostAsync(postId);
-        var member = await _context.Member.Where(m => m.Id == post.MemberId).SingleOrDefaultAsync();
+        var member = await _context.Member.Where(m => m.Id == post.MemberId).FirstOrDefaultAsync();
         bool check = false;
 
         foreach (var report in post.ReporterIds)
@@ -95,12 +95,45 @@ public class PostRepository : IPostRepository
             _context.Reports.Add(report);
             _context.Update(post);
             await _context.SaveChangesAsync();
-        }        
+        }
+    }
+
+    public async Task UpdatePostReplyCounterAsync(int id)
+    {
+        var post = await GetOnePostAsync(id);
+
+        post.Reply++;
+
+        _context.Update(post);
+        await _context.SaveChangesAsync();
+    }
+
+
+    public async Task UpdatePostViewsCounterAsync(int postId, int memberId)
+    {
+        var viewCheck = await _context.Views.Where(vm => vm.MemberId == memberId).FirstOrDefaultAsync();
+
+        var post = await GetOnePostAsync(postId);
+
+        if (viewCheck == null || post.Id != viewCheck.PostId)
+        {
+            var member = await _context.Member.Where(m => m.Id == memberId).FirstOrDefaultAsync();
+
+
+            var view = new View
+            {
+                PostId = post.Id,
+                MemberId = member.Id,
+            };
+
+            _context.Add(view);
+            await _context.SaveChangesAsync();
+        }
     }
 
     // Subpost
 
-    public async Task<SubPost> GetOneSubPostAsync(int id) => await _context.SubPost.Where(sp => sp.Id == id).SingleOrDefaultAsync();
+    public async Task<SubPost> GetOneSubPostAsync(int id) => await _context.SubPost.Where(sp => sp.Id == id).FirstOrDefaultAsync();
     public async Task<List<SubPost>> GettingSubPostFromPostByIdAsync(int id) => await _context.SubPost
         .Where(sp => sp.PostId == id)
         .Include(sp => sp.Member)
@@ -114,6 +147,11 @@ public class PostRepository : IPostRepository
     public async Task DeleteSubPostAsync(SubPost subPost)
     {
         _context.SubPost.Remove(subPost);
+        await _context.SaveChangesAsync();
+    }
+    public async Task UpdateSubPostAsync(SubPost subPost)
+    {
+        _context.Update(subPost);
         await _context.SaveChangesAsync();
     }
 

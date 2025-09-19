@@ -2,6 +2,7 @@ using ApplicationService.Interface;
 using EFCore;
 using Entity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using Snackis.Models;
 using System.Diagnostics;
 
@@ -31,7 +32,7 @@ public class HomeController : Controller
         var members = await _memberService.GetAllMembersAsync();
 
         var addToPost = await _postService.GettingAll25RecentPostsAsync();
-
+                
 
         var fullModel = new FullViewModel
         {

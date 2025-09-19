@@ -1,6 +1,5 @@
 ﻿@{
     var userId = Context.Session.GetInt32("UserId");
-    var IsAdmin = Context.Session.GetInt32("IsAdmin");
     var userName = Context.Session.GetString("UserName");
 }
 
@@ -49,7 +48,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="Profile">Profile</a>
                         </li>
-                        @if (!string.IsNullOrWhiteSpace(userName) && IsAdmin == 1)
+                        @if (!string.IsNullOrWhiteSpace(userName) && Context.Session.GetInt32("IsAdmin") == 1)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="Admin">Admin</a>

@@ -20,5 +20,6 @@ public interface IMemberRepository
     Task UpdateProfilePostCounterAsync(int id);
     Task UpdateProfileReplyCounterAsync(int id);
 
-    
+
+
 }

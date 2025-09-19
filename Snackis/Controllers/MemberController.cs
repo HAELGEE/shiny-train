@@ -257,6 +257,7 @@ public class MemberController : Controller
 
         HttpContext.Session.SetInt32("UserId", member.Id);
         HttpContext.Session.SetString("UserName", member.UserName);
+        HttpContext.Session.SetInt32("updateSubpost", 0);
 
         if (member.IsAdmin)
             HttpContext.Session.SetInt32("IsAdmin", 1); //This is to create a session variable to access the Admin page

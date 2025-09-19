@@ -68,12 +68,12 @@
     {
         @foreach (var item in Model.SubPosts)
         {
-            @if (Context.Session.GetInt32("UserId") == item.MemberId)
+            @if (Context.Session.GetInt32("UserId") == item.MemberId || Context.Session.GetInt32("IsAdmin") == 1)
             {
                 <a asp-controller="Post" asp-action="UpdateSubPost" asp-route-id="@item.Id"><button type="submit" style="background-color: lightblue; color:black;">Update</button></a>
                 <a asp-controller="Post" asp-action="DeleteSubPost" asp-route-id="@item.Id"><button type="submit" style="background-color: lightcoral; color:black;">Delete</button></a>
             }
-            <div class="post"">
+            <div class="post" ">
                 <div>
                     <div style="flex: 1; flex-direction:column; justify-items: center;">
                         <div>
@@ -88,16 +88,40 @@
                             </p>
                         </div>
                         <div>
-                            @item.Created                            
+                            @item.Created
                         </div>
                     </div>
                 </div>
 
                 <div class="post-content">
 
-                    
+
                     <br />
-                    <p style="margin-left: 2rem; margin-top: -6rem;">@item.Text</p>
+                    @if (Context.Session.GetInt32("updateSubpost") == 0 || Context.Session.GetInt32("updateSubpost") == null)
+                    {
+                        <p style="margin-left: 2rem; margin-top: -6rem;">@item.Text</p>
+                    }
+                    else if (Context.Session.GetInt32("updateSubpost") == item.Id)
+                    {
+                        <form asp-controller="Post" asp-action="UpdateSubPost">
+
+                            <input type="hidden" asp-for="@Model.SubPost.Id" value="@Model.SubPost.Id" />
+                            <input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
+                            <input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")">
+
+                            <div style="display: flex; flex-direction: column;">
+                                <div style="display: flex; justify-content: center;">
+                                    <div class="post" style="width: 50rem; height: 10rem;">
+
+
+                                        <textarea class="textarea-styling" asp-for="@Model.SubPost.Text" ></textarea>
+
+                                    </div>
+                                </div>
+                                <button type="submit" class="button-to-right">Update</button>
+                            </div>
+                        </form>
+                    }
 
                 </div>
             </div>

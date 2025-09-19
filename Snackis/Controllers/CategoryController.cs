@@ -94,7 +94,7 @@ public class CategoryController : Controller
             return RedirectToAction(nameof(Index), "Home");
 
 
-        ViewBag.CategoryId = id;
+        //ViewBag.CategoryId = id;
         if (id != 0)
         {
             var fullModel = new Views

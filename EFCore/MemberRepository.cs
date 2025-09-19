@@ -80,5 +80,5 @@ public class MemberRepository : IMemberRepository
         member.TotalReply++;
 
         await _dbContext.SaveChangesAsync();
-    }
+    }    
 }

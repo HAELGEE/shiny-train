@@ -51,6 +51,15 @@ public class PostService : IPostService
     {
         await _postRepository.ReportPostAsync(id, reporterId);
     }
+    public async Task UpdatePostReplyCounterAsync(int id)
+    {
+        await _postRepository.UpdatePostReplyCounterAsync(id);
+    }    
+    public async Task UpdatePostViewsCounterAsync(int postId, int memberId)
+    {
+        await _postRepository.UpdatePostViewsCounterAsync(postId, memberId);
+    }
+   
 
 
     // Subpost
@@ -70,4 +79,10 @@ public class PostService : IPostService
     {
         return await _postRepository.GetOneSubPostAsync(id);
     }
+    public async Task UpdateSubPostAsync(SubPost subPost)
+    {
+        await _postRepository.UpdateSubPostAsync(subPost);
+    }
+
+    
 }

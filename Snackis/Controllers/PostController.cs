@@ -40,26 +40,43 @@ public class PostController : Controller
     }
 
     [HttpGet("ReadPost")]
-    public async Task<IActionResult> ReadPost(int id)
+    public async Task<IActionResult> ReadPost(int id, int subPostId)
     {
         var post = await _postService.GetOnePostAsync(id);
         var subPosts = await _postService.GettingSubPostFromPostByIdAsync(post.Id);
+
         var subPost = new SubPost();
+
+        if (subPostId > 0)
+        {
+            subPost = await _postService.GetOneSubPostAsync(subPostId);
+        }
 
         var subCategory = await _categoryService.GetOneSubCategoriesAsync((int)post.SubCategoryId!);
 
-        var view = new Views {
+        var view = new Views
+        {
             Post = post,
             SubPosts = subPosts,
-            SubPost= subPost,           
+            SubPost = subPost,
             SubCategory = subCategory,
         };
 
+
+
+        if (HttpContext.Session.GetInt32("UserId") != null)
+        {
+            await _postService.UpdatePostViewsCounterAsync(id, (int)HttpContext.Session.GetInt32("UserId"));
+        }
+
+
         return View(view);
     }
+
     [HttpGet("Report")]
     public async Task<IActionResult> Report(int id, int reporterId)
     {
+        HttpContext.Session.SetInt32("updateSubpost", 0);
         await _postService.ReportPostAsync(id, reporterId);
 
         return RedirectToAction(nameof(ReadPost), new { Id = id });
@@ -77,7 +94,7 @@ public class PostController : Controller
         if (id != 0)
         {
             var post = await _postService.GetOnePostAsync(id);
-            foreach(var report in post.ReporterIds)
+            foreach (var report in post.ReporterIds)
             {
                 await _memberService.DeleteReportsAsync(report);
             }
@@ -87,7 +104,7 @@ public class PostController : Controller
             return RedirectToAction("Admin", "Member");
         }
 
-            return View();
+        return View();
     }
 
     // User delete
@@ -97,7 +114,7 @@ public class PostController : Controller
         var userId = HttpContext.Session.GetInt32("UserId");
         var postCheck = await _postService.GetOnePostAsync(id);
 
-        if(userId != postCheck.MemberId)
+        if (userId != postCheck.MemberId)
         {
             return RedirectToAction("Index", "Home");
         }
@@ -109,7 +126,6 @@ public class PostController : Controller
             foreach (var reports in post.ReporterIds!)
             {
                 await _memberService.DeleteReportsAsync(reports);
-
             }
             await _postService.DeletePostAsync(post);
         }
@@ -121,10 +137,11 @@ public class PostController : Controller
     public async Task<IActionResult> DeleteSubPost(int id)
     {
         var userId = HttpContext.Session.GetInt32("UserId");
+
         var subPostCheck = await _postService.GetOneSubPostAsync(id);
         //var subPostCheck = await _postService.GetOnePostAsync(id);
 
-        if (userId != subPostCheck.MemberId)
+        if (userId != subPostCheck.MemberId && HttpContext.Session.GetInt32("IsAdmin") == 0)
         {
             return RedirectToAction("Index", "Home");
         }
@@ -167,12 +184,12 @@ public class PostController : Controller
     [HttpPost("CreatePost")]
     public async Task<IActionResult> CreatePost(Post post)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return View(post);
 
-       await _postService.CreatePostAsync(post);
+        await _postService.CreatePostAsync(post);
 
-        return RedirectToAction("ReadPost", new { id = post.Id});
+        return RedirectToAction("ReadPost", new { id = post.Id });
     }
 
     [HttpGet("UpdatePost")]
@@ -184,14 +201,14 @@ public class PostController : Controller
             return RedirectToAction("Login", "Member");
         }
         var post = await _postService.GetOnePostAsync(id);
-       
-        
+
+
         return View(post);
     }
 
     [HttpPost("UpdatePost")]
     public async Task<IActionResult> UpdatePost(Post post)
-    {        
+    {
 
         await _postService.UpdatePostAsync(post);
 
@@ -206,8 +223,35 @@ public class PostController : Controller
         {
             return RedirectToAction("Login", "Member");
         }
-        
+
+        await _memberService.UpdateProfileReplyCounterAsync((int)userId);
+        await _postService.UpdatePostReplyCounterAsync((int)subPost.PostId);
         await _postService.CreateSubPostAsync(subPost);
+
+        return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId });
+    }
+
+    [HttpGet("UpdateSubPost")]
+    public async Task<IActionResult> UpdateSubPost(int id)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        var subPost = await _postService.GetOneSubPostAsync(id);
+
+        if (userId == null && subPost.MemberId != userId)
+        {
+            return RedirectToAction("Login", "Member");
+        }
+
+        HttpContext.Session.SetInt32("updateSubpost", id);
+
+        return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId, subPostId = id });
+    }
+
+    [HttpPost("UpdateSubPost")]
+    public async Task<IActionResult> UpdateSubPost(SubPost subPost)
+    {
+        HttpContext.Session.SetInt32("updateSubpost", 0);
+        await _postService.UpdateSubPostAsync(subPost);
 
         return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId });
     }

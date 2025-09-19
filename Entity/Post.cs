@@ -18,7 +18,7 @@ public class Post
     [Required]
     public string? Text { get; set; }   // Text (information about the context)
 
-    public int Views { get; set; } = 0;
+    public int View { get; set; } = 0;
     public int Like { get; set; } = 0;
     public int Reply { get; set; } = 0;
     public bool? Reported { get; set; } = false;
@@ -34,7 +34,8 @@ public class Post
     public int? MemberId { get; set; }
     public Member? Member { get; set; }
     public ICollection<SubPost>? SubPosts { get; set; }
-    //public ICollection<Likes>? Likes { get; set; }
+    public ICollection<View>? Views { get; set; }
     public ICollection<Reports>? ReporterIds { get; set; }
+    //public ICollection<Likes>? Likes { get; set; }
 
 }
