@@ -62,9 +62,9 @@ public class PostService : IPostService
     {
         await _postRepository.CreateSubPostAsync(subPost);
     }
-    public async Task DeleteSubPostAsync(int id)
+    public async Task DeleteSubPostAsync(SubPost subPost)
     {
-        await _postRepository.DeleteSubPostAsync(id);
+        await _postRepository.DeleteSubPostAsync(subPost);
     }
     public async Task<SubPost> GetOneSubPostAsync(int id)
     {

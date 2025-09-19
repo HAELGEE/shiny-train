@@ -19,7 +19,7 @@ public interface IPostRepository
     // SubPost
     Task<List<SubPost>> GettingSubPostFromPostByIdAsync(int id);
     Task CreateSubPostAsync(SubPost subPost);
-    Task DeleteSubPostAsync(int id);
+    Task DeleteSubPostAsync(SubPost subPost);
     Task<SubPost> GetOneSubPostAsync(int id);
 
 

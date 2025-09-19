@@ -117,6 +117,34 @@ public class PostController : Controller
         return RedirectToAction("Index", "Home");
     }
 
+    [HttpGet("DeleteSubPost")]
+    public async Task<IActionResult> DeleteSubPost(int id)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        var subPostCheck = await _postService.GetOneSubPostAsync(id);
+        //var subPostCheck = await _postService.GetOnePostAsync(id);
+
+        if (userId != subPostCheck.MemberId)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+        if (id != 0)
+        {
+            var post = await _postService.GetOneSubPostAsync(id);
+
+            //foreach (var reports in post.ReporterIds!)
+            //{
+            //    await _memberService.DeleteReportsAsync(reports);
+
+            //}
+
+            await _postService.DeleteSubPostAsync(post);
+        }
+
+        return RedirectToAction(nameof(ReadPost), new { Id = subPostCheck.PostId });
+    }
+
     [HttpGet("CreatePost")]
     public async Task<IActionResult> CreatePost(int id)
     {

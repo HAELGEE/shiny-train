@@ -111,10 +111,8 @@ public class PostRepository : IPostRepository
         _context.SubPost.Add(subPost);
         await _context.SaveChangesAsync();
     }
-    public async Task DeleteSubPostAsync(int id)
+    public async Task DeleteSubPostAsync(SubPost subPost)
     {
-        var subPost = await GetOneSubPostAsync(id);
-
         _context.SubPost.Remove(subPost);
         await _context.SaveChangesAsync();
     }

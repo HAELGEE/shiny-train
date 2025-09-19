@@ -63,11 +63,16 @@
             </div>
         </div>
     </div>
-
+    <hr />
     @if (Model.SubPosts != null)
     {
         @foreach (var item in Model.SubPosts)
         {
+            @if (Context.Session.GetInt32("UserId") == item.MemberId)
+            {
+                <a asp-controller="Post" asp-action="UpdateSubPost" asp-route-id="@item.Id"><button type="submit" style="background-color: lightblue; color:black;">Update</button></a>
+                <a asp-controller="Post" asp-action="DeleteSubPost" asp-route-id="@item.Id"><button type="submit" style="background-color: lightcoral; color:black;">Delete</button></a>
+            }
             <div class="post"">
                 <div>
                     <div style="flex: 1; flex-direction:column; justify-items: center;">
