@@ -49,10 +49,30 @@
 
         <div class="post-content">
             <div>
-                <div style="display: flex; height: 1rem; justify-content:center;">
-                    <h5><a asp-controller="Category" asp-action="SubCategory" asp-route-id="@Model.SubCategory.Id">@Model.SubCategory.Name</a>/@Model.Post.Description</h5>
-                </div>
+                <div>
+                    @if (Context.Session.GetInt32("UserId") > 0)
+                        {
+                            <div class="div-box-post-header"></div>
 
+                            <div style="display: flex; justify-content:center; margin-bottom: -3rem;">
+                                <h5><a asp-controller="Category" asp-action="SubCategory" asp-route-id="@Model.SubCategory.Id">@Model.SubCategory.Name</a>/@Model.Post.Description</h5>
+                            </div>
+
+
+                            <div class="div-box-post-header">
+                                <form asp-controller="Post" asp-action="LikeButton" method="get">
+                                    <button>Like</button>
+                                </form>
+
+                            </div>                        
+                    }
+                    else
+                    {
+                        <div style="display: flex; justify-content:center; margin-bottom: -1rem;">
+                            <h5><a asp-controller="Category" asp-action="SubCategory" asp-route-id="@Model.SubCategory.Id">@Model.SubCategory.Name</a>/@Model.Post.Description</h5>
+                        </div>
+                    }
+                </div>
                 <hr />
 
                 <div style="height: 9rem;">
@@ -114,7 +134,7 @@
                                     <div class="post" style="width: 50rem; height: 10rem;">
 
 
-                                        <textarea class="textarea-styling" asp-for="@Model.SubPost.Text" ></textarea>
+                                        <textarea class="textarea-styling" asp-for="@Model.SubPost.Text"></textarea>
 
                                     </div>
                                 </div>

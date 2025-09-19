@@ -394,3 +394,23 @@ body.dark .SubcategoriesStyle {
     max-height: 8.5rem; 
     padding: 1rem;
 }
+
+.div-box-post-header
+{
+    display: flex;
+    flex: auto;
+    margin-left: 50rem;
+    margin-top: 0.7rem;
+}
+
+@media (max-width: 2300px) {
+    .div-box-post-header {
+        margin-left: 40rem;
+    }
+}
+
+@media (max-width: 2100px) {
+    .div-box-post-header {
+        margin-left: 17rem;
+    }
+}

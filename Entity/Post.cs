@@ -36,6 +36,6 @@ public class Post
     public ICollection<SubPost>? SubPosts { get; set; }
     public ICollection<View>? Views { get; set; }
     public ICollection<Reports>? ReporterIds { get; set; }
-    //public ICollection<Likes>? Likes { get; set; }
+    public ICollection<Likes>? Likes { get; set; }
 
 }

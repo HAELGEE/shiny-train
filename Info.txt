@@ -29,13 +29,13 @@ eller vi skapelse att den säger till att det inte går att använda
 
 ** Klar ** Svara på andras inlägg med en Timestamp (där det första inlägget visas först)
 
-Det ska gå att hämta alla inlägg för en diskussion, med författare och datum, via API. <-- Göra API av messages"chatt"?
+Det ska gå att hämta alla inlägg för en diskussion, med författare och datum, via API.          <-- Göra API av messages"chatt"?
 
 ** Klar ** Kunna ändra mellan Darkmode och Lightmode
 
-Man skall bara öka antalet "Views on profile" 1 gång per profil. Skapa en View tabell!!!!
+Man skall bara öka antalet "Views i post" 1 gång per profil.                                      <-- EJ RIKTIGT FIXAD
 
-Fixa ett träd där det flyttas höger för varje svar. <-- Om jag hinner och Orkar
+Fixa ett träd där det flyttas höger för varje svar.             <-- Om jag hinner och Orkar
 ---------------------------------------------------------------------------------------------------------------------
 
 /Blogg/Användare

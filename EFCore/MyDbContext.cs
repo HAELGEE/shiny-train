@@ -18,5 +18,5 @@ public class MyDbContext : DbContext
     public DbSet<SubPost> SubPost { get; set; }
     public DbSet<Reports> Reports { get; set; }
     public DbSet<View> Views { get; set; }
-    //public DbSet<Likes> Likes { get; set; }
+    public DbSet<Likes> Likes { get; set; }
 }

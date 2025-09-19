@@ -54,7 +54,7 @@ public class Member
     public ICollection<Reports>? ReportedPosts { get; set; }
     public ICollection<Post>? Posts { get; set; }
     public ICollection<SubPost>? SubPosts { get; set; }
-    //public ICollection<Likes>? Likes { get; set; }
+    public ICollection<Likes>? Likes { get; set; }
 
 
 }

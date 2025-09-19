@@ -115,18 +115,50 @@ public class PostRepository : IPostRepository
 
         var post = await GetOnePostAsync(postId);
 
+        if (viewCheck == null)
+        {
+            var member = await _context.Member.Where(m => m.Id == memberId).FirstOrDefaultAsync();
+            if (post.Id != viewCheck.PostId && viewCheck.MemberId != member.Id)
+            {
+
+                var view = new View
+                {
+                    PostId = post.Id,
+                    MemberId = member.Id,
+                };
+
+                post.View++;
+                _context.Update(post);
+
+                _context.Add(view);
+
+                await _context.SaveChangesAsync();
+            }
+        }
+    }
+
+    public async Task UpdatePostLikesCounterAsync(int postId, int memberId)
+    {
+        var viewCheck = await _context.Likes.Where(l => l.MemberId == memberId).FirstOrDefaultAsync();
+
+        var post = await GetOnePostAsync(postId);
+
         if (viewCheck == null || post.Id != viewCheck.PostId)
         {
             var member = await _context.Member.Where(m => m.Id == memberId).FirstOrDefaultAsync();
 
 
-            var view = new View
+            var like = new Likes
             {
                 PostId = post.Id,
                 MemberId = member.Id,
             };
 
-            _context.Add(view);
+            post.Like++;
+            _context.Update(post);
+
+            _context.Add(like);
+
             await _context.SaveChangesAsync();
         }
     }
