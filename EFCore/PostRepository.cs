@@ -40,12 +40,14 @@ public class PostRepository : IPostRepository
         .Include (p => p.Views)
         .Include(p => p.Likes)
         .ToListAsync();
-
+    
     public async Task<List<Post>> GettingAllPostForSubCategoryAsync(int categoryId) =>
         await _context.Post
             .Where(x => x.SubCategoryId == categoryId)
             .Include(p => p.SubPosts)
-        .Include(p => p.Member)
+            .Include(p => p.Member)
+            .Include(p => p.Likes)
+            .Include(p => p.Views)
             .OrderByDescending(x => x.Created)
             .ToListAsync();
 
