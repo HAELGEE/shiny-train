@@ -23,6 +23,8 @@
     {
         @foreach (var item in Model.Posts)
         {
+            @* ViewBag.LikesNumber = 0;
+            ViewBag.LikesNumber = 0; *@
             <div class="post">
                 <div class="post-content" style="margin-right: 2rem;">
                     <p style="margin-bottom: -1px;">
@@ -34,8 +36,27 @@
                     </p>
                 </div>
                 <div class="post-meta">
-                    <span>@item.Like Likes</span>
-                    <span>@item.Views Views</span>
+                    @if (item.Likes != null)
+                    {
+                        @foreach (var like in item.Likes)
+                        {
+                            if (item.Id == like.PostId)
+                                ViewBag.LikesNumber++;
+                        }
+                    }
+                    <span>@ViewBag.LikesNumber Likes</span>
+
+                    @if (item.Views != null)
+                    {
+                        @foreach (var view in item.Views)
+                        {
+                            if (item.Id == view.PostId)
+                                ViewBag.LikesNumber++;
+                        }
+                    }
+                    <span>@ViewBag.ViewsNumber Views</span>
+                    @* <span>@item.View Views</span> *@
+
                     <span>@item.Reply Replies</span>
                 </div>
             </div>

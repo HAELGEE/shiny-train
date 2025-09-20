@@ -16,7 +16,8 @@ public interface IPostService
     Task ReportPostAsync(int id, int reporterId);
     Task UpdatePostReplyCounterAsync(int id);
     Task UpdatePostViewsCounterAsync(int postId, int memberId);
-    
+    Task UpdatePostLikesCounterAsync(int postId, int memberId);
+
 
     // SubPost
     Task<List<SubPost>> GettingSubPostFromPostByIdAsync(int id);

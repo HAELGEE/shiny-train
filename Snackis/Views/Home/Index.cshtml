@@ -1,7 +1,7 @@
 ﻿@model FullViewModel
 @{
     ViewData["Title"] = "Home Page";
-    
+
 }
 
 
@@ -37,31 +37,52 @@
     <div class="posts">
         @foreach (var item in Model.Posts)
         {
-            ViewBag.number = 0;
             <div class="post">
                 <div class="post-content">
                     <p style="margin-bottom: -1px;">
                         <a asp-controller="Post" asp-action="ReadPost" asp-route-id="@item.Id" style="text-decoration: none;">@item.Description</a>
-                        <b>By</b> 
+                        <b>By</b>
                         <a asp-controller="Member" asp-action="Guest" asp-route-id="@item.Member.Id">@item.Member.UserName</a>
-                        - 
+                        -
                         <b>@item.Created</b>
                     </p>
                 </div>
                 <div class="post-meta">
-                    <span>@item.Like Likes</span>
+                    @*  LIKES *@
+                    @if (item.Likes != null)
+                    {
+                        ViewBag.LikesNumber = 0;
+                        @foreach (var like in item.Likes)
+                        {                            
+                            if (item.Id == like.PostId)
+                                ViewBag.LikesNumber++;
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.LikesNumber = 0;
+                    }
+                    <span>@ViewBag.LikesNumber Likes</span>
 
+                    @*  VIEW *@
                     @if (item.Views != null)
                     {
+                        ViewBag.ViewsNumber = 0;
+                       
                         @foreach (var view in item.Views)
                         {
                             if (item.Id == view.PostId)
-                                ViewBag.number++;
+                                ViewBag.ViewsNumber++;
                         }
                     }
-                    <span>@ViewBag.number Views</span>
+                    else
+                    {
+                        ViewBag.ViewsNumber = 0;
+                    }
+                    <span>@ViewBag.ViewsNumber Views</span>
                     @* <span>@item.View Views</span> *@
 
+                    @* REPLIES *@
                     <span>@item.Reply Replies</span>
                 </div>
             </div>

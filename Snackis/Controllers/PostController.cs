@@ -39,6 +39,17 @@ public class PostController : Controller
         return false;
     }
 
+    [HttpPost("LikeButton")]
+    public async Task<IActionResult> LikeButton(int postId, int memberId)
+    {
+        if(memberId > 0)
+        {            
+            await _postService.UpdatePostLikesCounterAsync(postId, memberId);
+        }
+
+        return RedirectToAction(nameof(ReadPost), new { Id = postId });
+    }
+
     [HttpGet("ReadPost")]
     public async Task<IActionResult> ReadPost(int id, int subPostId)
     {
@@ -255,4 +266,7 @@ public class PostController : Controller
 
         return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId });
     }
+
+   
+
 }

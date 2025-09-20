@@ -59,7 +59,11 @@ public class PostService : IPostService
     {
         await _postRepository.UpdatePostViewsCounterAsync(postId, memberId);
     }
-   
+    public async Task UpdatePostLikesCounterAsync(int postId, int memberId)
+    {
+        await _postRepository.UpdatePostLikesCounterAsync(postId, memberId);
+    }
+
 
 
     // Subpost

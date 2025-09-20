@@ -16,7 +16,8 @@ public interface IPostRepository
     Task ReportPostAsync(int id, int reporterId);
     Task UpdatePostReplyCounterAsync(int id);
     Task UpdatePostViewsCounterAsync(int postId, int memberId);
-  
+    Task UpdatePostLikesCounterAsync(int postId, int memberId);
+
 
 
 
