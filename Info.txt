@@ -33,9 +33,10 @@ Det ska gå att hämta alla inlägg för en diskussion, med författare och datum, vi
 
 ** Klar ** Kunna ändra mellan Darkmode och Lightmode
 
-Man skall bara öka antalet "Views i post" 1 gång per profil.                                      <-- EJ RIKTIGT FIXAD
+** Klar ** Man skall bara öka antalet "Views i post" 1 gång per profil.                                      
 
 Fixa ett träd där det flyttas höger för varje svar.             <-- Om jag hinner och Orkar
+eller fixa så att det blir en Quote till den man svarar. typ ( svarade "(snedtext) Jag vill spela" (från dig) Jag med :))
 ---------------------------------------------------------------------------------------------------------------------
 
 /Blogg/Användare

@@ -1,7 +1,9 @@
 ﻿@model FullViewModel
 @{
     ViewData["Title"] = "Home Page";
+    
 }
+
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
@@ -35,6 +37,7 @@
     <div class="posts">
         @foreach (var item in Model.Posts)
         {
+            ViewBag.number = 0;
             <div class="post">
                 <div class="post-content">
                     <p style="margin-bottom: -1px;">
@@ -47,7 +50,18 @@
                 </div>
                 <div class="post-meta">
                     <span>@item.Like Likes</span>
-                    <span>@item.View Views</span>
+
+                    @if (item.Views != null)
+                    {
+                        @foreach (var view in item.Views)
+                        {
+                            if (item.Id == view.PostId)
+                                ViewBag.number++;
+                        }
+                    }
+                    <span>@ViewBag.number Views</span>
+                    @* <span>@item.View Views</span> *@
+
                     <span>@item.Reply Replies</span>
                 </div>
             </div>

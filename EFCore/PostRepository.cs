@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,6 +37,7 @@ public class PostRepository : IPostRepository
         .Take(25)
         .OrderByDescending(p => p.Created)
         .Include(p => p.Member)
+        .Include (p => p.Views)
         .ToListAsync();
 
     public async Task<List<Post>> GettingAllPostForSubCategoryAsync(int categoryId) =>
@@ -111,30 +113,23 @@ public class PostRepository : IPostRepository
 
     public async Task UpdatePostViewsCounterAsync(int postId, int memberId)
     {
-        var viewCheck = await _context.Views.Where(vm => vm.MemberId == memberId).FirstOrDefaultAsync();
+        var viewCheck = await _context.Views.Where(vm => vm.MemberId == memberId && vm.PostId == postId).FirstOrDefaultAsync();
 
         var post = await GetOnePostAsync(postId);
-
-        if (viewCheck == null)
-        {
             var member = await _context.Member.Where(m => m.Id == memberId).FirstOrDefaultAsync();
-            if (post.Id != viewCheck.PostId && viewCheck.MemberId != member.Id)
+
+        if (viewCheck == null && post.MemberId != memberId)
+        {
+            var view = new View
             {
+                PostId = post.Id,
+                MemberId = member.Id,
+            };
 
-                var view = new View
-                {
-                    PostId = post.Id,
-                    MemberId = member.Id,
-                };
+            _context.Add(view);
 
-                post.View++;
-                _context.Update(post);
-
-                _context.Add(view);
-
-                await _context.SaveChangesAsync();
-            }
-        }
+            await _context.SaveChangesAsync();
+        }               
     }
 
     public async Task UpdatePostLikesCounterAsync(int postId, int memberId)
