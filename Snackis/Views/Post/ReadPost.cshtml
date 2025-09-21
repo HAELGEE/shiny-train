@@ -27,6 +27,42 @@
             </a>
         }
     }
+    <div class="post-meta">
+        @*  LIKES *@
+        @if (Model.Post.Likes != null)
+        {
+            ViewBag.LikesNumber = 0;
+            @foreach (var like in Model.Post.Likes)
+            {
+                ViewBag.LikesNumber++;
+            }
+        }
+        else
+        {
+            ViewBag.LikesNumber = 0;
+        }
+        <span>@ViewBag.LikesNumber Likes</span>
+
+        @*  VIEW *@
+        @if (Model.Post.Views != null)
+        {
+            ViewBag.ViewsNumber = 0;
+
+            @foreach (var view in Model.Post.Views)
+            {
+                ViewBag.ViewsNumber++;
+            }
+        }
+        else
+        {
+            ViewBag.ViewsNumber = 0;
+        }
+        <span>@ViewBag.ViewsNumber Views</span>
+        @* <span>@item.View Views</span> *@
+
+        @* REPLIES *@
+        <span>@Model.Post.Reply Replies</span>
+    </div>
     <div class="post">
         <div>
             <div style="flex-direction:column; justify-items: center;">
@@ -51,25 +87,24 @@
             <div>
                 <div>
                     @if (Context.Session.GetInt32("UserId") > 0)
-                        {
-                            <div class="div-box-post-header"></div>
+                    {
+                        <div class="div-box-post-header"></div>
 
-                            <div style="display: flex; justify-content:center; margin-bottom: -3rem;">
-                                <h5><a asp-controller="Category" asp-action="SubCategory" asp-route-id="@Model.SubCategory.Id">@Model.SubCategory.Name</a>/@Model.Post.Description</h5>
-                            </div>
+                        <div style="display: flex; justify-content:center; margin-bottom: -3rem;">
+                            <h5><a asp-controller="Category" asp-action="SubCategory" asp-route-id="@Model.SubCategory.Id">@Model.SubCategory.Name</a>/@Model.Post.Description</h5>
+                        </div>
 
-
-                            <div class="div-box-post-header">
-                                <form asp-controller="Post" asp-action="LikeButton">
+                        @* GILLA KNAPP *@
+                        <div class="div-box-post-header">
+                            <form asp-controller="Post" asp-action="LikeButton">
                                 <input type="hidden" name="postId" value="@Model.Post.Id">
                                 <input type="hidden" name="memberId" value="@Context.Session.GetInt32("UserId")">
-                               
-                                
-                                <button type="submit" style="border: none;"><img style="height: 2rem;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAE7UlEQVR4nO2X21MbVRzHFwKUwItvPjmlVMBYBSkFhFIoYqUt0EAdHW29UG0tir3YWjrjEzO+1vFPcKa21dZeRC4hhISQBAIkKTLj+OSMDzjj+GDJ/UJZfs45u5vdJOfsbkKpYYYz83n/fD+zObthmKd0wPPmIHiO+1lPzwNYequC2UoHPD2D6w+PgwDr6XkEC/rnmK1wWKm8pycO6+m5w2wNeVFapBtYT7ePyXr5JGkprEsfYLaGfKL4uluPYd3635jslU+WFsV5eWDdXd8w2XZYjz5RXiItih+DNVdXDNzdu5mslCfWPibiwgOuMlkn79YrirOuLmBdnd8y2XRYlyhPlhbEu2DN1fknk43yLLW2lE5gFzq+Y7JJnpWpLUpzrC10wNr80V4mGw7r6hpUrs1LY44ieQBne8nmml1d7GAGlv5iBpaAGfgVchBXFnkeQs6XCI+62hLxtfkjcR7PHeZp53kDHjsFDsEqYvZ1CW2YmKPVF3O03o/a2sqp/jlXFpdThTlpzGU3Rr42flSSxA+niidLOw+lSK/OvIaJYVoxUXvLv1FrcxllAFk497KL49ICJvPa7apqryZJxxyIgzwtELM33yUPSBEWpXMvzUPuF4g5dJvIiGdau40gfjBBPGpHNEPEfsBLHEATxlx0goZHlCaJP+HaDk5a5ABEbE2UAQnCc3FhzcVZ0FxAzGBka8v+KNOvHeWlMTZEE0Snm+zkARRhzQUHaM4L2NXVdpJr08VbyOKCtK0JlYeIbT9EphuvEQeIwjMJwppzdsg7Z+OZTq/2rHLtmEOmdlxaoBHC1v1vkwcIwucThfM+F7BiMr0CFWvbRelE8UaeBohYGyBsbthJHBCXThLO65/isUB+vyXN2so/ymhy7WRxKxJ/FcKIqbp/iPJ4AEU4/zOEmePTyadb2yqI1yN5CE/VDtEH9E8RhTlMHH2mza09LaltrZeI10HYUgtBy76vqANowvl9E1CAMULBWePGrkCZ2pGU2rg4Fg9Z9mECluo2+gCKcMHZcY5PEIYnXLuBWluQDllqIGSugeDk3vWVqapnqANShLG0gWcMCs6MwY4zo5tQu55YG0mHzHs5JqshOPnK71R5PIAiHOf0CEb9Cyfz2iFePMiJYwKmSvl/dDThHaeHOT7+BaO+dtIVaE2ndnVcPGiqgqCpEkITlX2yA2jCiMKPhnh+TrgCM6tdq1g7iKU5cURg4mUImnTV8gMowphTD+KoeuEo1hbEq4m1BWmOl8A/vicM7pp82QE04cJT96GwF3EPtL33VL5wOHFa7YTHxJRaG0ljjHs4xnXkL9CEARRhbe9d0H4o8JNC7boN1w4YBfEXwY8Y14HfoLumPIAirP0AcYfnNrW2qh+lmtpGJM2Lj7+ACRjKyV+g0kMT1r5/G4owP2Iyr12VWnuCUFsQNyAqwG8oh0cjup3KAyTCWolw0Xs/8NyCopO30rgCq2QeE3ptP5auAJ+hHHxj5eAdLaN/gUoPTZjjJseJG2ldgeTagriOWJsTL+N5HryjpUPqBlCEizHfc7x7XfGFI1vbKF/bx0v7RhG7wYsY23VS3YATN5dThTlpKUovnI3U9sXFS8E7Ugre4RKz4v0vDrhxpPid68vJwqkD0q2tU197tBRWRkrZleGSP1aGd339t/HZYlXy22f7bJ/tw/wf5z8vSQEOxiDUhAAAAABJRU5ErkJggg==" alt="thumb-up"></button>
-                                
-                                </form>
 
-                            </div>                        
+                                <button type="submit" style="border: none;"><img style="height: 2rem;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAE7UlEQVR4nO2X21MbVRzHFwKUwItvPjmlVMBYBSkFhFIoYqUt0EAdHW29UG0tir3YWjrjEzO+1vFPcKa21dZeRC4hhISQBAIkKTLj+OSMDzjj+GDJ/UJZfs45u5vdJOfsbkKpYYYz83n/fD+zObthmKd0wPPmIHiO+1lPzwNYequC2UoHPD2D6w+PgwDr6XkEC/rnmK1wWKm8pycO6+m5w2wNeVFapBtYT7ePyXr5JGkprEsfYLaGfKL4uluPYd3635jslU+WFsV5eWDdXd8w2XZYjz5RXiItih+DNVdXDNzdu5mslCfWPibiwgOuMlkn79YrirOuLmBdnd8y2XRYlyhPlhbEu2DN1fknk43yLLW2lE5gFzq+Y7JJnpWpLUpzrC10wNr80V4mGw7r6hpUrs1LY44ieQBne8nmml1d7GAGlv5iBpaAGfgVchBXFnkeQs6XCI+62hLxtfkjcR7PHeZp53kDHjsFDsEqYvZ1CW2YmKPVF3O03o/a2sqp/jlXFpdThTlpzGU3Rr42flSSxA+niidLOw+lSK/OvIaJYVoxUXvLv1FrcxllAFk497KL49ICJvPa7apqryZJxxyIgzwtELM33yUPSBEWpXMvzUPuF4g5dJvIiGdau40gfjBBPGpHNEPEfsBLHEATxlx0goZHlCaJP+HaDk5a5ABEbE2UAQnCc3FhzcVZ0FxAzGBka8v+KNOvHeWlMTZEE0Snm+zkARRhzQUHaM4L2NXVdpJr08VbyOKCtK0JlYeIbT9EphuvEQeIwjMJwppzdsg7Z+OZTq/2rHLtmEOmdlxaoBHC1v1vkwcIwucThfM+F7BiMr0CFWvbRelE8UaeBohYGyBsbthJHBCXThLO65/isUB+vyXN2so/ymhy7WRxKxJ/FcKIqbp/iPJ4AEU4/zOEmePTyadb2yqI1yN5CE/VDtEH9E8RhTlMHH2mza09LaltrZeI10HYUgtBy76vqANowvl9E1CAMULBWePGrkCZ2pGU2rg4Fg9Z9mECluo2+gCKcMHZcY5PEIYnXLuBWluQDllqIGSugeDk3vWVqapnqANShLG0gWcMCs6MwY4zo5tQu55YG0mHzHs5JqshOPnK71R5PIAiHOf0CEb9Cyfz2iFePMiJYwKmSvl/dDThHaeHOT7+BaO+dtIVaE2ndnVcPGiqgqCpEkITlX2yA2jCiMKPhnh+TrgCM6tdq1g7iKU5cURg4mUImnTV8gMowphTD+KoeuEo1hbEq4m1BWmOl8A/vicM7pp82QE04cJT96GwF3EPtL33VL5wOHFa7YTHxJRaG0ljjHs4xnXkL9CEARRhbe9d0H4o8JNC7boN1w4YBfEXwY8Y14HfoLumPIAirP0AcYfnNrW2qh+lmtpGJM2Lj7+ACRjKyV+g0kMT1r5/G4owP2Iyr12VWnuCUFsQNyAqwG8oh0cjup3KAyTCWolw0Xs/8NyCopO30rgCq2QeE3ptP5auAJ+hHHxj5eAdLaN/gUoPTZjjJseJG2ldgeTagriOWJsTL+N5HryjpUPqBlCEizHfc7x7XfGFI1vbKF/bx0v7RhG7wYsY23VS3YATN5dThTlpKUovnI3U9sXFS8E7Ugre4RKz4v0vDrhxpPid68vJwqkD0q2tU197tBRWRkrZleGSP1aGd339t/HZYlXy22f7bJ/tw/wf5z8vSQEOxiDUhAAAAABJRU5ErkJggg==" alt="thumb-up"></button>
+
+                            </form>
+
+                        </div>
                     }
                     else
                     {
@@ -98,7 +133,7 @@
                 <a asp-controller="Post" asp-action="UpdateSubPost" asp-route-id="@item.Id"><button type="submit" style="background-color: lightblue; color:black;">Update</button></a>
                 <a asp-controller="Post" asp-action="DeleteSubPost" asp-route-id="@item.Id"><button type="submit" style="background-color: lightcoral; color:black;">Delete</button></a>
             }
-            <div class="post" >
+            <div class="post">
                 <div>
                     <div style="flex: 1; flex-direction:column; justify-items: center;">
                         <div>

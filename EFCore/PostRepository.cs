@@ -23,13 +23,15 @@ public class PostRepository : IPostRepository
         .Where(p => p.Reported == true)
         .Include(p => p.Member)
         .Include(p => p.ReporterIds)
-        .ToListAsync();
-
+        .ToListAsync();    
+    
     public async Task<Post> GetOnePostAsync(int id) => await _context.Post
         .Where(p => p.Id == id)
         .Include(p => p.Member)
         .Include(p => p.SubPosts)
         .Include(p => p.ReporterIds)
+        .Include(p => p.Likes)
+        .Include(p => p.Views)
         .SingleOrDefaultAsync();
 
     public async Task<List<Post>> GettingAll25RecentPostsAsync() =>
