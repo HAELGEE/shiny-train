@@ -48,7 +48,7 @@ eller fixa så att det blir en Quote till den man svarar. typ ( svarade "(snedtex
 
 ** KLAR ** kunna ta bort sina inlägg
 
-Kunna gilla inlägg
+** KLAR ** Kunna gilla inlägg
 
 ** KLAR ** Kunna anmälla stötande Inlägg
 
