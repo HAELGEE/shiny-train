@@ -51,6 +51,10 @@ public class PostService : IPostService
     {
         await _postRepository.ReportPostAsync(id, reporterId);
     }
+    public async Task UnReportPostAsync(int postId, int reporterId)
+    {
+        await _postRepository.UnReportPostAsync(postId, reporterId);
+    }
     public async Task UpdatePostReplyCounterAsync(int id)
     {
         await _postRepository.UpdatePostReplyCounterAsync(id);

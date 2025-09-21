@@ -23,8 +23,8 @@ public class PostRepository : IPostRepository
         .Where(p => p.Reported == true)
         .Include(p => p.Member)
         .Include(p => p.ReporterIds)
-        .ToListAsync();    
-    
+        .ToListAsync();
+
     public async Task<Post> GetOnePostAsync(int id) => await _context.Post
         .Where(p => p.Id == id)
         .Include(p => p.Member)
@@ -39,10 +39,10 @@ public class PostRepository : IPostRepository
         .Take(25)
         .OrderByDescending(p => p.Created)
         .Include(p => p.Member)
-        .Include (p => p.Views)
+        .Include(p => p.Views)
         .Include(p => p.Likes)
         .ToListAsync();
-    
+
     public async Task<List<Post>> GettingAllPostForSubCategoryAsync(int categoryId) =>
         await _context.Post
             .Where(x => x.SubCategoryId == categoryId)
@@ -104,6 +104,24 @@ public class PostRepository : IPostRepository
             await _context.SaveChangesAsync();
         }
     }
+    public async Task UnReportPostAsync(int postId, int reporterId)
+    {
+        var post = await GetOnePostAsync(postId);
+
+        var unreportMembers = await _context.Reports.Where(r => r.PostId == postId).ToListAsync();
+
+        if (unreportMembers != null)
+        {
+            foreach (var report in unreportMembers)
+            {
+                _context.Reports.Remove(report);
+            }
+
+            post.Reported = false;
+            _context.Update(post);
+            await _context.SaveChangesAsync();
+        }
+    }
 
     public async Task UpdatePostReplyCounterAsync(int id)
     {
@@ -115,13 +133,13 @@ public class PostRepository : IPostRepository
         await _context.SaveChangesAsync();
     }
 
-    
+
     public async Task UpdatePostViewsCounterAsync(int postId, int memberId)
     {
         var viewCheck = await _context.Views.Where(vm => vm.MemberId == memberId && vm.PostId == postId).FirstOrDefaultAsync();
 
         var post = await GetOnePostAsync(postId);
-            var member = await _context.Member.Where(m => m.Id == memberId).FirstOrDefaultAsync();
+        var member = await _context.Member.Where(m => m.Id == memberId).FirstOrDefaultAsync();
 
         if (viewCheck == null && post.MemberId != memberId)
         {
@@ -134,7 +152,7 @@ public class PostRepository : IPostRepository
             _context.Add(view);
 
             await _context.SaveChangesAsync();
-        }               
+        }
     }
 
     public async Task UpdatePostLikesCounterAsync(int postId, int memberId)
@@ -157,14 +175,14 @@ public class PostRepository : IPostRepository
             await _context.SaveChangesAsync();
         }
         else if (likeCheck != null && post.MemberId != memberId)
-        {   
+        {
             _context.Remove(likeCheck);
 
             await _context.SaveChangesAsync();
         }
     }
 
-    
+
 
     // Subpost
 

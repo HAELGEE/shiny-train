@@ -92,6 +92,14 @@ public class PostController : Controller
 
         return RedirectToAction(nameof(ReadPost), new { Id = id });
     }
+    [HttpGet("UnReport")]
+    public async Task<IActionResult> UnReport(int id, int reporterId)
+    {
+        HttpContext.Session.SetInt32("updateSubpost", 0);
+        await _postService.UnReportPostAsync(id, reporterId);
+
+        return RedirectToAction(nameof(ReadPost), new { Id = id });
+    }
 
     // Admin delete
     [HttpGet("DeletePost")]

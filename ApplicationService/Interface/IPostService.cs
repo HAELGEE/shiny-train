@@ -14,6 +14,7 @@ public interface IPostService
     Task DeletePostAsync(Post post);
     Task UpdatePostAsync(Post post);
     Task ReportPostAsync(int id, int reporterId);
+    Task UnReportPostAsync(int postId, int reporterId);
     Task UpdatePostReplyCounterAsync(int id);
     Task UpdatePostViewsCounterAsync(int postId, int memberId);
     Task UpdatePostLikesCounterAsync(int postId, int memberId);

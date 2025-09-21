@@ -11,19 +11,39 @@
         <a asp-controller="Post" asp-action="UpdatePost" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color: lightblue; color:black;">Update</button></a>
         <a asp-controller="Post" asp-action="Delete" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color: lightcoral; color:black;">Delete</button></a>
     }
+
     @if (Context.Session.GetInt32("UserId") > 0)
     {
+        ViewBag.reporterId = 0;
         @foreach (var report in Model.Post.ReporterIds)
         {
             @if (report.MemberId == Context.Session.GetInt32("UserId"))
             {
                 checkIfTrue = true;
+                ViewBag.reporterId = @report.MemberId;
             }
+
         }
         @if (!checkIfTrue)
         {
             <a asp-controller="Post" asp-action="Report" asp-route-id="@Model.Post.Id" asp-route-reporterId="@Context.Session.GetInt32("UserId")">
                 <button type="submit" style="background-color:lightskyblue; color:black;">Report</button>
+            </a>
+        }
+
+        @if (Context.Session.GetInt32("IsAdmin") == 1 && Model.Post.Reported == true)
+        {
+            @foreach (var report in Model.Post.ReporterIds)
+            {
+                @if (report.MemberId == Context.Session.GetInt32("UserId"))
+                {
+                    ViewBag.reporterId = @report.MemberId;
+                }
+
+            }
+
+            <a asp-controller="Post" asp-action="UnReport" asp-route-id="@Model.Post.Id" asp-route-reporterId="@ViewBag.reporterId">
+                <button type="submit" style="background-color:lightseagreen; color:black;">UnReport</button>
             </a>
         }
     }
@@ -188,7 +208,7 @@
         }
     }
 
-    @if (Context.Session.GetInt32("UserId") > 0)
+    @if (Context.Session.GetInt32("UserId") > 0 && Model.SubPost.Id == 0)
     {
         <br />
         <form asp-controller="Post" asp-action="CreateSubPost">

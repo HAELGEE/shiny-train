@@ -76,6 +76,8 @@ Kunna chatta med andra Live!
 
 Kunna kolla anmälda inlägg och eventuellt ändra till Ickestötande om det bara är någon som tyckte det var kul att anmäla
 
+Kunna ta bort en en anmälan om inlägget inte var stötande på något sätt
+
 ** KLAR ** Kunna ge varning till Användare
 
 Kunna sätta Bans på användare beroende på hur många reports dom fått på sig
