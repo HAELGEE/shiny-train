@@ -60,11 +60,7 @@ public class MemberService : IMemberService
     public async Task UpdateMemberAdminrightsAsync(int id, bool isAdmin)
     {
         await _memberRepository.UpdateMemberAdminrightsAsync(id, isAdmin);
-    }
-    //public async Task UpdateProfileViewsAsync(int id)
-    //{
-    //    await _memberRepository.UpdateProfileViewsAsync(id);
-    //}
+    }    
     public async Task UpdateReportsForMemberAsync(int id)
     {
        await _memberRepository.UpdateReportsForMemberAsync(id);
@@ -78,10 +74,6 @@ public class MemberService : IMemberService
     {
         await _memberRepository.UpdateProfileReplyCounterAsync(id);
     }
-    //public async Task UpdateProfileViewsAsync(int id)
-    //{
-    //    await _memberRepository.UpdateProfileViewsAsync(id);
-    //}
     public async Task AddProfileViewAsync(int userId, int visitorId)
     {
         await _memberRepository.AddProfileViewAsync(userId, visitorId);

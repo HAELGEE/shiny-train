@@ -20,14 +20,14 @@ public class Member
 
     [RegularExpression(@"^\d{8}$", ErrorMessage = "Date must be as YYYYMMDD.")]
     [Display(Name = "Birthday", Prompt = "Insert yyyymmdd here...")]
-    [Required(ErrorMessage = "Must type in your Birtday")]
-    public int? Birthday { get; set; }
-        
+    [Required(ErrorMessage = "Must type in your Birthday")]
+    public string? Birthday { get; set; }
+
     [Display(Name = "Username", Prompt = "Insert Username here...")]
     [Required(ErrorMessage = "Must type in your Username")]
     public string? UserName { get; set; }
-    
-    [EmailAddress(ErrorMessage = "Must be a legit Email-Address")]    
+
+    [EmailAddress(ErrorMessage = "Must be a legit Email-Address")]
     [Display(Name = "Email", Prompt = "Insert Email-address here...")]
     [Required]
     public string? Email { get; set; }
@@ -35,7 +35,7 @@ public class Member
     [Display(Name = "Password", Prompt = "Insert your Password here...")]
     [Required(ErrorMessage = "Must type in a Password")]
     public string? Password { get; set; }
-    
+
     // Admin rights
     public bool IsOwner { get; set; } = false;
     public bool IsAdmin { get; set; } = false;
@@ -46,20 +46,24 @@ public class Member
     {
         get
         {
-            if (!Birthday.HasValue) return 0;
-            var birthStr = Birthday.Value.ToString();
-            var birthDate = DateTime.ParseExact(birthStr, "yyyyMMdd", CultureInfo.InvariantCulture);
-            var age = DateTime.Now.Year - birthDate.Year;
-            if (DateTime.Now < birthDate.AddYears(age)) age--;
-            return age;
+            if (Birthday.Length == 8)
+            {
+                var birthStr = Birthday;
+                var birthDate = DateTime.ParseExact(birthStr, "yyyyMMdd", CultureInfo.InvariantCulture);
+                var age = DateTime.Now.Year - birthDate.Year;
+                if (DateTime.Now < birthDate.AddYears(age)) age--;
+                return age;
+            }
+            else
+                return 0;
         }
     }
     public int TotalPosts { get; set; } = 0;
     public int TotalReply { get; set; } = 0;
     //public int TotalLikes { get; set; } = 0;
     //public int ProfileViews { get; set; } = 0;
-    public DateTime? RegisteryDate { get; set; } = DateTime.Now;    
-    public string ProfileImagePath {get; set; } = "/uploads/standardProfile.png";
+    public DateTime? RegisteryDate { get; set; } = DateTime.Now;
+    public string ProfileImagePath { get; set; } = "/uploads/standardProfile.png";
 
 
     // DB connections 
