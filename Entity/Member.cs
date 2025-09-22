@@ -36,8 +36,8 @@ public class Member
     public string? Password { get; set; }
     
     // Admin rights
-    public bool IsAdmin { get; set; } = false;
     public bool IsOwner { get; set; } = false;
+    public bool IsAdmin { get; set; } = false;
     public int? Reports { get; set; } = 0;
 
     // Information for the View on Profile
