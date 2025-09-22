@@ -44,11 +44,11 @@ public class CategoryController : Controller
     {
         var subCategory = await _categoryRepository.GetOneSubCategoriesAsync(id);
         var posts = await _postRepository.GettingAllPostForSubCategoryAsync(id);
-        
 
-        var view = new Views
+
+        var view = new Entities
         {
-            SubCategory =  subCategory,
+            SubCategory = subCategory,
             Posts = posts,
         };
 
@@ -97,7 +97,7 @@ public class CategoryController : Controller
         ViewBag.CategoryId = id;
         if (id != 0)
         {
-            var fullModel = new Views
+            var fullModel = new Entities
             {
                 category = await _categoryRepository.GetOneCategoriesAsync(id)
             };
@@ -105,7 +105,7 @@ public class CategoryController : Controller
         }
         else
         {
-            var fullModel = new Views
+            var fullModel = new Entities
             {
                 Categories = await _categoryRepository.GetAllCategoriesAsync()
             };
@@ -129,7 +129,7 @@ public class CategoryController : Controller
         {
             ViewBag.CategoryId = category.Id;
 
-            var fullModel = new Views
+            var fullModel = new Entities
             {
                 Categories = await _categoryRepository.GetAllCategoriesAsync()
             };
@@ -150,7 +150,7 @@ public class CategoryController : Controller
         if (await CheckAdmin())
             return RedirectToAction(nameof(Index), "Home");
 
-        var fullModel = new Views
+        var fullModel = new Entities
         {
             Categories = await _categoryRepository.GetAllCategoriesAsync()
         };
@@ -162,7 +162,14 @@ public class CategoryController : Controller
     {
         Category category = await _categoryRepository.GetOneCategoriesAsync(id);
 
-        await _categoryRepository.DeleteCategoryAsync(category);
+        try
+        {
+            await _categoryRepository.DeleteCategoryAsync(category);
+        }
+        catch (Exception ex)
+        {
+            return RedirectToAction("Admin", "Member", new { warningText = $"No access to delete categories and subcategories when post is in it" });
+        }
 
         return RedirectToAction("Admin", "Member");
     }
@@ -183,7 +190,7 @@ public class CategoryController : Controller
         {
             var category = await _categoryRepository.GetOneCategoriesAsync(id);
 
-            var fullModel = new Views
+            var fullModel = new Entities
             {
                 category = category,
             };
@@ -191,7 +198,7 @@ public class CategoryController : Controller
         }
         else
         {
-            var fullModel = new Views
+            var fullModel = new Entities
             {
                 Categories = await _categoryRepository.GetAllCategoriesAsync()
             };
@@ -212,7 +219,7 @@ public class CategoryController : Controller
             ViewBag.CreateSubcategory = subCategory.CategoryId;
             var category = await _categoryRepository.GetOneCategoriesAsync((int)subCategory.CategoryId);
 
-            var fullModel = new Views
+            var fullModel = new Entities
             {
                 category = category,
             };
@@ -239,7 +246,7 @@ public class CategoryController : Controller
         {
             var subCategory = await _categoryRepository.GetOneSubCategoriesAsync(id);
 
-            var fullModel = new Views
+            var fullModel = new Entities
             {
                 SubCategory = subCategory
             };
@@ -247,7 +254,7 @@ public class CategoryController : Controller
         }
         else
         {
-            var fullModel = new Views
+            var fullModel = new Entities
             {
                 SubCategories = await _categoryRepository.GetAllSubCategoriesAsync()
             };
@@ -270,7 +277,7 @@ public class CategoryController : Controller
         {
             ViewBag.SubCategoryId = subCategory.Id;
 
-            var fullModel = new Views
+            var fullModel = new Entities
             {
                 SubCategories = await _categoryRepository.GetAllSubCategoriesAsync()
             };
@@ -291,7 +298,7 @@ public class CategoryController : Controller
         if (await CheckAdmin())
             return RedirectToAction(nameof(Index), "Home");
 
-        var fullModel = new Views
+        var fullModel = new Entities
         {
             SubCategories = await _categoryRepository.GetAllSubCategoriesAsync()
         };
@@ -303,7 +310,14 @@ public class CategoryController : Controller
     {
         SubCategory subCategory = await _categoryRepository.GetOneSubCategoriesAsync(id);
 
-        await _categoryRepository.DeleteSubCategoryAsync(subCategory);
+        try
+        {
+            await _categoryRepository.DeleteSubCategoryAsync(subCategory);
+        }
+        catch (Exception ex)
+        {
+            return RedirectToAction("Admin", "Member", new { warningText = $"No access to delete categories and subcategories when post is in it" });
+        }
 
         return RedirectToAction("Admin", "Member");
     }

@@ -417,3 +417,96 @@ body.dark .SubcategoriesStyle {
         margin-left: 17rem;
     }
 }
+
+
+
+/*CHATT*/
+@media (max-width: 1400px) {
+    .chat-container {
+        margin-left: 8rem;
+        margin-right: -8rem;
+    }
+}
+@media (max-width: 990px) {
+    .chat-container {
+        margin-left: 0rem;
+        margin-right: 0rem;
+        visibility: hidden;
+    }
+}
+.chat-container {
+    display: flex;
+    flex-direction: row;
+    width: 30rem; /* tar lagom plats */
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+/* --- Userlistan --- */
+.chat-users {
+    width: 8rem;
+    border-right: 1px solid #ccc;
+    background: #f5f5f5;
+    padding: 0.5rem;
+}
+
+    .chat-users ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .chat-users li {
+        padding: 0.25rem;
+        cursor: pointer;
+    }
+
+/* --- Chatten --- */
+.chat-area {
+    display: flex;
+    flex-direction: column;
+    min-height: 800px; /* eller 100% / 100vh */
+    border: 1px solid #ccc;
+}
+
+/* Meddelandena fyller allt utrymme över inputfältet */
+.chat-messages {
+    flex: 1; /* <-- detta trycker ner .chat-input */
+    overflow-y: auto;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: #fff;
+}
+
+.message {
+    max-width: 75%;
+    padding: 0.5rem;
+    border-radius: 8px;
+    word-wrap: break-word;
+}
+
+    .message.me {
+        align-self: flex-start;
+        background: #e5e5e5;
+    }
+
+    .message.other {
+        align-self: flex-end;
+        background: #d1e7ff;
+    }
+
+/* --- Inputfält --- */
+.chat-input {
+    display: flex;
+    gap: 0.5rem;
+    border-top: 1px solid #ccc;
+    padding: 0.5rem;
+    background: #f9f9f9;
+}
+
+    .chat-input input {
+        flex: 1;
+        padding: 0.5rem;
+    }

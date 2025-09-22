@@ -1,9 +1,11 @@
-﻿@model Views
+﻿@model Entities
 @{
 	ViewData["Title"] = "Guest";
 }
 <div class="three-in-row">
-	<div style="display: flex; width: 20rem;"></div>
+	<div style="display: flex; width: 20rem;">
+
+	</div>
 
 	<div style="display: flex; flex-direction:column; align-items:center; width: 80%;">
 		<h1>@ViewData["Title"] Page</h1>
@@ -15,12 +17,10 @@
 
 		<p><b>First name: </b>@Model.Member.FirstName</p>
 		<p><b>Last name: </b>@Model.Member.LastName</p>
-		<p><b>Age: </b>@Model.Member.Age</p>
-		<p><b>Email: </b></p>
-		<p style="margin-top: -1rem;">@Model.Member.Email</p>
+		<p><b>Age: </b>@Model.Member.Age</p>		
 		<br />
 		<p><b>Username: </b>@Model.Member.UserName</p>
-		<p><b>Views on profile: </b>@Model.Member.ProfileViews</p>
+		<p><b>Views on profile: </b>@Model.Member.MemberViews.Count()</p>
 		<p><b>Member since: </b></p>
 		<p style="margin-top: -1rem;">@Model.Member.RegisteryDate</p>
 		<br />

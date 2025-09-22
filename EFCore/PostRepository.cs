@@ -136,14 +136,14 @@ public class PostRepository : IPostRepository
 
     public async Task UpdatePostViewsCounterAsync(int postId, int memberId)
     {
-        var viewCheck = await _context.Views.Where(vm => vm.MemberId == memberId && vm.PostId == postId).FirstOrDefaultAsync();
+        var viewCheck = await _context.PostViews.Where(vm => vm.MemberId == memberId && vm.PostId == postId).FirstOrDefaultAsync();
 
         var post = await GetOnePostAsync(postId);
         var member = await _context.Member.Where(m => m.Id == memberId).FirstOrDefaultAsync();
 
         if (viewCheck == null && post.MemberId != memberId)
         {
-            var view = new View
+            var view = new PostView
             {
                 PostId = post.Id,
                 MemberId = member.Id,

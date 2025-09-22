@@ -1,4 +1,4 @@
-﻿@model Views
+﻿@model Entities
 @{
 	ViewData["Title"] = "Admin Page";
 	// ViewBag.counter = 0;
@@ -12,6 +12,10 @@
 		<button><a style="color: forestgreen; text-decoration: none;" asp-controller="Category" asp-action="UpdateCategory">Update Category</a></button>
 	</div>
 	<br />
+	@if(Model.WarningMessage != null)
+	{
+	<h3>@Model.WarningMessage</h3>
+	}
 	<br />
 	<p>CRUD for SubCategory</p>
 	<button><a style="color: black; text-decoration: none;" asp-controller="Category" asp-action="CreateSubCategory">Create SubCategory</a></button>

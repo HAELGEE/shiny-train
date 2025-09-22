@@ -1,5 +1,5 @@
 ﻿namespace Entity;
-public class Views
+public class Entities
 {
     public Member? Member { get; set; }
     public List<Member>? Members { get; set; }
@@ -20,5 +20,6 @@ public class Views
     public List<SubPost>? SubPosts { get; set; }   
 
     public string? Password { get; set; }
+    public string? WarningMessage { get; set; }
    
 }

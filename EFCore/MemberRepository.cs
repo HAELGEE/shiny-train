@@ -14,11 +14,11 @@ public class MemberRepository : IMemberRepository
     }
 
     public async Task<List<Member>> GetAllMembersAsync() => await _dbContext.Member.OrderBy(m => m.UserName).ToListAsync();
-    public async Task<Member> GetOneMemberAsync(int id) => await _dbContext.Member.Where(m => m.Id == id).SingleOrDefaultAsync();
-    public async Task<Member> GetMemberByUsernameAsync(string userName) => await _dbContext.Member.Where(m => m.UserName == userName).SingleOrDefaultAsync();
+    public async Task<Member> GetOneMemberAsync(int id) => await _dbContext.Member.Where(m => m.Id == id).Include(m => m.MemberViews).SingleOrDefaultAsync();
+    public async Task<Member> GetMemberByUsernameAsync(string userName) => await _dbContext.Member.Where(m => m.UserName == userName).Include(m => m.MemberViews).SingleOrDefaultAsync();
     public async Task<List<Member>> GetAdminMembersAsync() => await _dbContext.Member.Where(m => m.IsAdmin == true).ToListAsync();
     public async Task<Member> GetAdminMemberAsync(int id) => await _dbContext.Member.Where(m => m.IsAdmin == true && m.Id == id).SingleOrDefaultAsync();
-    public async Task<Member> GetMemberByEmailAsync(string email) => await _dbContext.Member.Where(m => m.Email == email).SingleOrDefaultAsync();
+    public async Task<Member> GetMemberByEmailAsync(string email) => await _dbContext.Member.Where(m => m.Email == email).Include(m => m.MemberViews).SingleOrDefaultAsync();
     public async Task<Member> GetMemberByUsernamePasswordAsync(string username, string password) => await _dbContext.Member.Where(m => m.UserName == username && m.Password == password).FirstOrDefaultAsync();
     public async Task UpdateMemberAsync(Member member)
     {       
@@ -45,15 +45,15 @@ public class MemberRepository : IMemberRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task UpdateProfileViewsAsync(int id)
-    {
-        var member = new Member();
-        member = await GetOneMemberAsync(id);
+    //public async Task UpdateProfileViewsAsync(int id)
+    //{
+    //    var member = new Member();
+    //    member = await GetOneMemberAsync(id);
 
-        member.ProfileViews++;
+    //    member.ProfileViews++;
 
-        await _dbContext.SaveChangesAsync();
-    }
+    //    await _dbContext.SaveChangesAsync();
+    //}
     public async Task UpdateReportsForMemberAsync(int id)
     {
         var member = new Member();
@@ -80,5 +80,36 @@ public class MemberRepository : IMemberRepository
         member.TotalReply++;
 
         await _dbContext.SaveChangesAsync();
-    }    
+    }
+    public async Task AddProfileViewAsync(int visitorId, int userId)
+    {
+        var memberViewList = await _dbContext.MemberViews.ToListAsync();
+
+        bool checkIfTrue = false;
+
+        if (memberViewList != null)
+        {
+            foreach (var view in memberViewList)
+            {
+                if (view.MemberId == userId && view.VisitorId == visitorId)
+                {
+                    checkIfTrue = true; break;
+                }
+            }
+        }
+
+        if (!checkIfTrue)
+        {
+            var memberView = new MemberView
+            {
+                MemberId = userId,
+                VisitorId = visitorId,
+            };
+
+            _dbContext.MemberViews.Add(memberView);
+            await _dbContext.SaveChangesAsync();
+        }
+    }
+
+    public async Task ViewProfileViewsAsync(int id) => await _dbContext.MemberViews.Where(m => m.MemberId == id).ToListAsync();
 }

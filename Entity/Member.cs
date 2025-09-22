@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace Entity;
 
@@ -20,7 +21,7 @@ public class Member
     [RegularExpression(@"^\d{8}$", ErrorMessage = "Date must be as YYYYMMDD.")]
     [Display(Name = "Birthday", Prompt = "Insert yyyymmdd here...")]
     [Required(ErrorMessage = "Must type in your Birtday")]
-    public int? Age { get; set; }
+    public int? Birthday { get; set; }
         
     [Display(Name = "Username", Prompt = "Insert Username here...")]
     [Required(ErrorMessage = "Must type in your Username")]
@@ -41,20 +42,34 @@ public class Member
     public int? Reports { get; set; } = 0;
 
     // Information for the View on Profile
+    public int Age
+    {
+        get
+        {
+            if (!Birthday.HasValue) return 0;
+            var birthStr = Birthday.Value.ToString();
+            var birthDate = DateTime.ParseExact(birthStr, "yyyyMMdd", CultureInfo.InvariantCulture);
+            var age = DateTime.Now.Year - birthDate.Year;
+            if (DateTime.Now < birthDate.AddYears(age)) age--;
+            return age;
+        }
+    }
     public int TotalPosts { get; set; } = 0;
     public int TotalReply { get; set; } = 0;
-    public int TotalLikes { get; set; } = 0;
-    public int ProfileViews { get; set; } = 0;
+    //public int TotalLikes { get; set; } = 0;
+    //public int ProfileViews { get; set; } = 0;
     public DateTime? RegisteryDate { get; set; } = DateTime.Now;    
     public string ProfileImagePath {get; set; } = "/uploads/standardProfile.png";
 
 
     // DB connections 
-    public ICollection<View>? Views { get; set; }
+    public ICollection<MemberView>? MemberViews { get; set; }
+    public ICollection<PostView>? PostViews { get; set; }
     public ICollection<Reports>? ReportedPosts { get; set; }
     public ICollection<Post>? Posts { get; set; }
     public ICollection<SubPost>? SubPosts { get; set; }
     public ICollection<Likes>? Likes { get; set; }
+    public ICollection<Chatt>? Chatt { get; set; }
 
 
 }

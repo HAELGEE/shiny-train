@@ -48,26 +48,10 @@ public class MemberController : Controller
         if (member != null)
         {
             ViewBag.Member = member;
-            int? birthDateInt = member.Age;
-            DateTime birthDate = DateTime.ParseExact(
-                birthDateInt.ToString(),
-                "yyyymmdd",
-                System.Globalization.CultureInfo.InvariantCulture
-                );
-
-            DateTime today = DateTime.Today;
-
-            int age = today.Year - birthDate.Year;
-
-            if (birthDate.Date > today.AddYears(-age))
-                age--;
-
-            member.Age = age;
-
+            
             viewModel.Member = member;
         }
 
-        //_memberService.GetOneMemberAsync(member.Id);
 
         return View(viewModel);
     }
@@ -105,29 +89,8 @@ public class MemberController : Controller
 
         var member = await _memberService.GetOneMemberAsync(id);
 
-        if (member != null)
-        {
-
-            await _memberService.UpdateProfileViewsAsync(member.Id);
-
-            int? birthDateInt = member.Age;
-            DateTime birthDate = DateTime.ParseExact(
-                birthDateInt.ToString(),
-                "yyyymmdd",
-                System.Globalization.CultureInfo.InvariantCulture
-                );
-
-            DateTime today = DateTime.Today;
-
-            int age = today.Year - birthDate.Year;
-
-            if (birthDate.Date > today.AddYears(-age))
-                age--;
-
-            member.Age = age;
-
-        }
-        var view = new Views
+        
+        var view = new Entities
         {
             Member = member
         };
@@ -139,6 +102,8 @@ public class MemberController : Controller
 
             view.Admin = admin;
         }
+
+        await _memberService.AddProfileViewAsync((int)userId, member.Id);
 
         return View(view);
     }
@@ -198,7 +163,7 @@ public class MemberController : Controller
             newMember = await _memberService.GetMemberByEmailAsync(email);
         }
 
-        var view = new Views
+        var view = new Entities
         {
             Password = password,
             Member = newMember,
@@ -246,7 +211,7 @@ public class MemberController : Controller
     }
 
     [HttpGet("Admin")]
-    public async Task<IActionResult> Admin()
+    public async Task<IActionResult> Admin(string warningText)
     {
         var userId = HttpContext.Session.GetInt32("UserId");
 
@@ -277,8 +242,9 @@ public class MemberController : Controller
             }
         }
 
-        var view = new Views
+        var view = new Entities
         {
+            WarningMessage = warningText,
             Posts = posts,
             Members = members,
         };

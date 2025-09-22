@@ -17,6 +17,25 @@ public class MyDbContext : DbContext
     public DbSet<Post> Post { get; set; }
     public DbSet<SubPost> SubPost { get; set; }
     public DbSet<Reports> Reports { get; set; }
-    public DbSet<View> Views { get; set; }
+    public DbSet<PostView> PostViews { get; set; }
+    public DbSet<MemberView> MemberViews { get; set; }
     public DbSet<Likes> Likes { get; set; }
+    public DbSet<Chatt> Chatt { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<MemberView>()
+            .HasOne(mv => mv.Member)
+            .WithMany(m => m.MemberViews)
+            .HasForeignKey(mv => mv.MemberId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<MemberView>()
+            .HasOne(mv => mv.Visitor)
+            .WithMany()
+            .HasForeignKey(mv => mv.VisitorId)
+            .OnDelete(DeleteBehavior.Restrict);
+    }
 }

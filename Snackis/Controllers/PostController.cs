@@ -65,7 +65,7 @@ public class PostController : Controller
 
         var subCategory = await _categoryService.GetOneSubCategoriesAsync((int)post.SubCategoryId!);
 
-        var view = new Views
+        var view = new Entities
         {
             Post = post,
             SubPosts = subPosts,

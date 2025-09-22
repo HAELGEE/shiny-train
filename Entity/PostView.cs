@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Entity;
-public class View
+public class PostView
 {
     public int Id { get; set; }
 

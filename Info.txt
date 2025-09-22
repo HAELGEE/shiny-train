@@ -16,7 +16,7 @@ Insperation ifrån flashback
 
 ** Klar ** Man skall kunna logga in.
 
-Finnas en QR inloggnings kod.
+Finnas en QR inloggnings kod.     <-- Om jag hinner/orkar/har lust
 
 ** KLAR ** Skapa inlägg, där senaste inlägget visas först.
 
@@ -80,7 +80,7 @@ Kunna chatta med andra Live!
 
 ** KLAR ** Kunna ge varning till Användare
 
-Kunna sätta Bans på användare beroende på hur många reports dom fått på sig
+Kunna sätta Bans på användare beroende på hur många reports dom fått på sig    <-- Om jag hinner orkar och har lust
 
 ** KLAR ** Kunna sätta andra som Admin
 
