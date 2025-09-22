@@ -19,6 +19,6 @@ public class Views
     public SubPost? SubPost { get; set; }
     public List<SubPost>? SubPosts { get; set; }   
 
-
+    public string? Password { get; set; }
    
 }

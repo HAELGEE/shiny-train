@@ -66,7 +66,7 @@ Användaren ska också kunna ladda upp en bild på sig själv, som syns vid sidan om
 
 ** Klar ** Info ruta om sig själv
 
-Kalla på nytt lösenord om man glömt
+** Klar ** Kalla på nytt lösenord om man glömt ( Inte det säkraste, men går utan att använda Email skick )
 
 Kunna chatta med andra Live!
 ---------------------------------------------------------------------------------------------------------------------
@@ -74,9 +74,9 @@ Kunna chatta med andra Live!
 /Admin
 ---------------------------------------------------------------------------------------------------------------------
 
-Kunna kolla anmälda inlägg och eventuellt ändra till Ickestötande om det bara är någon som tyckte det var kul att anmäla
+** KLAR ** Kunna kolla anmälda inlägg och eventuellt ändra till Ickestötande om det bara är någon som tyckte det var kul att anmäla
 
-Kunna ta bort en en anmälan om inlägget inte var stötande på något sätt
+** KLAR ** Kunna ta bort en en anmälan om inlägget inte var stötande på något sätt
 
 ** KLAR ** Kunna ge varning till Användare
 

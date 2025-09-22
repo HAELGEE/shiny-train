@@ -2,6 +2,8 @@
 using EFCore;
 using Entity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace Snackis.Controllers;
 
@@ -75,7 +77,7 @@ public class MemberController : Controller
     {
         var isAdminCheck = await IsAdmin();
 
-        if(isAdminCheck)
+        if (isAdminCheck)
         {
             await _memberService.UpdateMemberAdminrightsAsync(member.Id, member.IsAdmin);
         }
@@ -127,7 +129,7 @@ public class MemberController : Controller
         }
         var view = new Views
         {
-            Member = member            
+            Member = member
         };
 
         Member? admin = null;
@@ -186,6 +188,62 @@ public class MemberController : Controller
         return RedirectToAction(nameof(Index), "Home");
     }
 
+    [HttpGet("ForgotPassword")]
+    public async Task<IActionResult> ForgotPassword(string email, string password)
+    {
+        var newMember = new Member();
+
+        if (email != null)
+        {
+            newMember = await _memberService.GetMemberByEmailAsync(email);
+        }
+
+        var view = new Views
+        {
+            Password = password,
+            Member = newMember,
+            Members = await _memberService.GetAllMembersAsync()
+        };
+
+        return View(view);
+    }
+    [HttpPost("ForgotPassword")]
+    public async Task<IActionResult> ForgotPassword(Member member)
+    {
+        char Pick(string set, RandomNumberGenerator rng)
+        {
+            int idx = RandomNumberGenerator.GetInt32(set.Length);
+            return set[idx];
+        }
+
+        
+            char[] newPassword = new char[10];
+        if (member.Email != null)
+        {
+            string Lower = "abcdefghijklmnopqrstuvwxyz";
+            string Upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string Digits = "0123456789";
+            string All = Lower + Upper + Digits;
+
+
+            var rng = RandomNumberGenerator.Create();
+            newPassword[0] = Pick(Lower, rng);  // Always lower to start
+            newPassword[1] = Pick(Upper, rng);  // Always upper for second
+            newPassword[2] = Pick(Digits, rng); // Always one number at third
+
+
+            for (int i = 3; i < newPassword.Length; i++)
+                newPassword[i] = Pick(All, rng);
+
+            var newMember = await _memberService.GetMemberByEmailAsync(member.Email);
+
+
+            newMember.Password = new string(newPassword);
+
+            await _memberService.UpdateMemberAsync(newMember);
+        }
+        return RedirectToAction(nameof(ForgotPassword), new { password = new string(newPassword) });
+    }
 
     [HttpGet("Admin")]
     public async Task<IActionResult> Admin()

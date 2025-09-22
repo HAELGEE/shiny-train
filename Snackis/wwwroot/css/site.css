@@ -258,6 +258,7 @@ input:checked + .slider {
     padding: 5px;
     text-decoration: none;
     color: black;
+    margin-top: -0.3rem;
 }
 
 /* När man hovrar över kategori → visa subkategorierna i en kolumn */
@@ -275,10 +276,12 @@ input:checked + .slider {
     transition: background 0.2s, border-color 0.2s;
     top: 100%;
     left: 0;
+    
     padding: 5px;
     z-index: 10;
     min-width: 80px;
     height: 38px;
+    white-space: nowrap;
 }
 
     .SubcategoriesStyle:hover {

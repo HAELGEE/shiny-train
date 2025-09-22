@@ -1,12 +1,12 @@
 ﻿@model Views
 @{
-    ViewData["Title"] = "Update SubPost";
+    ViewData["Title"] = "ReadPost";
     bool checkIfTrue = false;
 
 }
 
 <div class="posts">
-    @if (Context.Session.GetInt32("UserId") == Model.Post.MemberId)
+    @if (Context.Session.GetInt32("UserId") == Model.Post.MemberId || Context.Session.GetInt32("IsAdmin") == 1)
     {
         <a asp-controller="Post" asp-action="UpdatePost" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color: lightblue; color:black;">Update</button></a>
         <a asp-controller="Post" asp-action="Delete" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color: lightcoral; color:black;">Delete</button></a>

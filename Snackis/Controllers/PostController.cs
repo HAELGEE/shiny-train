@@ -132,8 +132,9 @@ public class PostController : Controller
     {
         var userId = HttpContext.Session.GetInt32("UserId");
         var postCheck = await _postService.GetOnePostAsync(id);
+        var member = await _memberService.GetOneMemberAsync((int)userId);
 
-        if (userId != postCheck.MemberId)
+        if (userId != postCheck.MemberId && member.IsAdmin == false)
         {
             return RedirectToAction("Index", "Home");
         }
