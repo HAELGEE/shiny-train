@@ -36,8 +36,8 @@ public class PostRepository : IPostRepository
 
     public async Task<List<Post>> GettingAll25RecentPostsAsync() =>
         await _context.Post
-        .Take(25)
         .OrderByDescending(p => p.Created)
+        .Take(25)
         .Include(p => p.Member)
         .Include(p => p.Views)
         .Include(p => p.Likes)

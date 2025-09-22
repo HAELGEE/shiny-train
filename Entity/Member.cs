@@ -46,7 +46,7 @@ public class Member
     {
         get
         {
-            if (Birthday.Length == 8)
+            if (Birthday!.Length == 8)
             {
                 var birthStr = Birthday;
                 var birthDate = DateTime.ParseExact(birthStr, "yyyyMMdd", CultureInfo.InvariantCulture);
