@@ -1,6 +1,7 @@
 ﻿using ApplicationService.Interface;
 using Entity;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using System.Security.Cryptography;
 
 namespace Snackis.Controllers;
@@ -46,7 +47,7 @@ public class MemberController : Controller
         if (member != null)
         {
             ViewBag.Member = member;
-            
+
             viewModel.Member = member;
         }
 
@@ -87,7 +88,7 @@ public class MemberController : Controller
 
         var member = await _memberService.GetOneMemberAsync(id);
 
-        
+
         var view = new Entities
         {
             Member = member
@@ -179,8 +180,8 @@ public class MemberController : Controller
             return set[idx];
         }
 
-        
-            char[] newPassword = new char[10];
+
+        char[] newPassword = new char[10];
         if (member.Email != null)
         {
             string Lower = "abcdefghijklmnopqrstuvwxyz";

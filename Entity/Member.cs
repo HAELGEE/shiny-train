@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace Entity;
 
@@ -18,9 +19,10 @@ public class Member
     [Required(ErrorMessage = "Must type in your Last name")]
     public string? LastName { get; set; }
 
-    [RegularExpression(@"^\d{8}$", ErrorMessage = "Date must be as YYYYMMDD.")]
+    //[RegularExpression(@"^\d{8}$", ErrorMessage = "Date must be as YYYYMMDD.")]
     [Display(Name = "Birthday", Prompt = "Insert yyyymmdd here...")]
     [Required(ErrorMessage = "Must type in your Birthday")]
+    [ValidDate(ErrorMessage = "Date must be a valid date in format YYYYMMDD.")]
     public string? Birthday { get; set; }
 
     [Display(Name = "Username", Prompt = "Insert Username here...")]
@@ -36,6 +38,11 @@ public class Member
     [Required(ErrorMessage = "Must type in a Password")]
     public string? Password { get; set; }
 
+    [Compare("Password", ErrorMessage = "You did not match the passwords")]
+    [Display(Name = "Password", Prompt = "Insert your Password here...")]
+    [Required()]
+    public string? SecondPassword { get; set; }
+
     // Admin rights
     public bool IsOwner { get; set; } = false;
     public bool IsAdmin { get; set; } = false;
@@ -45,21 +52,31 @@ public class Member
     public int Age
     {
         get
-        {            
+        {
+
+            // Theses controlls are just because this executes before the validation, so i typed these here to prevent error
             if (Birthday != null && Birthday!.Length == 8)
             {
-                var birthStr = Birthday;
-                var birthDate = DateTime.ParseExact(birthStr, "yyyyMMdd", CultureInfo.InvariantCulture);
-                var age = DateTime.Now.Year - birthDate.Year;
-                if (DateTime.Now < birthDate.AddYears(age)) age--;
-                return age;
+                var birthStrTest = Convert.ToInt32(Birthday);
+                var todayDate = DateTime.Now.Year + 0101;
+
+                if (todayDate > birthStrTest)
+                {
+                    var birthStr = Birthday;
+                    var birthDate = DateTime.ParseExact(birthStr, "yyyyMMdd", CultureInfo.InvariantCulture);
+                    var age = DateTime.Now.Year - birthDate.Year;
+                    if (DateTime.Now < birthDate.AddYears(age)) age--;
+                    return age;
+                }
+                else
+                    return 0;
             }
             else
                 return 0;
         }
     }
     public int TotalPosts { get; set; } = 0;
-    public int TotalReply { get; set; } = 0;    
+    public int TotalReply { get; set; } = 0;
     public DateTime? RegisteryDate { get; set; } = DateTime.Now;
     public string ProfileImagePath { get; set; } = "/uploads/standardProfile.png";
 
@@ -73,5 +90,21 @@ public class Member
     public ICollection<Likes>? Likes { get; set; }
     public ICollection<Chatt>? Chatt { get; set; }
 
+}
+public class ValidDateAttribute : ValidationAttribute
+{
+    public override bool IsValid(object? value)
+    {
+        if (value == null) return false;
 
+        string strValue = value.ToString()!;
+
+        return DateTime.TryParseExact(
+            strValue,
+            "yyyyMMdd",
+            System.Globalization.CultureInfo.InvariantCulture,
+            System.Globalization.DateTimeStyles.None,
+            out _
+        );
+    }
 }
