@@ -45,8 +45,8 @@ public class Member
     public int Age
     {
         get
-        {
-            if (Birthday!.Length == 8)
+        {            
+            if (Birthday != null && Birthday!.Length == 8)
             {
                 var birthStr = Birthday;
                 var birthDate = DateTime.ParseExact(birthStr, "yyyyMMdd", CultureInfo.InvariantCulture);
@@ -59,9 +59,7 @@ public class Member
         }
     }
     public int TotalPosts { get; set; } = 0;
-    public int TotalReply { get; set; } = 0;
-    //public int TotalLikes { get; set; } = 0;
-    //public int ProfileViews { get; set; } = 0;
+    public int TotalReply { get; set; } = 0;    
     public DateTime? RegisteryDate { get; set; } = DateTime.Now;
     public string ProfileImagePath { get; set; } = "/uploads/standardProfile.png";
 

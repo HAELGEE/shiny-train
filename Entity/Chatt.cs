@@ -8,6 +8,7 @@ public class Chatt
     public string? Text { get; set; }
     public DateTime TimeCreated { get; set; }
 
+    // DB connections
     public ICollection<Member>? Member { get; set; }
 
 }
