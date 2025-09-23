@@ -274,10 +274,11 @@ public class PostController : Controller
     [HttpPost("UpdateSubPost")]
     public async Task<IActionResult> UpdateSubPost(SubPost subPost)
     {
+        HttpContext.Session.SetInt32("updateSubpost", 0);
+
         if (!ModelState.IsValid)
             return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId });  
         
-        HttpContext.Session.SetInt32("updateSubpost", 0);
 
         await _postService.UpdateSubPostAsync(subPost);
 
