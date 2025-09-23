@@ -177,7 +177,7 @@
 
 
                     <br />
-                    @if (Context.Session.GetInt32("updateSubpost") == 0 || Context.Session.GetInt32("updateSubpost") == null)
+                    @if (Context.Session.GetInt32("updateSubpost") != item.Id || Context.Session.GetInt32("updateSubpost") == null)
                     {
                         <p style="margin-left: 2rem; margin-top: -6rem;">@item.Text</p>
                     }
@@ -193,9 +193,7 @@
                                 <div style="display: flex; justify-content: center;">
                                     <div class="post" style="width: 50rem; height: 10rem;">
 
-
                                         <textarea class="textarea-styling" asp-for="@Model.SubPost.Text"></textarea>
-
                                     </div>
                                 </div>
                                 <button type="submit" class="button-to-right">Update</button>

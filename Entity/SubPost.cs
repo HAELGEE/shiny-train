@@ -6,7 +6,7 @@ public class SubPost
     public int Id { get; set; }
 
     [Display(Name = "Reply text", Prompt = "Insert text here...")]
-    [Required(ErrorMessage = "Must type in text to reply")]
+    [Required]
     public string? Text { get; set; }
     public bool? Reported { get; set; } = false;
 

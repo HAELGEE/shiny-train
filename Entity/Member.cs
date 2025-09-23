@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.Design;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
@@ -53,28 +54,20 @@ public class Member
     {
         get
         {
-
             // Theses controlls are just because this executes before the validation, so i typed these here to prevent error
-            if (Birthday != null && Birthday!.Length == 8)
+            if (!string.IsNullOrEmpty(Birthday) && 
+                DateTime.TryParseExact(Birthday, "yyyyMMdd", CultureInfo.InvariantCulture,
+                DateTimeStyles.None, out var birthDate))
             {
-                var birthStrTest = Convert.ToInt32(Birthday);
-                var todayDate = DateTime.Now.Year + 0101;
-
-                if (todayDate > birthStrTest)
-                {
-                    var birthStr = Birthday;
-                    var birthDate = DateTime.ParseExact(birthStr, "yyyyMMdd", CultureInfo.InvariantCulture);
-                    var age = DateTime.Now.Year - birthDate.Year;
-                    if (DateTime.Now < birthDate.AddYears(age)) age--;
-                    return age;
-                }
-                else
-                    return 0;
+                var age = DateTime.Now.Year - birthDate.Year;
+                if (DateTime.Now < birthDate.AddYears(age)) age--;
+                return age;
             }
             else
                 return 0;
-        }
+        }           
     }
+
     public int TotalPosts { get; set; } = 0;
     public int TotalReply { get; set; } = 0;
     public DateTime? RegisteryDate { get; set; } = DateTime.Now;
