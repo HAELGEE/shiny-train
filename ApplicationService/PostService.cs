@@ -1,7 +1,6 @@
 ﻿using ApplicationService.Interface;
 using EFCore;
 using Entity;
-using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationService;
 public class PostService : IPostService

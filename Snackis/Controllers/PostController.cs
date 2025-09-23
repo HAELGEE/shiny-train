@@ -1,8 +1,6 @@
 ﻿using ApplicationService.Interface;
-using EFCore;
 using Entity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace Snackis.Controllers;
 

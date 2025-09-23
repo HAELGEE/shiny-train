@@ -1,5 +1,4 @@
 ﻿using Entity;
-using Microsoft.EntityFrameworkCore;
 
 namespace EFCore;
 public interface IPostRepository

@@ -1,7 +1,6 @@
 ﻿using ApplicationService.Interface;
 using EFCore;
 using Entity;
-using static QRCoder.PayloadGenerator;
 
 namespace ApplicationService;
 

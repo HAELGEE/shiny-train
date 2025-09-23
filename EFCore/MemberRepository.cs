@@ -1,6 +1,5 @@
 ﻿using Entity;
 using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace EFCore;

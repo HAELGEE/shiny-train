@@ -1,5 +1,4 @@
-﻿using ApplicationService;
-using ApplicationService.Interface;
+﻿using ApplicationService.Interface;
 using EFCore;
 using Entity;
 using Microsoft.AspNetCore.Mvc;

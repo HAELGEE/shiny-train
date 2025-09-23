@@ -1,9 +1,7 @@
 ﻿using ApplicationService.Interface;
-using EFCore;
 using Entity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
 
 namespace Snackis.Controllers;
 
@@ -186,7 +184,7 @@ public class MemberController : Controller
         if (member.Email != null)
         {
             string Lower = "abcdefghijklmnopqrstuvwxyz";
-            string Upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string Upper = Lower.ToUpper();
             string Digits = "0123456789";
             string All = Lower + Upper + Digits;
 

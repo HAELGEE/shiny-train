@@ -1,5 +1,4 @@
-﻿using EFCore;
-using Entity;
+﻿using Entity;
 
 namespace ApplicationService.Interface;
 public interface IMemberService
