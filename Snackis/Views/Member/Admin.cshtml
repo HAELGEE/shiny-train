@@ -2,47 +2,79 @@
 @{
     ViewData["Title"] = "Admin Page";
 }
-
-<div>
-    <p>CRUD for Category</p>
-    <div>
-        <button><a style="color: black; text-decoration: none;" asp-controller="Category" asp-action="CreateCategory">Create Category</a></button>
-        <button><a style="color: darkred; text-decoration: none;" asp-controller="Category" asp-action="DeleteCategory">Delete Category</a></button>
-        <button><a style="color: forestgreen; text-decoration: none;" asp-controller="Category" asp-action="UpdateCategory">Update Category</a></button>
-    </div>
-    <br />
-    @if (Model.WarningMessage != null)
-    {
-        <h3>@Model.WarningMessage</h3>
-    }
-    <br />
-    <p>CRUD for SubCategory</p>
-    <button><a style="color: black; text-decoration: none;" asp-controller="Category" asp-action="CreateSubCategory">Create SubCategory</a></button>
-    <button><a style="color: darkred; text-decoration: none;" asp-controller="Category" asp-action="DeleteSubCategory">Delete SubCategory</a></button>
-    <button><a style="color: forestgreen; text-decoration: none;" asp-controller="Category" asp-action="UpdateSubCategory">Update SubCategory</a></button>
-    <br />
-    <br />
-    <br />
-    <h5>Reports</h5>
-
-    @if (Model.Posts != null)
-    {
-        @foreach (var post in Model.Posts)
-        {
-            @if (post.Reported == true)
+<main style="width: 80rem;">
+    <div class="lika-stor-container">
+        <div class="lika-stor" ">
+            <div style="flex:1; flex-direction: column;">
+                @if (Model.Members != null)
+                {
+                    <table>
+                        <tr>
+                            <td><b><h4 style="margin-right:1rem;">Username</h4></b></td>
+                            <td><b><h4>If admin</h4></b></td>
+                        </tr>
+                        @foreach (var member in Model.Members)
+                        {
+                            <tr>
+                                <td style="color:steelblue">@member.UserName</td>
+                                @if (@member.IsAdmin)
+                                {
+                                    <td>Is admin: <b style="color:green;">@member.IsAdmin</b></td>
+                                }
+                                else
+                                {
+                                    <td>Is admin: <b style="color:red;">@member.IsAdmin</b></td>
+                                }
+                            </tr>
+                        }
+                    </table>
+                }
+            </div>
+        </div>
+        <div class="lika-stor">
+            <p>CRUD for Category</p>
+            <div class="three-in-row">
+                <button style="margin-right: 0.5rem; width: 10.5rem; height: 2rem;"><a style="color: black; text-decoration: none;" asp-controller="Category" asp-action="CreateCategory">Create Category</a></button>
+                <button style="margin-right: 0.5rem; width: 10.5rem; height: 2rem;"><a style="color: darkred; text-decoration: none;" asp-controller="Category" asp-action="DeleteCategory">Delete Category</a></button>
+                <button style="margin-right: 0.5rem; width: 10.5rem; height: 2rem;"><a style="color: forestgreen; text-decoration: none;" asp-controller="Category" asp-action="UpdateCategory">Update Category</a></button>
+            </div>
+            @if (Model.WarningMessage != null)
             {
-                <p>
-                    Post wich being reported:
-                    <a asp-controller="Post" asp-action="ReadPost" asp-route-id="@post.Id" style="margin-right: 1rem;">@post.Description</a>
-
-                    Total reports: @post.TotalReports
-
-
-                    <a asp-controller="Post" asp-action="DeletePost" asp-route-id="@post.Id" style="margin-left: 2rem;">DELETE</a>
-
-                </p>
+                <h3>@Model.WarningMessage</h3>
             }
-        }
-    }
+            <br />
+            <p>CRUD for SubCategory</p>
+            <div class="three-in-row">
+                <button style="margin-right: 0.5rem; width: 10.5rem; height: 2rem;"><a style="color: black; text-decoration: none;" asp-controller="Category" asp-action="CreateSubCategory">Create SubCategory</a></button>
+                <button style="margin-right: 0.5rem; width: v; height: 2rem;"><a style="color: darkred; text-decoration: none;" asp-controller="Category" asp-action="DeleteSubCategory">Delete SubCategory</a></button>
+                <button style="margin-right: 0.5rem; width: 10.5rem; height: 2rem;"><a style="color: forestgreen; text-decoration: none;" asp-controller="Category" asp-action="UpdateSubCategory">Update SubCategory</a></button>
+            </div>
 
-</div> 
+            <br />
+            <br />
+            <h5>Reports</h5>
+
+            @if (Model.Posts != null)
+            {
+                @foreach (var post in Model.Posts)
+                {
+                    @if (post.Reported == true)
+                    {
+                        <p>
+                            Post wich being reported:
+                            <a asp-controller="Post" asp-action="ReadPost" asp-route-id="@post.Id" style="margin-right: 1rem;">@post.Description</a>
+
+                            Total reports: @post.TotalReports
+
+
+                            <a asp-controller="Post" asp-action="DeletePost" asp-route-id="@post.Id" style="margin-left: 2rem;">DELETE</a>
+
+                        </p>
+                    }
+                }
+            }
+        </div>
+        <div class="lika-stor"></div>
+
+    </div>
+</main>

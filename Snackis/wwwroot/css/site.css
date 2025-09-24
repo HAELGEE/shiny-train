@@ -510,3 +510,13 @@ body.dark .SubcategoriesStyle {
         flex: 1;
         padding: 0.5rem;
     }
+
+.lika-stor-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.lika-stor{
+    flex: 1;
+    flex-direction: column;
+}
