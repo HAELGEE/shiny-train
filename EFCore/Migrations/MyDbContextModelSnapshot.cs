@@ -136,6 +136,10 @@ namespace EFCore.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PasswordValidation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ProfileImagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -145,10 +149,6 @@ namespace EFCore.Migrations
 
                     b.Property<int?>("Reports")
                         .HasColumnType("int");
-
-                    b.Property<string>("SecondPassword")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TotalPosts")
                         .HasColumnType("int");

@@ -40,9 +40,9 @@ public class Member
     public string? Password { get; set; }
 
     [Compare("Password", ErrorMessage = "You did not match the passwords")]
-    [Display(Name = "Password", Prompt = "Insert your Password here...")]
+    [Display(Name = "Re-Password", Prompt = "Insert your Password here...")]
     [Required()]
-    public string? SecondPassword { get; set; }
+    public string? PasswordValidation { get; set; }
 
     // Admin rights
     public bool IsOwner { get; set; } = false;
