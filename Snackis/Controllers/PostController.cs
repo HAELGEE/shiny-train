@@ -73,7 +73,7 @@ public class PostController : Controller
 
 
 
-        if (HttpContext.Session.GetInt32("UserId") != null)
+        if (HttpContext.Session.GetInt32("UserId") != null && id != null)
         {
             await _postService.UpdatePostViewsCounterAsync(id, (int)HttpContext.Session.GetInt32("UserId"));
         }
