@@ -21,7 +21,8 @@ public class MemberRepository : IMemberRepository
     public async Task<Member> GetMemberByEmailAsync(string email) => await _dbContext.Member.Where(m => m.Email == email).Include(m => m.MemberViews).SingleOrDefaultAsync();
     public async Task<Member> GetMemberByUsernamePasswordAsync(string username, string password) => await _dbContext.Member.Where(m => m.UserName == username && m.Password == password).FirstOrDefaultAsync();
     public async Task UpdateMemberAsync(Member member)
-    {       
+    {
+        member.PasswordValidation = "";
         _dbContext.Member.Update(member);
         await _dbContext.SaveChangesAsync();        
     }
@@ -40,7 +41,8 @@ public class MemberRepository : IMemberRepository
     }
 
     public async Task CreateMemberAsync(Member member)
-    {       
+    {
+        member.PasswordValidation = "";
         _dbContext.Add(member);
         await _dbContext.SaveChangesAsync();
     }
