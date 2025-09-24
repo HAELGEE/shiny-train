@@ -244,11 +244,9 @@ public class PostController : Controller
         {
             return RedirectToAction("Login", "Member");
         }
+                   
 
-        if(subPost.Text == null)
-            
-
-        await _memberService.UpdateProfileReplyCounterAsync((int)userId);
+        await _memberService.UpdateProfileSubReplyCounterAsync((int)userId);
         await _postService.UpdatePostReplyCounterAsync((int)subPost.PostId);
         await _postService.CreateSubPostAsync(subPost);
 

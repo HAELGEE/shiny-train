@@ -16,7 +16,7 @@ public interface IMemberRepository
     Task UpdateMemberAdminrightsAsync(int id, bool isAdmin);
     Task UpdateReportsForMemberAsync(int id);
     Task UpdateProfilePostCounterAsync(int id);
-    Task UpdateProfileReplyCounterAsync(int id);
+    Task UpdateProfileSubReplyCounterAsync(int id);         
     Task AddProfileViewAsync(int userId, int visitorId);
     Task ViewProfileViewsAsync(int id);
 
