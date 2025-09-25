@@ -7,8 +7,8 @@
 
     <!-- CHATTEN TILL VÄNSTER -->
     <div class="chat-container" style="flex: auto; flex-direction:row;">
-        <div class="chat-users">
-            <p><b>Användare</b></p>
+        <div class="chat-users" style="color:black">
+            <p><b>Users</b></p>
 
             <input type="button" value="Create chatt" onclick="document.getElementById('conversationBox').style.display = 'block'" style="margin-top: -1rem; margin-bottom:-1.5rem; background-color: cornflowerblue" />
             <div id="conversationBox" style="
@@ -90,7 +90,7 @@
                     {
                         @if (message.SenderId == Model.Member.Id)
                         {
-                            <div class="message me">
+                            <div class="message me" style="color:black">
                                 <b>@Model.Member.UserName</b> @message.TimeCreated.ToString("yyyy/MM/dd - HH:mm") <br />
                                 <hr style="margin-top: 0rem;" />
 
@@ -99,7 +99,7 @@
                         }
                         else
                         {
-                            <div class="message other">
+                            <div class="message other" style="color:black">
                                 <b style="justify-self: flex-end">@message.SenderMember.UserName</b> @message.TimeCreated.ToString("yyyy/MM/dd - HH:mm") <br />
                                 <hr style="margin-top: 0rem;"/>
                                 @message.Text

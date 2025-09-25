@@ -69,6 +69,8 @@ Användaren ska också kunna ladda upp en bild på sig själv, som syns vid sidan om
 ** Klar ** Kalla på nytt lösenord om man glömt ( Inte det säkraste, men går utan att använda Email skick )
 
 Kunna chatta med andra Live!
+
+** Klar ** Kunna skriva meddelande till annan användare
 ---------------------------------------------------------------------------------------------------------------------
 
 /Admin
@@ -101,8 +103,6 @@ Kunna lägg till nya admins via en lista
 
 SMÅ FIX
 ---------------------------------------------------------------------------------------------------------------------
-
-----> Om jag får ett meddelande visas inte det. Men om jag skickar till den som skickade till mig så kommer allt upp <---- PRIO 1
 
 Skall fixa så att listan av members i admin sänks under i vyn tex på mobil
 
