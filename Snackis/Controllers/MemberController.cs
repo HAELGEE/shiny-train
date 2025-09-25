@@ -1,8 +1,10 @@
 ﻿using ApplicationService.Interface;
 using Entity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Globalization;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace Snackis.Controllers;
 
@@ -33,7 +35,7 @@ public class MemberController : Controller
 
 
     [HttpGet("profile")]
-    public async Task<IActionResult> Profile()
+    public async Task<IActionResult> Profile(int receiverId, Chatt chatt)
     {
         var userId = HttpContext.Session.GetInt32("UserId");
 
@@ -49,10 +51,26 @@ public class MemberController : Controller
             ViewBag.Member = member;
 
             viewModel.Member = member;
+            viewModel.Chatts = await _memberService.GetAllChattUsersAsync((int)userId);
+
+            if (receiverId != 0)
+            {
+                viewModel.ChattMessages = await _memberService.GetAllChattBetweenUsersAsync((int)userId, receiverId);
+            }
+
+            if (chatt != null)
+            {
+                await _memberService.CreateChattWithUserAsync(chatt);
+            }
         }
 
 
         return View(viewModel);
+    }
+    [HttpPost("profile")]
+    public IActionResult Profile(Member member)
+    {
+        return View(member);
     }
 
     [HttpPost("MakeAdmin")]
@@ -68,11 +86,6 @@ public class MemberController : Controller
         return RedirectToAction(nameof(Guest), new { id = member.Id });
     }
 
-    [HttpPost("profile")]
-    public IActionResult Profile(Member member)
-    {
-        return View(member);
-    }
 
     [HttpGet("Guest")]
     public async Task<IActionResult> Guest(int id)
@@ -312,5 +325,10 @@ public class MemberController : Controller
         return RedirectToAction(nameof(Profile), "Member");
     }
 
+    [HttpGet("Chatt")]
+    public async Task<IActionResult> Chatt(int userId, int ReceiverId)
+    {
 
+        return Empty;
+    }
 }

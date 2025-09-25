@@ -19,6 +19,9 @@ public interface IMemberRepository
     Task UpdateProfileSubReplyCounterAsync(int id);         
     Task AddProfileViewAsync(int userId, int visitorId);
     Task ViewProfileViewsAsync(int id);
-
+    Task<List<Chatt>> GetAllChattBetweenUsersAsync(int userId, int ReceiverId);
+    Task<List<Chatt>> GetAllChattUsersAsync(int id);
+    Task CreateChattWithUserAsync(Chatt chatt);
+    Task DeleteChattWithUserAsync(int userId, int receiverId);
 
 }

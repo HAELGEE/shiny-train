@@ -105,4 +105,30 @@ public class MemberRepository : IMemberRepository
     }
 
     public async Task ViewProfileViewsAsync(int id) => await _dbContext.MemberViews.Where(m => m.MemberId == id).ToListAsync();
+
+
+    // Chatt CRUD
+    public async Task<List<Chatt>> GetAllChattBetweenUsersAsync(int userId, int ReceiverId) => await _dbContext.Chatt
+        .Where(c => c.SenderId == ReceiverId && c.ReceiverId == ReceiverId)
+        .Include(c => c.Member)
+        .ToListAsync();
+
+    public async Task<List<Chatt>> GetAllChattUsersAsync(int id) => await _dbContext.Chatt.Where(c => c.SenderId == id).ToListAsync();
+    public async Task CreateChattWithUserAsync(Chatt chatt)
+    {
+        chatt.TimeCreated = DateTime.Now;
+        _dbContext.Chatt.Add(chatt);
+        await _dbContext.SaveChangesAsync();
+    }
+    public async Task DeleteChattWithUserAsync(int userId, int receiverId)
+    {
+        var chatts = await GetAllChattBetweenUsersAsync(userId, receiverId);
+
+        foreach (var chatt in chatts)
+        {
+            _dbContext.Remove(chatt);
+        }
+        await _dbContext.SaveChangesAsync();
+    }
+
 }

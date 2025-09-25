@@ -8,7 +8,8 @@ public class FullViewModel
     public List<SubCategory>? SubCategorys { get; set; }
     public List<Post>? Posts { get; set; }
     public List<Post>? Top10Posts { get; set; }
-    public List<SubPost>? SubPosts { get; set; }    
-
+    public List<SubPost>? SubPosts { get; set; }  
+    public List<Chatt>? Chatts { get; set; }
+    public List<Chatt>? ChattMessages { get; set; }
 
 }

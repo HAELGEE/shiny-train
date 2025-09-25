@@ -421,13 +421,13 @@ body.dark .SubcategoriesStyle {
 
 
 /*CHATT*/
-@media (max-width: 1400px) {
+@media (max-width: 1500px) {
     .chat-container {
         margin-left: 8rem;
         margin-right: -8rem;
     }
 }
-@media (max-width: 990px) {
+@media (max-width: 1200px) {
     .chat-container {
         margin-left: 0rem;
         margin-right: 0rem;

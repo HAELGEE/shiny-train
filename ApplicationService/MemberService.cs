@@ -81,6 +81,22 @@ public class MemberService : IMemberService
     {
         await _memberRepository.ViewProfileViewsAsync(id);
     }
+    public async Task<List<Chatt>> GetAllChattBetweenUsersAsync(int userId, int ReceiverId)
+    {
+        return await _memberRepository.GetAllChattBetweenUsersAsync(userId, ReceiverId);
+    }
+    public async Task<List<Chatt>> GetAllChattUsersAsync(int id)
+    {
+        return await _memberRepository.GetAllChattUsersAsync(id);
+    }
+    public async Task CreateChattWithUserAsync(Chatt chatt)
+    {
+        await _memberRepository.CreateChattWithUserAsync(chatt);
+    }
+    public async Task DeleteChattWithUserAsync(int userId, int receiverId)
+    {
+        await _memberRepository.DeleteChattWithUserAsync(userId, receiverId);
+    }
 
     // Reports
     public async Task<List<Reports>> GettingAllReportsAsync()
