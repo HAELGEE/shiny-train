@@ -102,6 +102,8 @@ Kunna lägg till nya admins via en lista
 SMÅ FIX
 ---------------------------------------------------------------------------------------------------------------------
 
+----> Om jag får ett meddelande visas inte det. Men om jag skickar till den som skickade till mig så kommer allt upp <---- PRIO 1
+
 Skall fixa så att listan av members i admin sänks under i vyn tex på mobil
 
 skall fixa så admin på Guestpage där man kan göra grejer på användaren som admin att det hamnar under i vyn tex på mobil

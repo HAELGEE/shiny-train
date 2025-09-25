@@ -34,7 +34,7 @@
                 <form asp-controller="Member" asp-action="CreateChatt">
                     <label for="conversationId" style="display:block;margin:0.5rem 0 0.25rem;font-size:.9rem;">Chatt with user ID</label>
                     <input id="conversationId"
-                           asp-for="@Model.Chatt.ReceiverId"
+                           asp-for="@Model.Chat.ReceiverId"
                            type="text"
                            inputmode="numeric"
                            pattern="\d*"
@@ -43,13 +43,13 @@
                            style="width:100%;box-sizing:border-box;padding:.5rem;border:1px solid #ccc;border-radius:6px;" />
 
                     <label for="conversationText" style="display:block;margin:0.5rem 0 0.25rem;font-size:.9rem;">Text to Member</label>
-                    <input type="text" asp-for="@Model.Chatt.Text"
+                    <input type="text" asp-for="@Model.Chat.Text"
                            id="conversationText"
                            placeholder="Chatt message here.."
                            required
                            style="width:100%;box-sizing:border-box;padding:.5rem;border:1px solid #ccc;border-radius:6px;" />
 
-                    <input type="hidden" asp-for="@Model.Chatt.SenderId" value="@Model.Member.Id" />
+                    <input type="hidden" asp-for="@Model.Chat.SenderId" value="@Model.Member.Id" />
 
                     <div style="display:flex;gap:.5rem;margin-top:.75rem;justify-content:flex-end;">
                         <button type="submit" class="conversation-box__create" style="padding:.5rem .75rem;border-radius:6px;border:1px solid #2b6cb0;background:#2b6cb0;color:#fff;">
@@ -62,31 +62,27 @@
 
             <hr />
             <ul>
-                @if (Model.Chatt != null)
+                @if (Model.Chatts != null)
                 {
-                    @foreach (var chatt in Model.Chatts)
+                    foreach (var chatt in Model.Chatts)
                     {
-                        if (chatt.ReceiverId != Model.Member.Id)
-                        {
-                            <li>
-                                <a asp-controller="Member" asp-action="Profile" method="get" asp-route-receiverId="@chatt.ReceiverId"><input type="button" value="@chatt.ReceiverMember.UserName" onclick="toggleChat()" style="background-color: aquamarine" /></a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a asp-controller="Member" asp-action="Profile" method="get" asp-route-receiverId="@chatt.SenderId"><input type="button" value="@chatt.SenderMember.UserName" onclick="toggleChat()" style="background-color: aquamarine" /></a>
-                            </li>
-                        }
+                        var otherUser = chatt.SenderId == Model.Member.Id
+                        ? chatt.ReceiverMember
+                        : chatt.SenderMember;
 
+                        <li>
+                            <a asp-controller="Member" asp-action="Profile" asp-route-receiverId="@otherUser.Id">
+                                <input type="button" value="@otherUser.UserName" onclick="toggleChat()" style="background-color: aquamarine" />
+                            </a>
+                        </li>
                     }
                 }
             </ul>
         </div>
 
         <!-- NY wrapper för chatten -->
-       
-        <div>
+
+        <div class="chat-area">
             @if (Model.ChattMessages != null)
             {
                 <div class="chat-messages" id="chat-messages">
@@ -95,14 +91,17 @@
                         @if (message.SenderId == Model.Member.Id)
                         {
                             <div class="message me">
-                                <b>@Model.Member.UserName</b> @message.TimeCreated.ToString("yyyy/MM/dd - HH:mm"): <br />
-                                @message.Text                                
+                                <b>@Model.Member.UserName</b> @message.TimeCreated.ToString("yyyy/MM/dd - HH:mm") <br />
+                                <hr style="margin-top: 0rem;" />
+
+                                @message.Text
                             </div>
                         }
                         else
                         {
                             <div class="message other">
-                                <b style="justify-self: flex-end">@message.SenderMember.UserName</b> @message.TimeCreated.ToString("yyyy/MM/dd - HH:mm"): <br />
+                                <b style="justify-self: flex-end">@message.SenderMember.UserName</b> @message.TimeCreated.ToString("yyyy/MM/dd - HH:mm") <br />
+                                <hr style="margin-top: 0rem;"/>
                                 @message.Text
                             </div>
                         }
@@ -110,8 +109,13 @@
                 </div>
 
                 <div class="chat-input">
-                    <input type="text" placeholder="Skriv ett meddelande..." />
-                    <button>Skicka</button>
+                    <form asp-controller="Member" asp-action="SendMessage">
+                        <input type="hidden" asp-for="@Model.Chat.SenderId" value="@Model.Member.Id" />
+                        <input type="hidden" asp-for="@Model.Chat.ReceiverId" value="@Model.ReceiverMemberID" />
+
+                        <input type="text" placeholder="Type message here..." asp-for="@Model.Chat.Text" />
+                        <button type="submit">Send</button>
+                    </form>
                 </div>
             }
         </div>

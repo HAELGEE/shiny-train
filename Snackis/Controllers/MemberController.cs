@@ -53,13 +53,13 @@ public class MemberController : Controller
             viewModel.Member = member;
             viewModel.Chatts = await _memberService.AllChatForMemberAsync((int)userId);
 
-            viewModel.Chatt = new Chatt();
+            viewModel.Chat = new Chatt();
 
 
             if ((int)userId > 0 && receiverId > 0)
             {
                 viewModel.ChattMessages = await _memberService.GetAllChattMessagesFromReceiverIdAsync((int)userId, receiverId);
-
+                viewModel.ReceiverMemberID = receiverId;
             }
 
         }
@@ -325,17 +325,27 @@ public class MemberController : Controller
     }
 
     [HttpPost("CreateChatt")]
-    public async Task<IActionResult> CreateChatt(Chatt chatt)
+    public async Task<IActionResult> CreateChatt(Chatt chat)
     {
-       
-
-
-        if (chatt.SenderId > 0 && chatt.ReceiverId > 0)
+        if (chat.SenderId > 0 && chat.ReceiverId > 0)
         {
-            chatt.SenderMember = await _memberService.GetOneMemberAsync((int)chatt.SenderId);
-            chatt.ReceiverMember = await _memberService.GetOneMemberAsync((int)chatt.ReceiverId);
-            await _memberService.CreateChattWithUserAsync(chatt);
+            chat.SenderMember = await _memberService.GetOneMemberAsync((int)chat.SenderId);
+            chat.ReceiverMember = await _memberService.GetOneMemberAsync((int)chat.ReceiverId);
+            await _memberService.CreateChattWithUserAsync(chat);
         }
-        return RedirectToAction(nameof(Profile), new { ID = chatt.SenderId });
+        return RedirectToAction(nameof(Profile), new { receiverId = chat.ReceiverId });
+    }
+
+    [HttpPost("SendMessage")]
+    public async Task<IActionResult> SendMessage(Chatt chat)
+    {
+        if (chat.SenderId > 0 && chat.ReceiverId > 0)
+        {
+            chat.SenderMember = await _memberService.GetOneMemberAsync((int)chat.SenderId);
+            chat.ReceiverMember = await _memberService.GetOneMemberAsync((int)chat.ReceiverId);
+            await _memberService.CreateChattWithUserAsync(chat);
+        }
+
+        return RedirectToAction(nameof(Profile), new { receiverId = chat.ReceiverId });
     }
 }

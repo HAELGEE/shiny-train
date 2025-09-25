@@ -421,25 +421,27 @@ body.dark .SubcategoriesStyle {
 
 
 /*CHATT*/
-@media (max-width: 1500px) {
+/*@media (max-width: 1540px) {
     .chat-container {
-        margin-left: 8rem;
-        margin-right: -8rem;
+        margin-left: 10rem;
+        margin-right: -1rem;
     }
-}
-@media (max-width: 1200px) {
+}*/
+@media (max-width: 1550px) {
     .chat-container {
         margin-left: 0rem;
-        margin-right: 0rem;
+        margin-right: -1rem;
         visibility: hidden;
     }
 }
 .chat-container {
     display: flex;
     flex-direction: row;
-    width: 30rem; /* tar lagom plats */
+    width: 36rem; /* tar lagom plats */
     border: 1px solid #ccc;
     background: #fff;
+    margin-left: -0rem;
+    margin-right: -6rem;
 }
 
 /* --- Userlistan --- */
@@ -466,6 +468,8 @@ body.dark .SubcategoriesStyle {
     display: flex;
     flex-direction: column;
     min-height: 800px; /* eller 100% / 100vh */
+    max-width: 24rem;
+    min-width: 24rem;
     border: 1px solid #ccc;
 }
 

@@ -149,13 +149,23 @@ public class MemberRepository : IMemberRepository
 
     public async Task<List<Chatt>> AllChatForMemberAsync(int userId)
     {
-        var allSent = await GetAllChattUsersAsync(userId);
-        var allReceived = await GetAllChattReceiversAsync(userId);
+        var chats = await _dbContext.Chatt
+       .Where(c => c.SenderId == userId || c.ReceiverId == userId)
+       .Include(c => c.SenderMember)
+       .Include(c => c.ReceiverMember)
+       .ToListAsync(); 
 
-        var allChats = allSent.Concat(allReceived)
-            .OrderBy(c => c.TimeCreated).ToList();
+        var latestChats = chats
+            .GroupBy(c => new
+            {
+                User1 = Math.Min((int)c.SenderId, (int)c.ReceiverId),
+                User2 = Math.Max((int)c.SenderId, (int)c.ReceiverId)
+            })
+            .Select(g => g.OrderByDescending(c => c.TimeCreated).First())
+            .OrderByDescending(c => c.TimeCreated)
+            .ToList();
 
-        return allChats;
+        return latestChats;
     }
 
     public async Task<List<Chatt>> GetAllChattMessagesFromReceiverIdAsync(int userId, int receiverId) => await _dbContext.Chatt

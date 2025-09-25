@@ -12,6 +12,7 @@ public class FullViewModel
     public List<Chatt>? Chatts { get; set; } = new();
     public List<Chatt>? ChattsByReceiver { get; set; }
     public List<Chatt>? ChattMessages { get; set; }
-    public Chatt? Chatt {  get; set; }
+    public Chatt? Chat {  get; set; }
+    public int? ReceiverMemberID { get; set; }
 
 }
