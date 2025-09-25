@@ -1,6 +1,7 @@
 ﻿using Entity;
 using Entity;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 
 
 namespace EFCore;
@@ -108,21 +109,69 @@ public class MemberRepository : IMemberRepository
 
 
     // Chatt CRUD
-    public async Task<List<Chatt>> GetAllChattBetweenUsersAsync(int userId, int ReceiverId) => await _dbContext.Chatt
-        .Where(c => c.SenderId == ReceiverId && c.ReceiverId == ReceiverId)
-        .Include(c => c.Member)
-        .ToListAsync();
+   
 
-    public async Task<List<Chatt>> GetAllChattUsersAsync(int id) => await _dbContext.Chatt.Where(c => c.SenderId == id).ToListAsync();
+    public async Task<List<Chatt>> GetAllChattUsersAsync(int id)
+    {
+        
+        var latestChatIds = await _dbContext.Chatt
+            .Where(c => c.SenderId == id)
+            .GroupBy(c => c.ReceiverId)
+            .Select(g => g
+                .OrderByDescending(c => c.TimeCreated)
+                .FirstOrDefault().Id)
+            .ToListAsync();
+
+       
+        return await _dbContext.Chatt
+            .Where(c => latestChatIds.Contains(c.Id))
+            .Include(c => c.ReceiverMember)
+            .ToListAsync();
+    }
+
+    public async Task<List<Chatt>> GetAllChattReceiversAsync(int id)
+    {
+
+        var latestChatIds = await _dbContext.Chatt
+            .Where(c => c.ReceiverId == id)
+            .GroupBy(c => c.SenderId)
+            .Select(g => g
+                .OrderByDescending(c => c.TimeCreated)
+                .FirstOrDefault().Id)
+            .ToListAsync();
+
+
+        return await _dbContext.Chatt
+            .Where(c => latestChatIds.Contains(c.Id))
+            .Include(c => c.SenderMember)
+            .ToListAsync();
+    }
+
+    public async Task<List<Chatt>> AllChatForMemberAsync(int userId)
+    {
+        var allSent = await GetAllChattUsersAsync(userId);
+        var allReceived = await GetAllChattReceiversAsync(userId);
+
+        var allChats = allSent.Concat(allReceived)
+            .OrderBy(c => c.TimeCreated).ToList();
+
+        return allChats;
+    }
+
+    public async Task<List<Chatt>> GetAllChattMessagesFromReceiverIdAsync(int userId, int receiverId) => await _dbContext.Chatt
+        .Where(c => c.ReceiverId == receiverId && c.SenderId == userId || c.ReceiverId == userId && c.SenderId == receiverId)        
+        .Order()
+        .ToListAsync();
+    
     public async Task CreateChattWithUserAsync(Chatt chatt)
     {
         chatt.TimeCreated = DateTime.Now;
-        _dbContext.Chatt.Add(chatt);
+        _dbContext.Add(chatt);
         await _dbContext.SaveChangesAsync();
     }
     public async Task DeleteChattWithUserAsync(int userId, int receiverId)
     {
-        var chatts = await GetAllChattBetweenUsersAsync(userId, receiverId);
+        var chatts = await GetAllChattMessagesFromReceiverIdAsync(userId, receiverId);
 
         foreach (var chatt in chatts)
         {

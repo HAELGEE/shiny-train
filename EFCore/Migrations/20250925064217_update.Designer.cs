@@ -4,6 +4,7 @@ using EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250925064217_update")]
+    partial class update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,8 +66,6 @@ namespace EFCore.Migrations
 
                     b.HasIndex("ReceiverId");
 
-                    b.HasIndex("SenderId");
-
                     b.ToTable("Chatt");
                 });
 
@@ -102,6 +103,9 @@ namespace EFCore.Migrations
                     b.Property<string>("Birthday")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ChattId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -150,6 +154,8 @@ namespace EFCore.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ChattId");
 
                     b.HasIndex("UserName", "Email")
                         .IsUnique();
@@ -332,18 +338,9 @@ namespace EFCore.Migrations
                     b.HasOne("Entity.Member", "ReceiverMember")
                         .WithMany("Chatt")
                         .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("FK_Chatt_ReceiverMember");
-
-                    b.HasOne("Entity.Member", "SenderMember")
-                        .WithMany()
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("FK_Chatt_SenderMember");
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("ReceiverMember");
-
-                    b.Navigation("SenderMember");
                 });
 
             modelBuilder.Entity("Entity.Likes", b =>
@@ -359,6 +356,13 @@ namespace EFCore.Migrations
                     b.Navigation("Member");
 
                     b.Navigation("Post");
+                });
+
+            modelBuilder.Entity("Entity.Member", b =>
+                {
+                    b.HasOne("Entity.Chatt", null)
+                        .WithMany("Member")
+                        .HasForeignKey("ChattId");
                 });
 
             modelBuilder.Entity("Entity.MemberView", b =>
@@ -446,6 +450,11 @@ namespace EFCore.Migrations
             modelBuilder.Entity("Entity.Category", b =>
                 {
                     b.Navigation("SubCategories");
+                });
+
+            modelBuilder.Entity("Entity.Chatt", b =>
+                {
+                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("Entity.Member", b =>

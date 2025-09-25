@@ -14,30 +14,30 @@ public class Member
     // Some criteria for user registration
     [Display(Name = "First name", Prompt = "Insert First name here...")]
     [Required(ErrorMessage = "Must type in your First name")]
-    public string? FirstName { get; set; }
+    public string FirstName { get; set; }
 
     [Display(Name = "Last name", Prompt = "Insert Last name here...")]
     [Required(ErrorMessage = "Must type in your Last name")]
-    public string? LastName { get; set; }
+    public string LastName { get; set; }
 
     //[RegularExpression(@"^\d{8}$", ErrorMessage = "Date must be as YYYYMMDD.")]
     [Display(Name = "Birthday", Prompt = "Insert yyyymmdd here...")]
     [Required(ErrorMessage = "Must type in your Birthday")]
     [ValidDate(ErrorMessage = "Date must be a valid date in format YYYYMMDD.")]
-    public string? Birthday { get; set; }
+    public string Birthday { get; set; }
 
     [Display(Name = "Username", Prompt = "Insert Username here...")]
     [Required(ErrorMessage = "Must type in your Username")]
-    public string? UserName { get; set; }
+    public string UserName { get; set; }
 
     [EmailAddress(ErrorMessage = "Must be a legit Email-Address")]
     [Display(Name = "Email", Prompt = "Insert Email-address here...")]
     [Required]
-    public string? Email { get; set; }
+    public string Email { get; set; }
 
     [Display(Name = "Password", Prompt = "Insert your Password here...")]
     [Required(ErrorMessage = "Must type in a Password")]
-    public string? Password { get; set; }
+    public string Password { get; set; }
 
     [Compare("Password", ErrorMessage = "You did not match the passwords")]
     [Display(Name = "Re-Password", Prompt = "Insert your Password here...")]

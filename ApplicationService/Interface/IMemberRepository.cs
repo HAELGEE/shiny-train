@@ -18,10 +18,12 @@ public interface IMemberRepository
     Task UpdateProfilePostCounterAsync(int id);
     Task UpdateProfileSubReplyCounterAsync(int id);         
     Task AddProfileViewAsync(int userId, int visitorId);
-    Task ViewProfileViewsAsync(int id);
-    Task<List<Chatt>> GetAllChattBetweenUsersAsync(int userId, int ReceiverId);
+    Task ViewProfileViewsAsync(int id);   
     Task<List<Chatt>> GetAllChattUsersAsync(int id);
+    Task<List<Chatt>> GetAllChattReceiversAsync(int id);
     Task CreateChattWithUserAsync(Chatt chatt);
     Task DeleteChattWithUserAsync(int userId, int receiverId);
+    Task<List<Chatt>> GetAllChattMessagesFromReceiverIdAsync(int userId, int receiverId);
+    Task<List<Chatt>> AllChatForMemberAsync(int userId);
 
 }

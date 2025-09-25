@@ -4,6 +4,7 @@ using EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250925064516_update2")]
+    partial class update2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,8 +65,6 @@ namespace EFCore.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ReceiverId");
-
-                    b.HasIndex("SenderId");
 
                     b.ToTable("Chatt");
                 });
@@ -332,18 +333,9 @@ namespace EFCore.Migrations
                     b.HasOne("Entity.Member", "ReceiverMember")
                         .WithMany("Chatt")
                         .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("FK_Chatt_ReceiverMember");
-
-                    b.HasOne("Entity.Member", "SenderMember")
-                        .WithMany()
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("FK_Chatt_SenderMember");
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("ReceiverMember");
-
-                    b.Navigation("SenderMember");
                 });
 
             modelBuilder.Entity("Entity.Likes", b =>

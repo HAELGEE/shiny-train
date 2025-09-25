@@ -42,28 +42,27 @@ public class MemberController : Controller
         if (userId == null || userId == 0)
             return RedirectToAction(nameof(Login), "Member");
 
-        FullViewModel viewModel = new FullViewModel();
 
         var member = await _memberService.GetOneMemberAsync((int)userId);
 
+        FullViewModel viewModel = new FullViewModel();
         if (member != null)
         {
             ViewBag.Member = member;
 
             viewModel.Member = member;
-            viewModel.Chatts = await _memberService.GetAllChattUsersAsync((int)userId);
+            viewModel.Chatts = await _memberService.AllChatForMemberAsync((int)userId);
 
-            if (receiverId != 0)
+            viewModel.Chatt = new Chatt();
+
+
+            if ((int)userId > 0 && receiverId > 0)
             {
-                viewModel.ChattMessages = await _memberService.GetAllChattBetweenUsersAsync((int)userId, receiverId);
+                viewModel.ChattMessages = await _memberService.GetAllChattMessagesFromReceiverIdAsync((int)userId, receiverId);
+
             }
 
-            if (chatt != null)
-            {
-                await _memberService.CreateChattWithUserAsync(chatt);
-            }
         }
-
 
         return View(viewModel);
     }
@@ -325,10 +324,18 @@ public class MemberController : Controller
         return RedirectToAction(nameof(Profile), "Member");
     }
 
-    [HttpGet("Chatt")]
-    public async Task<IActionResult> Chatt(int userId, int ReceiverId)
+    [HttpPost("CreateChatt")]
+    public async Task<IActionResult> CreateChatt(Chatt chatt)
     {
+       
 
-        return Empty;
+
+        if (chatt.SenderId > 0 && chatt.ReceiverId > 0)
+        {
+            chatt.SenderMember = await _memberService.GetOneMemberAsync((int)chatt.SenderId);
+            chatt.ReceiverMember = await _memberService.GetOneMemberAsync((int)chatt.ReceiverId);
+            await _memberService.CreateChattWithUserAsync(chatt);
+        }
+        return RedirectToAction(nameof(Profile), new { ID = chatt.SenderId });
     }
 }

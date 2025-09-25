@@ -51,7 +51,6 @@ public class MemberService : IMemberService
     {
         return await _memberRepository.GetMemberByUsernamePasswordAsync(username, password);
     }
-
     public async Task UpdateMemberAsync(Member member)
     {
         await _memberRepository.UpdateMemberAsync(member);
@@ -81,13 +80,14 @@ public class MemberService : IMemberService
     {
         await _memberRepository.ViewProfileViewsAsync(id);
     }
-    public async Task<List<Chatt>> GetAllChattBetweenUsersAsync(int userId, int ReceiverId)
-    {
-        return await _memberRepository.GetAllChattBetweenUsersAsync(userId, ReceiverId);
-    }
+    
     public async Task<List<Chatt>> GetAllChattUsersAsync(int id)
     {
         return await _memberRepository.GetAllChattUsersAsync(id);
+    }
+    public async Task<List<Chatt>> GetAllChattReceiversAsync(int id)
+    {
+        return await _memberRepository.GetAllChattReceiversAsync(id);
     }
     public async Task CreateChattWithUserAsync(Chatt chatt)
     {
@@ -96,6 +96,14 @@ public class MemberService : IMemberService
     public async Task DeleteChattWithUserAsync(int userId, int receiverId)
     {
         await _memberRepository.DeleteChattWithUserAsync(userId, receiverId);
+    }
+    public async Task<List<Chatt>> GetAllChattMessagesFromReceiverIdAsync(int userId, int receiverId)
+    {
+        return await _memberRepository.GetAllChattMessagesFromReceiverIdAsync(userId, receiverId);
+    }
+    public async Task<List<Chatt>> AllChatForMemberAsync(int userId)
+    {
+        return await _memberRepository.AllChatForMemberAsync(userId);
     }
 
     // Reports

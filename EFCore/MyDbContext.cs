@@ -5,10 +5,10 @@ namespace EFCore;
 
 public class MyDbContext : DbContext
 {
-    
+
 
     public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
-    {        
+    {
     }
 
     public DbSet<Member> Member { get; set; }
@@ -37,5 +37,21 @@ public class MyDbContext : DbContext
             .WithMany()
             .HasForeignKey(mv => mv.VisitorId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Chatt>()
+         .HasOne(c => c.SenderMember)
+         .WithMany()
+         .HasForeignKey(c => c.SenderId)
+         .OnDelete(DeleteBehavior.Restrict)
+         .HasConstraintName("FK_Chatt_SenderMember");
+
+        modelBuilder.Entity<Chatt>()
+        .HasOne(c => c.ReceiverMember)
+        .WithMany(m => m.Chatt)
+        .HasForeignKey(c => c.ReceiverId)
+        .OnDelete(DeleteBehavior.Restrict)
+        .HasConstraintName("FK_Chatt_ReceiverMember");
+
+
     }
 }

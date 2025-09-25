@@ -5,36 +5,117 @@
 }
 <div style="display: flex; flex-direction:row; justify-content: space-evenly;">
 
-     <!-- CHATTEN TILL VÄNSTER -->
-     <div class="chat-container" style="flex: auto; flex-direction:row;">
-
+    <!-- CHATTEN TILL VÄNSTER -->
+    <div class="chat-container" style="flex: auto; flex-direction:row;">
         <div class="chat-users">
             <p><b>Användare</b></p>
+
+            <input type="button" value="Create chatt" onclick="document.getElementById('conversationBox').style.display = 'block'" style="margin-top: -1rem; margin-bottom:-1.5rem; background-color: cornflowerblue" />
+            <div id="conversationBox" style="
+                  display:none;
+                  position:fixed;
+                  top:20%;
+                  left:40%;
+                  transform:translate(-50%, -50%);
+                  background:#fff;
+                  padding:1rem;
+                  border:1px solid #ccc;
+                  border-radius:8px;
+                  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+                  z-index:1000;
+                  max-width:400px;
+                  width:90%;
+                ">
+                <header class="conversation-box__header" aria-label="Skapa konversation" style="display:flex; flex-direction: row; justify-content:space-between;">
+                    <h3 style="margin:0;font-size:1rem;">Create Conversation</h3>
+                    <button type="button" class="conversation-box__close" aria-label="Stäng" style="background:red;" onclick="this.closest('#conversationBox').style.display='none'">✕</button>
+                </header>
+
+                <form asp-controller="Member" asp-action="CreateChatt">
+                    <label for="conversationId" style="display:block;margin:0.5rem 0 0.25rem;font-size:.9rem;">Chatt with user ID</label>
+                    <input id="conversationId"
+                           asp-for="@Model.Chatt.ReceiverId"
+                           type="text"
+                           inputmode="numeric"
+                           pattern="\d*"
+                           placeholder="Type ID-number here.."
+                           required
+                           style="width:100%;box-sizing:border-box;padding:.5rem;border:1px solid #ccc;border-radius:6px;" />
+
+                    <label for="conversationText" style="display:block;margin:0.5rem 0 0.25rem;font-size:.9rem;">Text to Member</label>
+                    <input type="text" asp-for="@Model.Chatt.Text"
+                           id="conversationText"
+                           placeholder="Chatt message here.."
+                           required
+                           style="width:100%;box-sizing:border-box;padding:.5rem;border:1px solid #ccc;border-radius:6px;" />
+
+                    <input type="hidden" asp-for="@Model.Chatt.SenderId" value="@Model.Member.Id" />
+
+                    <div style="display:flex;gap:.5rem;margin-top:.75rem;justify-content:flex-end;">
+                        <button type="submit" class="conversation-box__create" style="padding:.5rem .75rem;border-radius:6px;border:1px solid #2b6cb0;background:#2b6cb0;color:#fff;">
+                            Create
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+
+            <hr />
             <ul>
-                <li>Elsa</li>
-                <li>Alma</li>
+                @if (Model.Chatt != null)
+                {
+                    @foreach (var chatt in Model.Chatts)
+                    {
+                        if (chatt.ReceiverId != Model.Member.Id)
+                        {
+                            <li>
+                                <a asp-controller="Member" asp-action="Profile" method="get" asp-route-receiverId="@chatt.ReceiverId"><input type="button" value="@chatt.ReceiverMember.UserName" onclick="toggleChat()" style="background-color: aquamarine" /></a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a asp-controller="Member" asp-action="Profile" method="get" asp-route-receiverId="@chatt.SenderId"><input type="button" value="@chatt.SenderMember.UserName" onclick="toggleChat()" style="background-color: aquamarine" /></a>
+                            </li>
+                        }
+
+                    }
+                }
             </ul>
         </div>
 
         <!-- NY wrapper för chatten -->
-        <div class="chat-area">
-            <div class="chat-messages">
-                <div class="message me">
-                    <b>Jag</b> (10:31): <br />
-                    Hej, vad gör du?
+       
+        <div>
+            @if (Model.ChattMessages != null)
+            {
+                <div class="chat-messages" id="chat-messages">
+                    @foreach (var message in Model.ChattMessages)
+                    {
+                        @if (message.SenderId == Model.Member.Id)
+                        {
+                            <div class="message me">
+                                <b>@Model.Member.UserName</b> @message.TimeCreated.ToString("yyyy/MM/dd - HH:mm"): <br />
+                                @message.Text                                
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="message other">
+                                <b style="justify-self: flex-end">@message.SenderMember.UserName</b> @message.TimeCreated.ToString("yyyy/MM/dd - HH:mm"): <br />
+                                @message.Text
+                            </div>
+                        }
+                    }
                 </div>
-                <div class="message other">
-                    <b style="justify-self: flex-end">Elsa</b> (10:32): <br />
-                    Jag gör inget just nu, vad gör du?
-                </div>
-            </div>
 
-            <div class="chat-input">
-                <input type="text" placeholder="Skriv ett meddelande..." />
-                <button>Skicka</button>
-            </div>
+                <div class="chat-input">
+                    <input type="text" placeholder="Skriv ett meddelande..." />
+                    <button>Skicka</button>
+                </div>
+            }
         </div>
-    </div> 
+    </div>
 
     <!-- PROFILSIDA MITTEN -->
     <div style="display: flex; flex-direction:column; align-items:center; width: 50rem; margin-right:7.8rem;">
