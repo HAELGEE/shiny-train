@@ -18,11 +18,10 @@ public class HomeController : Controller
         _categoryService = categoryService;
         _memberService = memberService;
     }
-    //public async Task<IActionResult> Index()
+   
     public async Task<IActionResult> Index()
     {
         var recentPosts = await _postService.Getting10RecentPostByReplyAsync();
-        //var allPosts = await _postRepository.GettingAllPostForSubCategoryAsync();
         var categories = await _categoryService.GetAllCategoriesAsync();
         var subCategories = await _categoryService.GetAllSubCategoriesAsync();
         var top10 = await _postService.Getting10RecentPostByReplyAsync();
@@ -87,10 +86,6 @@ public class HomeController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        
-
-
-
         var fullModel = new FullViewModel
         {
             Posts = addToPost,
@@ -103,38 +98,10 @@ public class HomeController : Controller
         return View(fullModel);
     }
 
-
-
-
-
     public IActionResult Info()
     {
         return View();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

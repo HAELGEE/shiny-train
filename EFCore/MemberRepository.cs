@@ -109,43 +109,6 @@ public class MemberRepository : IMemberRepository
 
 
     // Chatt CRUD
-   
-
-    //public async Task<List<Chatt>> GetAllChattUsersAsync(int id)
-    //{
-        
-    //    var latestChatIds = await _dbContext.Chatt
-    //        .Where(c => c.SenderId == id)
-    //        .GroupBy(c => c.ReceiverId)
-    //        .Select(g => g
-    //            .OrderByDescending(c => c.TimeCreated)
-    //            .FirstOrDefault().Id)
-    //        .ToListAsync();
-
-       
-    //    return await _dbContext.Chatt
-    //        .Where(c => latestChatIds.Contains(c.Id))
-    //        .Include(c => c.ReceiverMember)
-    //        .ToListAsync();
-    //}
-
-    //public async Task<List<Chatt>> GetAllChattReceiversAsync(int id)
-    //{
-
-    //    var latestChatIds = await _dbContext.Chatt
-    //        .Where(c => c.ReceiverId == id)
-    //        .GroupBy(c => c.SenderId)
-    //        .Select(g => g
-    //            .OrderByDescending(c => c.TimeCreated)
-    //            .FirstOrDefault().Id)
-    //        .ToListAsync();
-
-
-    //    return await _dbContext.Chatt
-    //        .Where(c => latestChatIds.Contains(c.Id))
-    //        .Include(c => c.SenderMember)
-    //        .ToListAsync();
-    //}
 
     public async Task<List<Chatt>> AllChatForMemberAsync(int userId)
     {
