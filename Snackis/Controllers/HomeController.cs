@@ -31,6 +31,23 @@ public class HomeController : Controller
 
         var addToPost = await _postService.GettingAll25RecentPostsAsync();
 
+        if (members.Count > 0)
+        {
+            var admin = new Member
+            {
+                FirstName = "admin",
+                LastName = "admin",
+                Email = "admin@admin.se",
+                Birthday = "20000101",
+                IsAdmin = true,
+                IsOwner = true,
+                Password = "password",
+                UserName = "Admin",
+            };
+            await _memberService.CreateMemberAsync(admin);
+        }
+
+
         if (categories.Count > 0)
         {
             var catogry1 = new Category
