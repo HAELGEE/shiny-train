@@ -47,7 +47,7 @@ public class Member
     // Admin rights
     public bool IsOwner { get; set; } = false;
     public bool IsAdmin { get; set; } = false;
-    public int? Reports { get; set; } = 0;
+    public int Reports { get; set; } = 0;
 
     // Information for the View on Profile
     public int Age
@@ -70,7 +70,7 @@ public class Member
 
     public int TotalPosts { get; set; } = 0;
     public int TotalReply { get; set; } = 0;
-    public DateTime? RegisteryDate { get; set; } = DateTime.Now;
+    public DateTime? RegisteryDate { get; set; } = DateTime.UtcNow;
     public string ProfileImagePath { get; set; } = "/uploads/standardProfile.png";
 
 

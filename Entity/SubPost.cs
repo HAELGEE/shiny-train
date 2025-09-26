@@ -7,15 +7,15 @@ public class SubPost
 
     [Display(Name = "Reply text", Prompt = "Insert text here...")]
     [Required]
-    public string? Text { get; set; }
+    public string Text { get; set; }
     public bool? Reported { get; set; } = false;
 
-    public DateTime? Created { get; set; } = DateTime.Now;
+    public DateTime Created { get; set; } = DateTime.UtcNow;
 
 
     // DB connections
-    public int? PostId { get; set; }
-    public int? MemberId { get; set; }
+    public int PostId { get; set; }
+    public int MemberId { get; set; }
     public Member? Member { get; set; }
 
 }
