@@ -11,6 +11,6 @@ public class SubCategory
 
 
     // DB connections
-    public int CategoryId { get; set; }
+    public int? CategoryId { get; set; }
     public ICollection<Post>? Posts { get; set; }
 }
