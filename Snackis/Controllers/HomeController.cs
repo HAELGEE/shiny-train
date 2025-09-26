@@ -37,7 +37,7 @@ public class HomeController : Controller
                 FirstName = "admin",
                 LastName = "admin",
                 Email = "admin@admin.se",
-                Birthday = "20000101",
+                Birthday = "11111111",
                 IsAdmin = true,
                 IsOwner = true,
                 Password = "password",
@@ -70,6 +70,7 @@ public class HomeController : Controller
             var subCategory2 = new SubCategory
             {
                 CategoryId = 2,
+
                 Name = "Fotball",
             };
             var subCategory3 = new SubCategory

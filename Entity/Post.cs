@@ -13,10 +13,10 @@ public class Post
     [Required]
     public string Text { get; set; }   // Text (information about the context)
 
-    //public int View { get; set; } = 0;
-    //public int Like { get; set; } = 0;
+    public string? ImagePath { get; set; }
+
     public int Reply { get; set; } = 0;
-    public bool? Reported { get; set; } = false;
+    public bool Reported { get; set; } = false;
     public int? ReporterId { get; set; }
     public int TotalReports { get; set; } = 0;
 

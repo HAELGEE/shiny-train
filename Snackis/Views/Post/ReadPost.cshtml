@@ -78,7 +78,6 @@
             ViewBag.ViewsNumber = 0;
         }
         <span>@ViewBag.ViewsNumber Views</span>
-        @* <span>@item.View Views</span> *@
 
         @* REPLIES *@
         <span>@Model.Post.Reply Replies</span>
@@ -135,10 +134,18 @@
                 </div>
                 <hr />
 
-                <div style="height: 9rem;">
-                    <p style="margin-top: 1.5rem; margin-left: 2rem;">
-                        @Model.Post.Text
-                    </p>
+                <div style="min-height: 9rem; display: flex; flex-direction: row;">
+                    @if (Model.Post.ImagePath != null)
+                    {
+                        <div style="margin-left:1.5rem;">
+                            <img src="@Model.Post.ImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
+                        </div>
+                    }
+                    <div>
+                        <p style="margin-top: 1.5rem; margin-left: 2rem;">
+                            @Model.Post.Text
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -191,8 +198,8 @@
 
                             <div style="display: flex; flex-direction: column;">
                                 <div style="display: flex; justify-content: center;">
-                                    <div class="post" style="width: 50rem; height: 10rem;">                                        
-                                        <textarea class="textarea-styling" asp-for="@Model.SubPost.Text"></textarea>                                        
+                                    <div class="post" style="width: 50rem; height: 10rem;">
+                                        <textarea class="textarea-styling" asp-for="@Model.SubPost.Text"></textarea>
                                     </div>
                                 </div>
                                 <button type="submit" class="button-to-right">Update</button>
