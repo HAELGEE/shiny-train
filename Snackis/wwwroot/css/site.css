@@ -340,6 +340,7 @@ body.dark .SubcategoriesStyle {
     }
 }
 
+/* For index page */
 @media (max-width: 2300px) {
     .posts {        
         width: 60rem;
@@ -351,12 +352,12 @@ body.dark .SubcategoriesStyle {
     }
 }
 
+/* Readpost page */
 @media (max-width: 1600px) {
     .posts2 {
         width: 60rem;
     }
 }
-
 @media (max-width: 1200px) {
     .posts2 {
         width: 35rem;
