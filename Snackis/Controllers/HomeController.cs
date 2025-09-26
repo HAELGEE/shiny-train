@@ -30,7 +30,51 @@ public class HomeController : Controller
         var members = await _memberService.GetAllMembersAsync();
 
         var addToPost = await _postService.GettingAll25RecentPostsAsync();
-                
+
+        if (categories.Count > 0)
+        {
+            var catogry1 = new Category
+            {
+                Name = "Cars",
+            };
+            var catogry2 = new Category
+            {
+                Name = "Hobbys",
+            };
+            var catogry3 = new Category
+            {
+                Name = "Gaming",
+            };
+
+            await _categoryService.CreateCategoryAsync(catogry1);
+            await _categoryService.CreateCategoryAsync(catogry2);
+            await _categoryService.CreateCategoryAsync(catogry3);
+        }
+
+        if (subCategories.Count > 0)
+        {
+            var subCategory1 = new SubCategory
+            {
+                CategoryId = 1,
+                Name = "Volvo",
+            };
+            var subCategory2 = new SubCategory
+            {
+                CategoryId = 2,
+                Name = "Fotball",
+            };
+            var subCategory3 = new SubCategory
+            {
+                CategoryId = 3,
+                Name = "Dota2",
+            };
+            
+            await _categoryService.CreateSubCategoryAsync(subCategory1);
+            await _categoryService.CreateSubCategoryAsync(subCategory2);
+            await _categoryService.CreateSubCategoryAsync(subCategory2);
+        }
+
+
 
         var fullModel = new FullViewModel
         {

@@ -202,7 +202,7 @@ public class PostController : Controller
         var post = new Post
         {
             SubCategoryId = id,
-            MemberId = userId,
+            MemberId = (int)userId,
         };
 
         await _memberService.UpdateProfilePostCounterAsync((int)userId);
