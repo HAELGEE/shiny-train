@@ -16,7 +16,7 @@
                         @foreach (var member in Model.Members)
                         {
                             <tr>
-                                <td style="color:steelblue">@member.UserName</td>
+                                <td style="color:steelblue"><a asp-controller="Member" asp-action="Guest" asp-route-id="@member.Id">@member.UserName</a></td>
                                 @if (@member.IsAdmin)
                                 {
                                     <td>Is admin: <b style="color:green;">@member.IsAdmin</b></td>

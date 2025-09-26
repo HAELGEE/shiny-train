@@ -94,7 +94,7 @@ public class MemberController : Controller
         if (userId == null || userId == 0)
             return RedirectToAction(nameof(Login), "Member");
 
-        if (userId == id)
+        if (userId == id || id == 0)
             return RedirectToAction(nameof(Profile), "Member");
 
 
