@@ -160,6 +160,8 @@ public class MemberController : Controller
         await _memberService.CreateMemberAsync(member);
         HttpContext.Session.SetInt32("UserId", member.Id);
         HttpContext.Session.SetString("UserName", member.UserName);
+        HttpContext.Session.SetInt32("IsAdmin", 0);
+
 
         return RedirectToAction(nameof(Index), "Home");
     }
