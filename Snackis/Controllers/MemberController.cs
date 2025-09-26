@@ -76,7 +76,7 @@ public class MemberController : Controller
         if (fullViewModel.UploadedImage != null)
         {
             // Valfritt sätt att göra bildnamnet unikt
-            filename = Random.Shared.Next(0, 99999).ToString() + "_" + $"{HttpContext.Session.GetInt32("UserId")}"
+            filename = Random.Shared.Next(0, 99999).ToString() + "_" + $"ID={HttpContext.Session.GetInt32("UserId")}"
                 + "_" + fullViewModel.UploadedImage.FileName;
 
             using (var fileStream = new FileStream("./wwwroot/uploads/" + filename, FileMode.Create))
