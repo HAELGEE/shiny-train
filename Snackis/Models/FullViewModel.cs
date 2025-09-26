@@ -14,5 +14,6 @@ public class FullViewModel
     public List<Chatt>? ChattMessages { get; set; }
     public Chatt? Chat {  get; set; }
     public int? ReceiverMemberID { get; set; }
+    public IFormFile? UploadedImage { get; set; }
 
 }

@@ -42,6 +42,8 @@ public class MemberController : Controller
         if (userId == null || userId == 0)
             return RedirectToAction(nameof(Login), "Member");
 
+       
+
 
         var member = await _memberService.GetOneMemberAsync((int)userId);
 
@@ -67,9 +69,29 @@ public class MemberController : Controller
         return View(viewModel);
     }
     [HttpPost("profile")]
-    public IActionResult Profile(Member member)
+    public async Task<IActionResult> Profile(Member member, FullViewModel fullViewModel)
     {
-        return View(member);
+        string filename = "";
+
+        if (fullViewModel.UploadedImage != null)
+        {
+            // Valfritt sätt att göra bildnamnet unikt
+            filename = Random.Shared.Next(0, 99999).ToString() + "_" + $"{HttpContext.Session.GetInt32("UserId")}"
+                + "_" + fullViewModel.UploadedImage.FileName;
+
+            using (var fileStream = new FileStream("./wwwroot/uploads/" + filename, FileMode.Create))
+            {
+                await fullViewModel.UploadedImage.CopyToAsync(fileStream);
+            }
+            var userMember = await _memberService.GetOneMemberAsync((int)HttpContext.Session.GetInt32("UserId"));
+
+            userMember.ProfileImagePath = "/uploads/" + filename;
+            await _memberService.UpdateMemberAsync(userMember);
+        }
+
+        fullViewModel.Member = member;
+
+        return RedirectToAction(nameof(Profile));
     }
 
     [HttpPost("MakeAdmin")]

@@ -35,7 +35,7 @@
                     <label for="conversationId" style="display:block;margin:0.5rem 0 0.25rem;font-size:.9rem;">Message to?</label>
                     <input id="conversationId"
                            name="userName"
-                           type="text" 
+                           type="text"
                            placeholder="Type Username here.."
                            required
                            style="width:100%;box-sizing:border-box;padding:.5rem;border:1px solid #ccc;border-radius:6px;" />
@@ -99,7 +99,7 @@
                         {
                             <div class="message other" style="color:black">
                                 <b style="justify-self: flex-end">@message.SenderMember.UserName</b> @message.TimeCreated.ToString("yyyy/MM/dd - HH:mm") <br />
-                                <hr style="margin-top: 0rem;"/>
+                                <hr style="margin-top: 0rem;" />
                                 @message.Text
                             </div>
                         }
@@ -124,7 +124,13 @@
         <h1>@ViewData["Title"] Page</h1>
         <br />
         <img src="@Model.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
-        <br /><br />
+        <form asp-controller="Member" asp-action="Profile" method="post" enctype="multipart/form-data">  
+
+            <input asp-for="UploadedImage" style="margin-left: 9.5rem;"/><br />
+            <input type="submit" class="btn btn-success" value="Change Picture" style="margin-left: 9.5rem; margin-top: 0.3rem;" />
+        </form>
+        <br />
+        <br />
 
         <p><b>First name: </b>@Model.Member.FirstName</p>
         <p><b>Last name: </b>@Model.Member.LastName</p>
