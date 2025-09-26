@@ -51,9 +51,9 @@ public class MemberService : IMemberService
     {
         return await _memberRepository.GetMemberByUsernamePasswordAsync(username, password);
     }
-    public async Task UpdateMemberAsync(Member member)
+    public async Task UpdateMemberAsync(Member member,string? image)
     {
-        await _memberRepository.UpdateMemberAsync(member);
+        await _memberRepository.UpdateMemberAsync(member, image);
     }
     public async Task UpdateMemberAdminrightsAsync(int id, bool isAdmin)
     {

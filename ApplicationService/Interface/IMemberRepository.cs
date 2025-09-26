@@ -1,4 +1,5 @@
 ﻿using Entity;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace EFCore;
 public interface IMemberRepository
@@ -12,7 +13,7 @@ public interface IMemberRepository
     Task<Member> GetAdminMemberAsync(int id);
     Task<Member> GetMemberByEmailAsync(string email);
     Task<Member> GetMemberByUsernamePasswordAsync(string username, string password);
-    Task UpdateMemberAsync(Member member);
+    Task UpdateMemberAsync(Member member, string? image);
     Task UpdateMemberAdminrightsAsync(int id, bool isAdmin);
     Task UpdateReportsForMemberAsync(int id);
     Task UpdateProfilePostCounterAsync(int id);

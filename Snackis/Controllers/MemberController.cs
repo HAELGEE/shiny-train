@@ -85,8 +85,11 @@ public class MemberController : Controller
             }
             var userMember = await _memberService.GetOneMemberAsync((int)HttpContext.Session.GetInt32("UserId"));
 
+            string pictureId = userMember.ProfileImagePath;
+
             userMember.ProfileImagePath = "/uploads/" + filename;
-            await _memberService.UpdateMemberAsync(userMember);
+            
+            await _memberService.UpdateMemberAsync(userMember, pictureId);
         }
 
         fullViewModel.Member = member;
@@ -240,7 +243,7 @@ public class MemberController : Controller
 
             newMember.Password = new string(newPassword);
 
-            await _memberService.UpdateMemberAsync(newMember);
+            await _memberService.UpdateMemberAsync(newMember, null);
         }
         return RedirectToAction(nameof(ForgotPassword), new { password = new string(newPassword) });
     }
@@ -343,7 +346,7 @@ public class MemberController : Controller
         member.Id = id;
 
 
-        await _memberService.UpdateMemberAsync(member);
+        await _memberService.UpdateMemberAsync(member, null);
 
         return RedirectToAction(nameof(Profile), "Member");
     }
