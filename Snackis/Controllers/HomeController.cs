@@ -31,7 +31,7 @@ public class HomeController : Controller
 
         var addToPost = await _postService.GettingAll25RecentPostsAsync();
 
-        if (members.Count == 0)
+        if (members.Count == 0 && categories.Count == 0 && subCategories.Count == 0)
         {
             var admin = new Member
             {
@@ -45,11 +45,7 @@ public class HomeController : Controller
                 UserName = "Admin",
             };
             await _memberService.CreateMemberAsync(admin);
-        }
 
-
-        if (categories.Count == 0)
-        {
             var catogry1 = new Category
             {
                 Name = "Cars",
@@ -66,10 +62,7 @@ public class HomeController : Controller
             await _categoryService.CreateCategoryAsync(catogry1);
             await _categoryService.CreateCategoryAsync(catogry2);
             await _categoryService.CreateCategoryAsync(catogry3);
-        }
-
-        if (subCategories.Count == 0)
-        {           
+                 
             var subCategory1 = new SubCategory
             {
                 CategoryId = 1,
@@ -93,6 +86,8 @@ public class HomeController : Controller
 
             return RedirectToAction(nameof(Index));
         }
+
+        
 
 
 
