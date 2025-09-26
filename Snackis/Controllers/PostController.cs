@@ -205,19 +205,40 @@ public class PostController : Controller
             MemberId = (int)userId,
         };
 
+        var view = new FullViewModel
+        {
+            Post = post,
+        };
+
         await _memberService.UpdateProfilePostCounterAsync((int)userId);
-        return View(post);
+        return View(view);
     }
 
     [HttpPost("CreatePost")]
-    public async Task<IActionResult> CreatePost(Post post)
+    public async Task<IActionResult> CreatePost(FullViewModel fullViewModel)
     {
-        if (!ModelState.IsValid)
-            return View(post);
+       
+        string filename = "";
 
-        await _postService.CreatePostAsync(post);
+        if (fullViewModel.UploadedImage != null)
+        {
+            // Valfritt sätt att göra bildnamnet unikt
+            filename = Random.Shared.Next(0, 99999).ToString() + "_" + $"ID={HttpContext.Session.GetInt32("UserId")}"
+                + "_" + fullViewModel.UploadedImage.FileName;
 
-        return RedirectToAction("ReadPost", new { id = post.Id });
+            using (var fileStream = new FileStream("./wwwroot/uploads/" + filename, FileMode.Create))
+            {
+                await fullViewModel.UploadedImage.CopyToAsync(fileStream);
+            }
+
+
+            fullViewModel.Post.ImagePath = "/uploads/" + filename;
+            
+        }
+
+        await _postService.CreatePostAsync(fullViewModel.Post);
+
+        return RedirectToAction("ReadPost", new { id = fullViewModel.Post.Id });
     }
 
     [HttpGet("UpdatePost")]

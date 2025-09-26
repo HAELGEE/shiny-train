@@ -21,7 +21,7 @@ public class Post
     public int TotalReports { get; set; } = 0;
 
     public DateTime Created { get; set; } = DateTime.UtcNow;
-
+   
 
     // DB connections
     public int? SubCategoryId { get; set; }

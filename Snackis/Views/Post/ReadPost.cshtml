@@ -137,15 +137,15 @@
                 <div style="min-height: 9rem; display: flex; flex-direction: row;">
                     @if (Model.Post.ImagePath != null)
                     {
-                        <div style="margin-left:1.5rem;">
+                        <div style="margin-left:1.5rem;"> 
                             <img src="@Model.Post.ImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
-                        </div>
+                         </div> 
                     }
-                    <div>
-                        <p style="margin-top: 1.5rem; margin-left: 2rem;">
+                      <div> 
+                        <p style="margin-top: -0.15rem; margin-left: 2rem;">
                             @Model.Post.Text
                         </p>
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>
@@ -186,7 +186,19 @@
                     <br />
                     @if (Context.Session.GetInt32("updateSubpost") != item.Id || Context.Session.GetInt32("updateSubpost") == null)
                     {
-                        <p style="margin-left: 2rem; margin-top: -6rem;">@item.Text</p>
+                        <div style="min-height: 9rem; display: flex; flex-direction: row;">
+                            @if (Model.SubPost.ImagePath != null)
+                            {
+                                <div style="margin-left:1.5rem; margin-top: -2rem;">
+                                    <img src="@Model.SubPost.ImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
+                                </div>
+                            }
+                            <div>
+                                <p style="margin-top: -2.3rem; margin-left: 2rem;">
+                                    @item.Text
+                                </p>
+                            </div>
+                        </div>
                     }
                     else if (Context.Session.GetInt32("updateSubpost") == item.Id)
                     {

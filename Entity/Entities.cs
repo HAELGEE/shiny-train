@@ -1,4 +1,6 @@
-﻿namespace Entity;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Entity;
 public class Entities
 {
     public Member? Member { get; set; }
@@ -21,5 +23,8 @@ public class Entities
 
     public string? Password { get; set; }
     public string? WarningMessage { get; set; }
-   
+
+    
+
+
 }

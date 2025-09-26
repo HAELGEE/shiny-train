@@ -7,6 +7,7 @@ public class FullViewModel
     public List<Category>? Categorys { get; set; } = new();
     public List<SubCategory>? SubCategorys { get; set; }
     public List<Post>? Posts { get; set; }
+    public Post? Post { get; set; }
     public List<Post>? Top10Posts { get; set; }
     public List<SubPost>? SubPosts { get; set; }
     public List<Chatt>? Chatts { get; set; } = new();
