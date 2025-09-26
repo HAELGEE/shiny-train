@@ -32,13 +32,11 @@
                 </header>
 
                 <form asp-controller="Member" asp-action="CreateChatt">
-                    <label for="conversationId" style="display:block;margin:0.5rem 0 0.25rem;font-size:.9rem;">Chatt with user ID</label>
+                    <label for="conversationId" style="display:block;margin:0.5rem 0 0.25rem;font-size:.9rem;">Message to?</label>
                     <input id="conversationId"
-                           asp-for="@Model.Chat.ReceiverId"
-                           type="text"
-                           inputmode="numeric"
-                           pattern="\d*"
-                           placeholder="Type ID-number here.."
+                           name="userName"
+                           type="text" 
+                           placeholder="Type Username here.."
                            required
                            style="width:100%;box-sizing:border-box;padding:.5rem;border:1px solid #ccc;border-radius:6px;" />
 

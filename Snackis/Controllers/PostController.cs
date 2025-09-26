@@ -40,8 +40,8 @@ public class PostController : Controller
     [HttpPost("LikeButton")]
     public async Task<IActionResult> LikeButton(int postId, int memberId)
     {
-        if(memberId > 0)
-        {            
+        if (memberId > 0)
+        {
             await _postService.UpdatePostLikesCounterAsync(postId, memberId);
         }
 
@@ -85,14 +85,21 @@ public class PostController : Controller
     [HttpGet("Report")]
     public async Task<IActionResult> Report(int id, int reporterId)
     {
-        HttpContext.Session.SetInt32("updateSubpost", 0);
+        if (id == 0 || reporterId == 0)
+            return RedirectToAction("Index", "Home");
+
         await _postService.ReportPostAsync(id, reporterId);
 
         return RedirectToAction(nameof(ReadPost), new { Id = id });
     }
+
     [HttpGet("UnReport")]
     public async Task<IActionResult> UnReport(int id, int reporterId)
     {
+        if (id > 0 || reporterId > 0)
+            return RedirectToAction("Index", "Home");
+
+
         HttpContext.Session.SetInt32("updateSubpost", 0);
         await _postService.UnReportPostAsync(id, reporterId);
 
@@ -154,6 +161,9 @@ public class PostController : Controller
     [HttpGet("DeleteSubPost")]
     public async Task<IActionResult> DeleteSubPost(int id)
     {
+        if (id > 0)
+            HttpContext.Session.SetInt32("updateSubpost", 0);
+
         var userId = HttpContext.Session.GetInt32("UserId");
 
         var subPostCheck = await _postService.GetOneSubPostAsync(id);
@@ -236,7 +246,7 @@ public class PostController : Controller
     [HttpPost("CreateSubPost")]
     public async Task<IActionResult> CreateSubPost(SubPost subPost)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId });
 
         var userId = HttpContext.Session.GetInt32("UserId");
@@ -244,7 +254,7 @@ public class PostController : Controller
         {
             return RedirectToAction("Login", "Member");
         }
-                   
+
 
         await _memberService.UpdateProfileSubReplyCounterAsync((int)userId);
         await _postService.UpdatePostReplyCounterAsync((int)subPost.PostId);
@@ -275,14 +285,14 @@ public class PostController : Controller
         HttpContext.Session.SetInt32("updateSubpost", 0);
 
         if (!ModelState.IsValid)
-            return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId });  
-        
+            return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId });
+
 
         await _postService.UpdateSubPostAsync(subPost);
 
-        return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId});
+        return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId });
     }
 
-   
+
 
 }

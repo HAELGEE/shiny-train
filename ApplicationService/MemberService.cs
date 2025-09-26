@@ -81,14 +81,14 @@ public class MemberService : IMemberService
         await _memberRepository.ViewProfileViewsAsync(id);
     }
     
-    public async Task<List<Chatt>> GetAllChattUsersAsync(int id)
-    {
-        return await _memberRepository.GetAllChattUsersAsync(id);
-    }
-    public async Task<List<Chatt>> GetAllChattReceiversAsync(int id)
-    {
-        return await _memberRepository.GetAllChattReceiversAsync(id);
-    }
+    //public async Task<List<Chatt>> GetAllChattUsersAsync(int id)
+    //{
+    //    return await _memberRepository.GetAllChattUsersAsync(id);
+    //}
+    //public async Task<List<Chatt>> GetAllChattReceiversAsync(int id)
+    //{
+    //    return await _memberRepository.GetAllChattReceiversAsync(id);
+    //}
     public async Task CreateChattWithUserAsync(Chatt chatt)
     {
         await _memberRepository.CreateChattWithUserAsync(chatt);
