@@ -227,7 +227,7 @@
     @if (Context.Session.GetInt32("UserId") > 0 && Model.SubPost.Id == 0)
     {
         <br />
-        <form asp-controller="Post" asp-action="CreateSubPost">
+        <form asp-controller="Post" asp-action="CreateSubPost" method="post" enctype="multipart/form-data">
 
             <input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
             <input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")">
@@ -241,6 +241,7 @@
 
                     </div>
                 </div>
+                <input asp-for="@Model.UploadedImage"  class="input-to-right"/><br />
                 <button type="submit" class="button-to-right">Reply</button>
             </div>
         </form>

@@ -24,7 +24,8 @@ public class Entities
     public string? Password { get; set; }
     public string? WarningMessage { get; set; }
 
-    
+    public IFormFile? UploadedImage { get; set; }
+
 
 
 }

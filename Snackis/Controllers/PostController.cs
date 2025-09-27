@@ -259,8 +259,8 @@ public class PostController : Controller
         return RedirectToAction(nameof(ReadPost), new { Id = post.Id });
     }
 
-    [HttpPost("CreateSubPost")]
-    public async Task<IActionResult> CreateSubPost(SubPost subPost)
+    [HttpPost("CreateSubPost")]    
+    public async Task<IActionResult> CreateSubPost(SubPost subPost, IFormFile? UploadedImage)
     {
         if (!ModelState.IsValid)
             return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId });
