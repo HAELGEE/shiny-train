@@ -187,10 +187,11 @@
                     @if (Context.Session.GetInt32("updateSubpost") != item.Id || Context.Session.GetInt32("updateSubpost") == null)
                     {
                         <div style="min-height: 9rem; display: flex; flex-direction: row;">
-                            @if (Model.SubPost.ImagePath != null)
+                            @if (item.ImagePath != null)
                             {
+                                
                                 <div style="margin-left:1.5rem; margin-top: -2rem;">
-                                    <img src="@Model.SubPost.ImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
+                                    <img src="@item.ImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
                                 </div>
                             }
                             <div>

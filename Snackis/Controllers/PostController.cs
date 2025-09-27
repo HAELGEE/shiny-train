@@ -153,6 +153,13 @@ public class PostController : Controller
                 await _memberService.DeleteReportsAsync(reports);
             }
 
+            if (post.SubPosts.Count != 0)
+            {
+                foreach (var subpost in post.SubPosts)
+                {
+                    await _postService.DeleteSubPostAsync(subpost);
+                }
+            }
             await _postService.DeletePostAsync(post);
         }
 
@@ -178,7 +185,7 @@ public class PostController : Controller
         if (id != 0)
         {
             var post = await _postService.GetOneSubPostAsync(id);
-            
+
             await _postService.DeleteSubPostAsync(post);
         }
 
@@ -212,7 +219,7 @@ public class PostController : Controller
     [HttpPost("CreatePost")]
     public async Task<IActionResult> CreatePost(FullViewModel fullViewModel)
     {
-       
+
         string filename = "";
 
         if (fullViewModel.UploadedImage != null)
@@ -228,7 +235,7 @@ public class PostController : Controller
 
 
             fullViewModel.Post.ImagePath = "/uploads/" + filename;
-            
+
         }
 
         await _postService.CreatePostAsync(fullViewModel.Post);
@@ -259,11 +266,31 @@ public class PostController : Controller
         return RedirectToAction(nameof(ReadPost), new { Id = post.Id });
     }
 
-    [HttpPost("CreateSubPost")]    
+    [HttpPost("CreateSubPost")]
     public async Task<IActionResult> CreateSubPost(SubPost subPost, IFormFile? UploadedImage)
     {
         if (!ModelState.IsValid)
             return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId });
+
+        string filename = "";
+
+        if (UploadedImage != null)
+        {
+            // Valfritt sätt att göra bildnamnet unikt
+            filename = Random.Shared.Next(0, 99999).ToString() + "_" + $"ID={HttpContext.Session.GetInt32("UserId")}"
+                + "_" + UploadedImage.FileName;
+
+            using (var fileStream = new FileStream("./wwwroot/uploads/" + filename, FileMode.Create))
+            {
+                await UploadedImage.CopyToAsync(fileStream);
+            }
+
+
+            subPost.ImagePath = "/uploads/" + filename;
+
+        }
+
+
 
         var userId = HttpContext.Session.GetInt32("UserId");
         if (userId == null)
