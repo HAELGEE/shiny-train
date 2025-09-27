@@ -1,5 +1,6 @@
 ﻿using Entity;
 using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace EFCore;
 
@@ -61,6 +62,16 @@ public class PostRepository : IPostRepository
     }
     public async Task DeletePostAsync(Post post)
     {
+        if (post.ImagePath != null && post.ImagePath != "/uploads/standardProfile.png")
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", post.ImagePath.TrimStart('/'));
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+        }
+
         _context.Post.Remove(post);
         await _context.SaveChangesAsync();
     }
@@ -193,6 +204,16 @@ public class PostRepository : IPostRepository
     }
     public async Task DeleteSubPostAsync(SubPost subPost)
     {
+        if (subPost.ImagePath != null && subPost.ImagePath != "/uploads/standardProfile.png")
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", subPost.ImagePath.TrimStart('/'));
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+        }
+
         _context.SubPost.Remove(subPost);
         await _context.SaveChangesAsync();
     }

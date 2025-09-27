@@ -152,6 +152,7 @@ public class PostController : Controller
             {
                 await _memberService.DeleteReportsAsync(reports);
             }
+
             await _postService.DeletePostAsync(post);
         }
 
@@ -177,13 +178,7 @@ public class PostController : Controller
         if (id != 0)
         {
             var post = await _postService.GetOneSubPostAsync(id);
-
-            //foreach (var reports in post.ReporterIds!)
-            //{
-            //    await _memberService.DeleteReportsAsync(reports);
-
-            //}
-
+            
             await _postService.DeleteSubPostAsync(post);
         }
 

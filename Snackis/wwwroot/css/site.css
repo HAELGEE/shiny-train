@@ -546,3 +546,30 @@ body.dark .SubcategoriesStyle {
     flex: 1;
     flex-direction: column;
 }
+
+@media (max-width: 1400px) {
+    .lika-stor-container {
+        display: flex;
+        width: 40rem;
+        margin-left: 21rem;
+        justify-content:center;
+        flex-direction: column-reverse;
+    }
+}
+
+@media (max-width: 1400px) {
+    .three-in-row {
+        display: flex;
+        width: 40rem;
+        margin-left: 10rem;
+        justify-content: center;
+        flex-direction: column;
+    }
+}
+@media (max-width: 1400px) {
+    .three-in-row>div:last-child{
+        width: 40rem;
+        margin-left: 11rem;
+        margin-top: -5rem;
+    }
+}

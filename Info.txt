@@ -60,7 +60,7 @@ eller fixa så att det blir en Quote till den man svarar. typ ( svarade "(snedtex
 
 ** Klar ** Registrera sig
 
-Användaren ska också kunna ladda upp en bild på sig själv, som syns vid sidan om inlägget.
+** Klar ** Användaren ska också kunna ladda upp en bild på sig själv, som syns vid sidan om inlägget.
 
 ** Klar ** Ändra uppgifter om sig själv samt byta lösenord.
 
@@ -76,7 +76,7 @@ Kunna chatta med andra Live!
 /Admin
 ---------------------------------------------------------------------------------------------------------------------
 
-Göra en Lista så man kan se alla andra Admins och en länk direkt till dom.
+** Klar ** Göra en Lista så man kan se alla andra Admins och en länk direkt till dom.
 
 ** KLAR ** Kunna kolla anmälda inlägg och eventuellt ändra till Ickestötande om det bara är någon som tyckte det var kul att anmäla
 
@@ -104,9 +104,9 @@ Kunna lägg till nya admins via en lista
 SMÅ FIX
 ---------------------------------------------------------------------------------------------------------------------
 
-Skall fixa så att listan av members i admin sänks under i vyn tex på mobil
+** KLAR ** Skall fixa så att listan av members i admin sänks under i vyn tex på mobil
 
-skall fixa så admin på Guestpage där man kan göra grejer på användaren som admin att det hamnar under i vyn tex på mobil
+** KLAR ** skall fixa så admin på Guestpage där man kan göra grejer på användaren som admin att det hamnar under i vyn tex på mobil
 
 ---------------------------------------------------------------------------------------------------------------------
 
