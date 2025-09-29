@@ -117,7 +117,7 @@
                                     <input type="checkbox" class="replyToggle" id="replyToggle" hidden>
 
                                     <div class="replyBox">
-                                        <div style="background-color: lightgray; display: flex; flex-direction:row; ">
+                                        <div style="background-color: lightgray; display: flex; flex-direction:row; height:1.7rem; word-break: break-word;">
                                             <p style="margin-right:0.5rem;">Answer to @Model.Post.Member.UserName </p>
                                             <p style="font-style: italic;">
                                                 "@Model.Post.Text"
@@ -169,7 +169,7 @@
                         </div>
                     }
                     <div>
-                        <p style="margin-top: -0.15rem; margin-left: 2rem;">
+                        <p style="margin-top: -0.15rem; margin-left: 2rem; word-break: break-word;">
                             @Model.Post.Text
                         </p>
 
@@ -228,7 +228,7 @@
                                     <div style="background-color: lightgray; display: flex; flex-direction:row; margin-top: -2.8rem; margin-left: 2rem; height:1.7rem">                                        
                                         <p style="font-style: italic;">@item.ReplyText</p>
                                     </div>
-                                    <div style="word-wrap: break-word; overflow-wrap: break-word; overflow: auto;">
+                                    <div style="word-break: break-word;">
                                         <p style="margin-top: 0rem; margin-left: 2rem; ">
                                             @item.Text
                                         </p>
