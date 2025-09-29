@@ -42,7 +42,10 @@
         <input type="password" asp-for="PasswordValidation"></input>
         <span asp-validation-for="PasswordValidation"></span>
         <br />
-
+        
+        <label asp-for="UserInfo"></label>
+        <br />
+        <textarea asp-for="UserInfo"  style="width: 20rem; height: 5rem;"></textarea>
 
         <br />
         <div asp-validation-summary="All" class="text-danger" style="margin-top: 1rem;">

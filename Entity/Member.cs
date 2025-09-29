@@ -20,7 +20,6 @@ public class Member
     [Required(ErrorMessage = "Must type in your Last name")]
     public string LastName { get; set; }
 
-    //[RegularExpression(@"^\d{8}$", ErrorMessage = "Date must be as YYYYMMDD.")]
     [Display(Name = "Birthday", Prompt = "Insert yyyymmdd here...")]
     [Required(ErrorMessage = "Must type in your Birthday")]
     [ValidDate(ErrorMessage = "Date must be a valid date in format YYYYMMDD.")]
@@ -43,6 +42,10 @@ public class Member
     [Display(Name = "Re-Password", Prompt = "Insert your Password here...")]
     [Required()]
     public string? PasswordValidation { get; set; }
+
+    [Display(Name = "Info", Prompt = "Insert information about you here...")]
+    public string? UserInfo { get; set; }
+
 
     // Admin rights
     public bool IsOwner { get; set; } = false;
@@ -95,8 +98,8 @@ public class ValidDateAttribute : ValidationAttribute
         return DateTime.TryParseExact(
             strValue,
             "yyyyMMdd",
-            System.Globalization.CultureInfo.InvariantCulture,
-            System.Globalization.DateTimeStyles.None,
+            CultureInfo.InvariantCulture,
+            DateTimeStyles.None,
             out _
         );
     }

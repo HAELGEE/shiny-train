@@ -23,13 +23,13 @@ public class MemberRepository : IMemberRepository
     public async Task<Member> GetMemberByUsernamePasswordAsync(string username, string password) => await _dbContext.Member.Where(m => m.UserName == username && m.Password == password).FirstOrDefaultAsync();
     public async Task UpdateMemberAsync(Member member, string? image)
     {
-        if(image != member.ProfileImagePath && image != "/uploads/standardProfile.png")
+        if(image != member.ProfileImagePath && image != "/uploads/standardProfile.png" && member.ProfileImagePath != "/uploads/standardProfile.png")
         {            
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", image.TrimStart('/'));
             
-            if (System.IO.File.Exists(filePath))
+            if (File.Exists(filePath))
             {
-                System.IO.File.Delete(filePath); 
+                File.Delete(filePath); 
             }
 
         }

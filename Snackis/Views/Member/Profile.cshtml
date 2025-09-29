@@ -124,9 +124,9 @@
         <h1>@ViewData["Title"] Page</h1>
         <br />
         <img src="@Model.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
-        <form asp-controller="Member" asp-action="Profile" method="post" enctype="multipart/form-data">  
+        <form asp-controller="Member" asp-action="Profile" method="post" enctype="multipart/form-data">
 
-            <input asp-for="UploadedImage" style="margin-left: 9rem;"/><br />
+            <input asp-for="UploadedImage" style="margin-left: 9rem;" /><br />
             <input type="submit" class="btn btn-success" value="Change Picture" style="margin-left: 9rem; margin-top: 0.3rem;" />
         </form>
         <br />
@@ -151,6 +151,11 @@
     </div>
 
     <!-- Höger tom spalt -->
-    <div style="display: flex; width: 30%;"></div>
+    <div style="display: flex; width: 30%;">
+        <p><b>Info</b>
+            <br />
+            @Model.Member.UserInfo
+            </p>
+    </div>
 </div>
 

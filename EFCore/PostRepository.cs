@@ -66,9 +66,9 @@ public class PostRepository : IPostRepository
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", post.ImagePath.TrimStart('/'));
 
-            if (System.IO.File.Exists(filePath))
+            if (File.Exists(filePath))
             {
-                System.IO.File.Delete(filePath);
+                File.Delete(filePath);
             }
         }
 
@@ -208,9 +208,9 @@ public class PostRepository : IPostRepository
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", subPost.ImagePath.TrimStart('/'));
 
-            if (System.IO.File.Exists(filePath))
+            if (File.Exists(filePath))
             {
-                System.IO.File.Delete(filePath);
+                File.Delete(filePath);
             }
         }
 
