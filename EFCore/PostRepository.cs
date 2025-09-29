@@ -72,6 +72,15 @@ public class PostRepository : IPostRepository
             }
         }
 
+        if(post.Views.Count > 0)
+        {
+            foreach (var view in post.Views)
+            {
+                _context.Remove(view);
+            }
+            await _context.SaveChangesAsync();
+        }
+
         _context.Post.Remove(post);
         await _context.SaveChangesAsync();
     }

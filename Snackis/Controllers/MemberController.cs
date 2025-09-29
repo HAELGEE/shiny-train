@@ -42,7 +42,7 @@ public class MemberController : Controller
         if (userId == null || userId == 0)
             return RedirectToAction(nameof(Login), "Member");
 
-       
+
 
 
         var member = await _memberService.GetOneMemberAsync((int)userId);
@@ -88,7 +88,7 @@ public class MemberController : Controller
             string pictureId = userMember.ProfileImagePath;
 
             userMember.ProfileImagePath = "/uploads/" + filename;
-            
+
             await _memberService.UpdateMemberAsync(userMember, pictureId);
         }
 
@@ -374,5 +374,33 @@ public class MemberController : Controller
         }
 
         return RedirectToAction(nameof(Profile), new { receiverId = chat.ReceiverId });
+    }
+
+    [HttpPost("DeleteUser")]
+    public async Task<IActionResult> DeleteUser(int userIdToRemove)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+
+        if (userId == null)
+            return RedirectToAction(nameof(Index), "Home");
+
+        var member = await _memberService.GetOneMemberAsync((int)userId);
+
+        if (member == null)
+            return RedirectToAction(nameof(Index), "Home");
+
+        if (!member.IsAdmin)
+            return RedirectToAction(nameof(Index), "Home");
+
+        var userToRemove = await _memberService.GetOneMemberAsync(userIdToRemove);
+
+
+        if (userToRemove.Id > 0)
+        {
+            await _memberService.DeleteMemberAsync(userToRemove);
+        }
+
+        return RedirectToAction(nameof(Admin));
+
     }
 }

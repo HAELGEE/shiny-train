@@ -62,6 +62,13 @@
 					</p>
 					<button type="submit">Submit</button>
 				</form>
+				<br />
+				<br />
+				<form asp-controller="Member" asp-action="DeleteUser">
+					<input type="hidden" name="userIdToRemove" value="@Model.Member.Id" />
+					
+					<button type="submit" style="background:red; color:black;">Delete User</button>
+				</form>
 			}
 
 		}

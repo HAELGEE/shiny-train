@@ -23,31 +23,71 @@ public class MemberRepository : IMemberRepository
     public async Task<Member> GetMemberByUsernamePasswordAsync(string username, string password) => await _dbContext.Member.Where(m => m.UserName == username && m.Password == password).FirstOrDefaultAsync();
     public async Task UpdateMemberAsync(Member member, string? image)
     {
-        if(image != member.ProfileImagePath && image != "/uploads/standardProfile.png" && member.ProfileImagePath != "/uploads/standardProfile.png")
-        {            
+        if (image != member.ProfileImagePath && image != "/uploads/standardProfile.png" && member.ProfileImagePath != "/uploads/standardProfile.png")
+        {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", image.TrimStart('/'));
-            
+
             if (File.Exists(filePath))
             {
-                File.Delete(filePath); 
+                File.Delete(filePath);
             }
 
         }
 
         member.PasswordValidation = "";
         _dbContext.Member.Update(member);
-        await _dbContext.SaveChangesAsync();        
+        await _dbContext.SaveChangesAsync();
     }
     public async Task UpdateMemberAdminrightsAsync(int id, bool isAdmin)
     {
         var member = await GetOneMemberAsync(id);
 
         member.IsAdmin = isAdmin;
-        
+
         await _dbContext.SaveChangesAsync();
     }
     public async Task DeleteMemberAsync(Member member)
     {
+        var likes = await _dbContext.Likes.Where(l => l.MemberId == member.Id).ToListAsync();
+        if (likes != null)
+        {
+            foreach (var like in likes)
+            {
+                _dbContext.Remove(like);
+            }
+            await _dbContext.SaveChangesAsync();
+        }
+
+        var posts = await _dbContext.Post.Where(p => p.MemberId == member.Id).ToListAsync();
+        if (posts != null)
+        {
+            foreach (var post in posts)
+            {
+                _dbContext.Remove(post);
+            }
+        }
+
+        var postView = await _dbContext.PostViews.Where(p => p.MemberId == member.Id).ToListAsync();
+        if (postView != null)
+        {
+            foreach (var view in postView)
+            {
+                _dbContext.Remove(view);
+            }
+            await _dbContext.SaveChangesAsync();
+        }
+
+        var memberView = await _dbContext.MemberViews.Where(p => p.Id == member.Id).ToListAsync();
+        if (memberView != null)
+        {
+            foreach (var view in memberView)
+            {
+                _dbContext.Remove(view);
+            }
+            await _dbContext.SaveChangesAsync();
+
+        }
+
         _dbContext.Remove(member);
         await _dbContext.SaveChangesAsync();
     }
@@ -127,7 +167,7 @@ public class MemberRepository : IMemberRepository
        .Where(c => c.SenderId == userId || c.ReceiverId == userId)
        .Include(c => c.SenderMember)
        .Include(c => c.ReceiverMember)
-       .ToListAsync(); 
+       .ToListAsync();
 
         var latestChats = chats
             .GroupBy(c => new
@@ -143,10 +183,10 @@ public class MemberRepository : IMemberRepository
     }
 
     public async Task<List<Chatt>> GetAllChattMessagesFromReceiverIdAsync(int userId, int receiverId) => await _dbContext.Chatt
-        .Where(c => c.ReceiverId == receiverId && c.SenderId == userId || c.ReceiverId == userId && c.SenderId == receiverId)        
+        .Where(c => c.ReceiverId == receiverId && c.SenderId == userId || c.ReceiverId == userId && c.SenderId == receiverId)
         .Order()
         .ToListAsync();
-    
+
     public async Task CreateChattWithUserAsync(Chatt chatt)
     {
         chatt.TimeCreated = DateTime.Now;
