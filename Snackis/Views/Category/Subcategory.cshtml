@@ -30,7 +30,7 @@
                         <b>By</b>
                          <a asp-controller="Member" asp-action="Guest" asp-route-id="@item.Member.Id">@item.Member.UserName</a> 
                         -
-                        <b>@item.Created</b>
+                        <b>@item.Created.ToLocalTime()</b>
                     </p>
                 </div>
                 <div class="post-meta">

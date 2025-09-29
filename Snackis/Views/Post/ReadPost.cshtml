@@ -97,7 +97,7 @@
                     </p>
                 </div>
                 <div>
-                    @Model.Post.Created
+                    @Model.Post.Created.ToLocalTime()
                 </div>
             </div>
         </div>
@@ -175,7 +175,7 @@
                             </p>
                         </div>
                         <div>
-                            @item.Created
+                            @item.Created.ToLocalTime()
                         </div>
                     </div>
                 </div>

@@ -46,7 +46,7 @@
                             <b>By</b>
                             <a asp-controller="Member" asp-action="Guest" asp-route-id="@item.Member.Id">@item.Member.UserName</a>
                             -
-                            <b>@item.Created</b>
+                            <b>@item.Created.ToLocalTime()</b>
                         </p>
                     </div>
                     <div class="post-meta">
@@ -104,7 +104,7 @@
         {
             @foreach (var item in Model.Top10Posts)
             {
-                <p><a asp-controller="Post" asp-action="ReadPost" asp-route-id="@item.Id">@item.Description</a> - @item.Created </p>
+                <p><a asp-controller="Post" asp-action="ReadPost" asp-route-id="@item.Id">@item.Description</a> - @item.Created.ToLocalTime() </p>
             }
         }
     </div>
