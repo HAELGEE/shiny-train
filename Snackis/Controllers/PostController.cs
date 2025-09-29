@@ -267,9 +267,9 @@ public class PostController : Controller
     }
 
     [HttpPost("CreateSubPost")]
-    public async Task<IActionResult> CreateSubPost(SubPost subPost, IFormFile? UploadedImage)
+    public async Task<IActionResult> CreateSubPost(SubPost subPost, IFormFile? UploadedImage, string reply)
     {
-        if (!ModelState.IsValid)
+        if (subPost.Text == null && subPost.MemberId == null)
             return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId });
 
         string filename = "";
@@ -290,7 +290,7 @@ public class PostController : Controller
 
         }
 
-
+        subPost.ReplyText = reply;
 
         var userId = HttpContext.Session.GetInt32("UserId");
         if (userId == null)

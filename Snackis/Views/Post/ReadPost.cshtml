@@ -107,7 +107,34 @@
                 <div>
                     @if (Context.Session.GetInt32("UserId") > 0)
                     {
-                        <div class="div-box-post-header"></div>
+                        <div style="margin-top: 2rem;">
+                            <div style="margin-bottom: -2.5rem; margin-left: 0.5rem;">
+
+                                <form asp-controller="Post" asp-action="CreateSubPost" method="post" enctype="multipart/form-data">
+                                    <label for="replyToggle" class="reply-button">
+                                        Reply this Post
+                                    </label>
+                                    <input type="checkbox" class="replyToggle" id="replyToggle" hidden>
+
+                                    <div class="replyBox">
+                                        <div style="background-color: lightgray; display: flex; flex-direction:row; ">
+                                            <p style="margin-right:0.5rem;">Answer to @Model.Post.Member.UserName </p>
+                                            <p style="font-style: italic;">
+                                                "@Model.Post.Text"
+                                            </p>
+                                        </div>
+
+                                        <textarea rows="5" cols="100" placeholder="Type your answer here..." asp-for="@Model.SubPost.Text" required></textarea>
+
+                                        <input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
+                                        <input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")" />
+                                        <input type="hidden" name="reply" value="Answer to @Model.Post.Member.UserName &quot;@Model.Post.Text&quot;" />
+                                        <br>
+                                        <button type="submit">Reply</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
 
                         <div style="display: flex; justify-content:center; margin-bottom: -3rem;">
                             <h5><a asp-controller="Category" asp-action="SubCategory" asp-route-id="@Model.SubCategory.Id">@Model.SubCategory.Name</a>/@Model.Post.Description</h5>
@@ -137,15 +164,16 @@
                 <div style="min-height: 9rem; display: flex; flex-direction: row;">
                     @if (Model.Post.ImagePath != null)
                     {
-                        <div style="margin-left:1.5rem;"> 
+                        <div style="margin-left:1.5rem;">
                             <img src="@Model.Post.ImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
-                         </div> 
+                        </div>
                     }
-                      <div> 
+                    <div>
                         <p style="margin-top: -0.15rem; margin-left: 2rem;">
                             @Model.Post.Text
                         </p>
-                    </div> 
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -189,15 +217,31 @@
                         <div style="min-height: 9rem; display: flex; flex-direction: row;">
                             @if (item.ImagePath != null)
                             {
-                                
+
                                 <div style="margin-left:1.5rem; margin-top: -2rem;">
                                     <img src="@item.ImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
                                 </div>
                             }
                             <div>
-                                <p style="margin-top: -2.3rem; margin-left: 2rem;">
-                                    @item.Text
-                                </p>
+                                @if (item.ReplyText != null)
+                                {
+                                    <div style="background-color: lightgray; display: flex; flex-direction:row; margin-top: -2.8rem; margin-left: 2rem; height:1.7rem">                                        
+                                        <p style="font-style: italic;">@item.ReplyText</p>
+                                    </div>
+                                    <div style="word-wrap: break-word; overflow-wrap: break-word; overflow: auto;">
+                                        <p style="margin-top: 0rem; margin-left: 2rem; ">
+                                            @item.Text
+                                        </p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div style="word-break: break-word;">
+                                        <p style="margin-top: -2rem; margin-left: 2rem; ">
+                                            @item.Text
+                                        </p>
+                                    </div>
+                                }
                             </div>
                         </div>
                     }
@@ -208,7 +252,7 @@
                             <input type="hidden" asp-for="@Model.SubPost.Id" value="@Model.SubPost.Id" />
                             <input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
                             <input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")">
-                            <input type="hidden" asp-for="@Model.SubPost.ImagePath" value="@Model.Post.ImagePath" />
+                            <input type="hidden" asp-for="@Model.SubPost.ImagePath" value="@Model.SubPost.ImagePath" />
 
 
                             <div style="display: flex; flex-direction: column;">
@@ -244,9 +288,10 @@
 
                     </div>
                 </div>
-                <input asp-for="@Model.UploadedImage"  class="input-to-right"/><br />
+                <input asp-for="@Model.UploadedImage" class="input-to-right" /><br />
                 <button type="submit" class="button-to-right">Reply</button>
             </div>
         </form>
     }
 </div>
+

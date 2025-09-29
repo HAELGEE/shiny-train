@@ -371,6 +371,7 @@ body.dark .SubcategoriesStyle {
     .button-to-right {
         margin-left: 4rem;
     }
+    
 }
 @media (max-width: 1200px) {
     .posts2 {
@@ -382,11 +383,14 @@ body.dark .SubcategoriesStyle {
     .button-to-right {
         margin-left: 0rem;
     }
+    
 }
+
 
 .post-content {
     flex: 1; /* låter texten ta så mycket plats som behövs */
     min-width: 200px; /* förhindrar att den blir för liten */
+   
 }
 
 /* Metadata */
@@ -445,18 +449,22 @@ body.dark .SubcategoriesStyle {
     margin-top: 0.7rem;
 }
 
-@media (max-width: 2300px) {
+@media (max-width: 1600px) {
     .div-box-post-header {
         margin-left: 40rem;
     }
 }
 
-@media (max-width: 2100px) {
+@media (max-width: 1450px) {
+    .div-box-post-header {
+        margin-left: 40rem;
+    }
+}
+@media (max-width: 1200px) {
     .div-box-post-header {
         margin-left: 17rem;
     }
 }
-
 
 
 /*CHATT*/
@@ -593,4 +601,28 @@ body.dark .SubcategoriesStyle {
     }
 }
 
-}*/
+.replyBox {
+    display: none;
+    position: fixed; /* alltid på samma plats */
+    top: 20%; /* mitten vertikalt */
+    left: 38%;  mitten horisontellt 
+    transform: translate(-50%, -50%); /* exakt centrerat */
+    background: white;
+    padding: 20px;
+    min-width: 47rem;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 1000; /* ovanpå allt annat */
+}
+
+.reply-button {
+    background-color: dodgerblue;
+    color: white;
+    padding: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.replyToggle:checked ~ .replyBox {
+    display: block;
+}
