@@ -108,6 +108,8 @@ SMÅ FIX
 
 ** KLAR ** skall fixa så admin på Guestpage där man kan göra grejer på användaren som admin att det hamnar under i vyn tex på mobil
 
+Reply knappen för post behöver ändras när man är på liten skärm.
+
 ---------------------------------------------------------------------------------------------------------------------
 
 

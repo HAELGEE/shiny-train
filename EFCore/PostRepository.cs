@@ -223,6 +223,10 @@ public class PostRepository : IPostRepository
             }
         }
 
+        var post = await _context.Post.Where(p => p.Id == subPost.PostId).FirstOrDefaultAsync();
+        post.Reply--;
+        await _context.SaveChangesAsync();
+
         _context.SubPost.Remove(subPost);
         await _context.SaveChangesAsync();
     }
