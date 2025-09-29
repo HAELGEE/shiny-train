@@ -164,7 +164,7 @@
                 <div>
                     <div style="flex: 1; flex-direction:column; justify-items: center;">
                         <div>
-                            <img src="@Model.Post.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
+                            <img src="@item.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
                         </div>
                         <div>
                             <p>
@@ -208,6 +208,8 @@
                             <input type="hidden" asp-for="@Model.SubPost.Id" value="@Model.SubPost.Id" />
                             <input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
                             <input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")">
+                            <input type="hidden" asp-for="@Model.SubPost.ImagePath" value="@Model.Post.ImagePath" />
+
 
                             <div style="display: flex; flex-direction: column;">
                                 <div style="display: flex; justify-content: center;">

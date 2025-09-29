@@ -22,7 +22,7 @@ Finnas en QR inloggnings kod.     <-- Om jag hinner/orkar/har lust
 
 ** Klar ** Använda sig av bilder i sina post
 
-       - Använda sig av bilder i sina SubPost
+       ** Klar ** - Använda sig av bilder i sina SubPost
 
 Vid post så skall ett Fula ord Filter finnas för att kolla igenom och ersättas med ****
 eller vi skapelse att den säger till att det inte går att använda
