@@ -1,298 +1,324 @@
 ﻿@model Entities
 @{
-    ViewData["Title"] = "ReadPost";
-    bool checkIfTrue = false;
+	ViewData["Title"] = "ReadPost";
+	bool checkIfTrue = false;
+
 
 }
 
 <div class="posts2">
-    @if (Context.Session.GetInt32("UserId") == Model.Post.MemberId || Context.Session.GetInt32("IsAdmin") == 1)
-    {
-        <a asp-controller="Post" asp-action="UpdatePost" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color: lightblue; color:black;">Update</button></a>
-        <a asp-controller="Post" asp-action="Delete" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color: lightcoral; color:black;">Delete</button></a>
-    }
+	@if (Context.Session.GetInt32("UserId") == Model.Post.MemberId || Context.Session.GetInt32("IsAdmin") == 1)
+	{
+		<a asp-controller="Post" asp-action="UpdatePost" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color: lightblue; color:black;">Update</button></a>
+		<a asp-controller="Post" asp-action="Delete" asp-route-id="@Model.Post.Id"><button type="submit" style="background-color: lightcoral; color:black;">Delete</button></a>
+	}
 
-    @if (Context.Session.GetInt32("UserId") > 0)
-    {
-        ViewBag.reporterId = 0;
-        @foreach (var report in Model.Post.ReporterIds)
-        {
-            @if (report.MemberId == Context.Session.GetInt32("UserId"))
-            {
-                checkIfTrue = true;
-                ViewBag.reporterId = @report.MemberId;
-            }
+	@if (Context.Session.GetInt32("UserId") > 0)
+	{
+		ViewBag.reporterId = 0;
+		@foreach (var report in Model.Post.ReporterIds)
+		{
+			@if (report.MemberId == Context.Session.GetInt32("UserId"))
+			{
+				checkIfTrue = true;
+				ViewBag.reporterId = @report.MemberId;
+			}
 
-        }
-        @if (!checkIfTrue)
-        {
-            <a asp-controller="Post" asp-action="Report" asp-route-id="@Model.Post.Id" asp-route-reporterId="@Context.Session.GetInt32("UserId")">
-                <button type="submit" style="background-color:lightskyblue; color:black;">Report</button>
-            </a>
-        }
+		}
+		@if (!checkIfTrue)
+		{
+			<a asp-controller="Post" asp-action="Report" asp-route-id="@Model.Post.Id" asp-route-reporterId="@Context.Session.GetInt32("UserId")">
+				<button type="submit" style="background-color:lightskyblue; color:black;">Report</button>
+			</a>
+		}
 
-        @if (Context.Session.GetInt32("IsAdmin") == 1 && Model.Post.Reported == true)
-        {
-            @foreach (var report in Model.Post.ReporterIds)
-            {
-                @if (report.MemberId == Context.Session.GetInt32("UserId"))
-                {
-                    ViewBag.reporterId = @report.MemberId;
-                }
+		@if (Context.Session.GetInt32("IsAdmin") == 1 && Model.Post.Reported == true)
+		{
+			@foreach (var report in Model.Post.ReporterIds)
+			{
+				@if (report.MemberId == Context.Session.GetInt32("UserId"))
+				{
+					ViewBag.reporterId = @report.MemberId;
+				}
 
-            }
+			}
 
-            <a asp-controller="Post" asp-action="UnReport" asp-route-id="@Model.Post.Id" asp-route-reporterId="@ViewBag.reporterId">
-                <button type="submit" style="background-color:lightseagreen; color:black;">UnReport</button>
-            </a>
-        }
-    }
-    <div class="post-meta">
-        @*  LIKES *@
-        @if (Model.Post.Likes != null)
-        {
-            ViewBag.LikesNumber = 0;
-            @foreach (var like in Model.Post.Likes)
-            {
-                ViewBag.LikesNumber++;
-            }
-        }
-        else
-        {
-            ViewBag.LikesNumber = 0;
-        }
-        <span>@ViewBag.LikesNumber Likes</span>
+			<a asp-controller="Post" asp-action="UnReport" asp-route-id="@Model.Post.Id" asp-route-reporterId="@ViewBag.reporterId">
+				<button type="submit" style="background-color:lightseagreen; color:black;">UnReport</button>
+			</a>
+		}
+	}
+	<div class="post-meta">
+		@*  LIKES *@
+		@if (Model.Post.Likes != null)
+		{
+			ViewBag.LikesNumber = 0;
+			@foreach (var like in Model.Post.Likes)
+			{
+				ViewBag.LikesNumber++;
+			}
+		}
+		else
+		{
+			ViewBag.LikesNumber = 0;
+		}
+		<span>@ViewBag.LikesNumber Likes</span>
 
-        @*  VIEW *@
-        @if (Model.Post.Views != null)
-        {
-            ViewBag.ViewsNumber = 0;
+		@*  VIEW *@
+		@if (Model.Post.Views != null)
+		{
+			ViewBag.ViewsNumber = 0;
 
-            @foreach (var view in Model.Post.Views)
-            {
-                ViewBag.ViewsNumber++;
-            }
-        }
-        else
-        {
-            ViewBag.ViewsNumber = 0;
-        }
-        <span>@ViewBag.ViewsNumber Views</span>
+			@foreach (var view in Model.Post.Views)
+			{
+				ViewBag.ViewsNumber++;
+			}
+		}
+		else
+		{
+			ViewBag.ViewsNumber = 0;
+		}
+		<span>@ViewBag.ViewsNumber Views</span>
 
-        @* REPLIES *@
-        <span>@Model.Post.Reply Replies</span>
-    </div>
-    <div class="post">
-        <div>
-            <div style="flex-direction:column; justify-items: center;">
-                <div>
-                    <img src="@Model.Post.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
-                </div>
-                <div>
-                    <p>
-                        Created by:
-                        <b>
-                            <a asp-controller="Member" asp-action="Guest" asp-route-id="@Model.Post.Member.Id">@Model.Post.Member.UserName</a>
-                        </b>
-                    </p>
-                </div>
-                <div>
-                    @Model.Post.Created.ToLocalTime()
-                </div>
-            </div>
-        </div>
+		@* REPLIES *@
+		<span>@Model.Post.Reply Replies</span>
+	</div>
+	<div class="post">
+		<div>
+			<div style="flex-direction:column; justify-items: center;">
+				<div>
+					<img src="@Model.Post.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
+				</div>
+				<div>
+					<p>
+						Created by:
+						<b>
+							<a asp-controller="Member" asp-action="Guest" asp-route-id="@Model.Post.Member.Id">@Model.Post.Member.UserName</a>
+						</b>
+					</p>
+				</div>
+				<div>
+					@Model.Post.Created.ToLocalTime()
+				</div>
+			</div>
+		</div>
 
-        <div class="post-content">
-            <div>
-                <div>
-                    @if (Context.Session.GetInt32("UserId") > 0)
-                    {
-                        <div style="margin-top: 2rem;">
-                            <div style="margin-bottom: -2.5rem; margin-left: 0.5rem;">
+		<div class="post-content">
+			<div>
+				<div>
+					@if (Context.Session.GetInt32("UserId") > 0)
+					{
+						<div style="margin-top: 2rem;">
+							<div style="margin-bottom: -2.5rem; margin-left: 0.5rem;">
 
-                                <form asp-controller="Post" asp-action="CreateSubPost" method="post" enctype="multipart/form-data">
-                                    <label for="replyToggle" class="reply-button">
-                                        Reply this Post
-                                    </label>
-                                    <input type="checkbox" class="replyToggle" id="replyToggle" hidden>
+								<form asp-controller="Post" asp-action="CreateSubPost" method="post" enctype="multipart/form-data">
+									<label for="replyToggle" class="reply-button">
+										Reply this Post
+									</label>
+									<input type="checkbox" class="replyToggle" id="replyToggle" hidden>
 
-                                    <div class="replyBox">
-                                        <div style="background-color: lightgray; display: flex; flex-direction:row; min-height:1.7rem; word-break: break-word; max-width: 20rem;">
-                                            <p style="margin-right:0.5rem; min-width:10rem;">Answer to @Model.Post.Member.UserName </p>
-                                            <p style="font-style: italic; min-width:10rem;">
-                                                "@Model.Post.Text"
-                                            </p>
-                                        </div>
+									<div class="replyBox">
+										<div style="background-color: lightgray; display: flex; flex-direction:row; min-height:1.7rem; word-break: break-word; max-width: 20rem;">
+											<p style="margin-right:0.5rem; min-width:10rem;">Answer to @Model.Post.Member.UserName </p>
+											<p style="font-style: italic; min-width:10rem;">
+												"@Model.Post.Text"
+											</p>
+										</div>
 
-                                        <textarea rows="5" cols="100" placeholder="Type your answer here..." asp-for="@Model.SubPost.Text" required></textarea>
+										<textarea rows="5" cols="100" placeholder="Type your answer here..." asp-for="@Model.SubPost.Text" required></textarea>
 
-                                        <input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
-                                        <input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")" />
-                                        <input type="hidden" name="reply" value="Answer to @Model.Post.Member.UserName &quot;@Model.Post.Text&quot;" />
-                                        <br>
-                                        <button type="submit">Reply</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+										<input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
+										<input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")" />
+										<input type="hidden" name="reply" value="Answer to @Model.Post.Member.UserName &quot;@Model.Post.Text&quot;" />
+										<br>
+										<button type="submit">Reply</button>
+									</div>
+								</form>
+							</div>
+						</div>
 
-                        <div style="display: flex; justify-content:center; margin-bottom: -3rem;">
-                            <h5><a asp-controller="Category" asp-action="SubCategory" asp-route-id="@Model.SubCategory.Id">@Model.SubCategory.Name</a>/@Model.Post.Description</h5>
-                        </div>
+						<div style="display: flex; justify-content:center; margin-bottom: -3rem;">
+							<h5><a asp-controller="Category" asp-action="SubCategory" asp-route-id="@Model.SubCategory.Id">@Model.SubCategory.Name</a>/@Model.Post.Description</h5>
+						</div>
 
-                        @* GILLA KNAPP *@
-                        <div class="div-box-post-header">
-                            <form asp-controller="Post" asp-action="LikeButton">
-                                <input type="hidden" name="postId" value="@Model.Post.Id">
-                                <input type="hidden" name="memberId" value="@Context.Session.GetInt32("UserId")">
+						@* GILLA KNAPP *@
+						<div class="div-box-post-header">
+							<form asp-controller="Post" asp-action="LikeButton">
+								<input type="hidden" name="postId" value="@Model.Post.Id">
+								<input type="hidden" name="memberId" value="@Context.Session.GetInt32("UserId")">
 
-                                <button type="submit" style="border: none;"><img style="height: 2rem;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAE7UlEQVR4nO2X21MbVRzHFwKUwItvPjmlVMBYBSkFhFIoYqUt0EAdHW29UG0tir3YWjrjEzO+1vFPcKa21dZeRC4hhISQBAIkKTLj+OSMDzjj+GDJ/UJZfs45u5vdJOfsbkKpYYYz83n/fD+zObthmKd0wPPmIHiO+1lPzwNYequC2UoHPD2D6w+PgwDr6XkEC/rnmK1wWKm8pycO6+m5w2wNeVFapBtYT7ePyXr5JGkprEsfYLaGfKL4uluPYd3635jslU+WFsV5eWDdXd8w2XZYjz5RXiItih+DNVdXDNzdu5mslCfWPibiwgOuMlkn79YrirOuLmBdnd8y2XRYlyhPlhbEu2DN1fknk43yLLW2lE5gFzq+Y7JJnpWpLUpzrC10wNr80V4mGw7r6hpUrs1LY44ieQBne8nmml1d7GAGlv5iBpaAGfgVchBXFnkeQs6XCI+62hLxtfkjcR7PHeZp53kDHjsFDsEqYvZ1CW2YmKPVF3O03o/a2sqp/jlXFpdThTlpzGU3Rr42flSSxA+niidLOw+lSK/OvIaJYVoxUXvLv1FrcxllAFk497KL49ICJvPa7apqryZJxxyIgzwtELM33yUPSBEWpXMvzUPuF4g5dJvIiGdau40gfjBBPGpHNEPEfsBLHEATxlx0goZHlCaJP+HaDk5a5ABEbE2UAQnCc3FhzcVZ0FxAzGBka8v+KNOvHeWlMTZEE0Snm+zkARRhzQUHaM4L2NXVdpJr08VbyOKCtK0JlYeIbT9EphuvEQeIwjMJwppzdsg7Z+OZTq/2rHLtmEOmdlxaoBHC1v1vkwcIwucThfM+F7BiMr0CFWvbRelE8UaeBohYGyBsbthJHBCXThLO65/isUB+vyXN2so/ymhy7WRxKxJ/FcKIqbp/iPJ4AEU4/zOEmePTyadb2yqI1yN5CE/VDtEH9E8RhTlMHH2mza09LaltrZeI10HYUgtBy76vqANowvl9E1CAMULBWePGrkCZ2pGU2rg4Fg9Z9mECluo2+gCKcMHZcY5PEIYnXLuBWluQDllqIGSugeDk3vWVqapnqANShLG0gWcMCs6MwY4zo5tQu55YG0mHzHs5JqshOPnK71R5PIAiHOf0CEb9Cyfz2iFePMiJYwKmSvl/dDThHaeHOT7+BaO+dtIVaE2ndnVcPGiqgqCpEkITlX2yA2jCiMKPhnh+TrgCM6tdq1g7iKU5cURg4mUImnTV8gMowphTD+KoeuEo1hbEq4m1BWmOl8A/vicM7pp82QE04cJT96GwF3EPtL33VL5wOHFa7YTHxJRaG0ljjHs4xnXkL9CEARRhbe9d0H4o8JNC7boN1w4YBfEXwY8Y14HfoLumPIAirP0AcYfnNrW2qh+lmtpGJM2Lj7+ACRjKyV+g0kMT1r5/G4owP2Iyr12VWnuCUFsQNyAqwG8oh0cjup3KAyTCWolw0Xs/8NyCopO30rgCq2QeE3ptP5auAJ+hHHxj5eAdLaN/gUoPTZjjJseJG2ldgeTagriOWJsTL+N5HryjpUPqBlCEizHfc7x7XfGFI1vbKF/bx0v7RhG7wYsY23VS3YATN5dThTlpKUovnI3U9sXFS8E7Ugre4RKz4v0vDrhxpPid68vJwqkD0q2tU197tBRWRkrZleGSP1aGd339t/HZYlXy22f7bJ/tw/wf5z8vSQEOxiDUhAAAAABJRU5ErkJggg==" alt="thumb-up"></button>
+								<button type="submit" style="border: none;"><img style="height: 2rem;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAE7UlEQVR4nO2X21MbVRzHFwKUwItvPjmlVMBYBSkFhFIoYqUt0EAdHW29UG0tir3YWjrjEzO+1vFPcKa21dZeRC4hhISQBAIkKTLj+OSMDzjj+GDJ/UJZfs45u5vdJOfsbkKpYYYz83n/fD+zObthmKd0wPPmIHiO+1lPzwNYequC2UoHPD2D6w+PgwDr6XkEC/rnmK1wWKm8pycO6+m5w2wNeVFapBtYT7ePyXr5JGkprEsfYLaGfKL4uluPYd3635jslU+WFsV5eWDdXd8w2XZYjz5RXiItih+DNVdXDNzdu5mslCfWPibiwgOuMlkn79YrirOuLmBdnd8y2XRYlyhPlhbEu2DN1fknk43yLLW2lE5gFzq+Y7JJnpWpLUpzrC10wNr80V4mGw7r6hpUrs1LY44ieQBne8nmml1d7GAGlv5iBpaAGfgVchBXFnkeQs6XCI+62hLxtfkjcR7PHeZp53kDHjsFDsEqYvZ1CW2YmKPVF3O03o/a2sqp/jlXFpdThTlpzGU3Rr42flSSxA+niidLOw+lSK/OvIaJYVoxUXvLv1FrcxllAFk497KL49ICJvPa7apqryZJxxyIgzwtELM33yUPSBEWpXMvzUPuF4g5dJvIiGdau40gfjBBPGpHNEPEfsBLHEATxlx0goZHlCaJP+HaDk5a5ABEbE2UAQnCc3FhzcVZ0FxAzGBka8v+KNOvHeWlMTZEE0Snm+zkARRhzQUHaM4L2NXVdpJr08VbyOKCtK0JlYeIbT9EphuvEQeIwjMJwppzdsg7Z+OZTq/2rHLtmEOmdlxaoBHC1v1vkwcIwucThfM+F7BiMr0CFWvbRelE8UaeBohYGyBsbthJHBCXThLO65/isUB+vyXN2so/ymhy7WRxKxJ/FcKIqbp/iPJ4AEU4/zOEmePTyadb2yqI1yN5CE/VDtEH9E8RhTlMHH2mza09LaltrZeI10HYUgtBy76vqANowvl9E1CAMULBWePGrkCZ2pGU2rg4Fg9Z9mECluo2+gCKcMHZcY5PEIYnXLuBWluQDllqIGSugeDk3vWVqapnqANShLG0gWcMCs6MwY4zo5tQu55YG0mHzHs5JqshOPnK71R5PIAiHOf0CEb9Cyfz2iFePMiJYwKmSvl/dDThHaeHOT7+BaO+dtIVaE2ndnVcPGiqgqCpEkITlX2yA2jCiMKPhnh+TrgCM6tdq1g7iKU5cURg4mUImnTV8gMowphTD+KoeuEo1hbEq4m1BWmOl8A/vicM7pp82QE04cJT96GwF3EPtL33VL5wOHFa7YTHxJRaG0ljjHs4xnXkL9CEARRhbe9d0H4o8JNC7boN1w4YBfEXwY8Y14HfoLumPIAirP0AcYfnNrW2qh+lmtpGJM2Lj7+ACRjKyV+g0kMT1r5/G4owP2Iyr12VWnuCUFsQNyAqwG8oh0cjup3KAyTCWolw0Xs/8NyCopO30rgCq2QeE3ptP5auAJ+hHHxj5eAdLaN/gUoPTZjjJseJG2ldgeTagriOWJsTL+N5HryjpUPqBlCEizHfc7x7XfGFI1vbKF/bx0v7RhG7wYsY23VS3YATN5dThTlpKUovnI3U9sXFS8E7Ugre4RKz4v0vDrhxpPid68vJwqkD0q2tU197tBRWRkrZleGSP1aGd339t/HZYlXy22f7bJ/tw/wf5z8vSQEOxiDUhAAAAABJRU5ErkJggg==" alt="thumb-up"></button>
 
-                            </form>
+							</form>
 
-                        </div>
-                    }
-                    else
-                    {
-                        <div style="display: flex; justify-content:center; margin-bottom: -1rem;">
-                            <h5><a asp-controller="Category" asp-action="SubCategory" asp-route-id="@Model.SubCategory.Id">@Model.SubCategory.Name</a>/@Model.Post.Description</h5>
-                        </div>
-                    }
-                </div>
-                <hr />
+						</div>
+					}
+					else
+					{
+						<div style="display: flex; justify-content:center; margin-bottom: -1rem;">
+							<h5><a asp-controller="Category" asp-action="SubCategory" asp-route-id="@Model.SubCategory.Id">@Model.SubCategory.Name</a>/@Model.Post.Description</h5>
+						</div>
+					}
+				</div>
+				<hr />
 
-                <div style="min-height: 9rem; display: flex; flex-direction: row;">
-                    @if (Model.Post.ImagePath != null)
-                    {
-                        <div style="margin-left:1.5rem;">
-                            <img src="@Model.Post.ImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
-                        </div>
-                    }
-                    <div>
-                        <p style="margin-top: -0.15rem; margin-left: 2rem; word-break: break-word;">
-                            @Model.Post.Text
-                        </p>
+				<div style="min-height: 9rem; display: flex; flex-direction: row;">
+					@if (Model.Post.ImagePath != null)
+					{
+						<div style="margin-left:1.5rem;">
+							<img src="@Model.Post.ImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
+						</div>
+					}
+					<div>
+						<p style="margin-top: -0.15rem; margin-left: 2rem; word-break: break-word;">
+							@Model.Post.Text
+						</p>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <hr />
-    @if (Model.SubPosts != null)
-    {
-        @foreach (var item in Model.SubPosts)
-        {
-            @if (Context.Session.GetInt32("UserId") == item.MemberId || Context.Session.GetInt32("IsAdmin") == 1)
-            {
-                <a asp-controller="Post" asp-action="UpdateSubPost" asp-route-id="@item.Id"><button type="submit" style="background-color: lightblue; color:black;">Update</button></a>
-                <a asp-controller="Post" asp-action="DeleteSubPost" asp-route-id="@item.Id"><button type="submit" style="background-color: lightcoral; color:black;">Delete</button></a>
-            }
-            <div class="post">
-                <div>
-                    <div style="flex: 1; flex-direction:column; justify-items: center;">
-                        <div>
-                            <img src="@item.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
-                        </div>
-                        <div>
-                            <p>
-                                Created by:
-                                <b>
-                                    <a asp-controller="Member" asp-action="Guest" asp-route-id="@item.MemberId">@item.Member.UserName</a>
-                                </b>
-                            </p>
-                        </div>
-                        <div>
-                            @item.Created.ToLocalTime()
-                        </div>
-                    </div>
-                </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr />
+	@if (Model.SubPosts != null)
+	{
+		@foreach (var item in Model.SubPosts)
+		{
+			@if (Context.Session.GetInt32("UserId") == item.MemberId || Context.Session.GetInt32("IsAdmin") == 1)
+			{
+				<a asp-controller="Post" asp-action="UpdateSubPost" asp-route-id="@item.Id"><button type="submit" style="background-color: lightblue; color:black;">Update</button></a>
+				<a asp-controller="Post" asp-action="DeleteSubPost" asp-route-id="@item.Id"><button type="submit" style="background-color: lightcoral; color:black;">Delete</button></a>
+			}
+			<div class="post">
+				<div>
+					<div style="flex: 1; flex-direction:column; justify-items: center;">
+						<div>
+							<img src="@item.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
+						</div>
+						<div>
+							<p>
+								Created by:
+								<b>
+									<a asp-controller="Member" asp-action="Guest" asp-route-id="@item.MemberId">@item.Member.UserName</a>
+								</b>
+							</p>
+						</div>
+						<div>
+							@item.Created.ToLocalTime()
+						</div>
+					</div>
+				</div>
 
-                <div class="post-content">
-
-
-                    <br />
-                    @if (Context.Session.GetInt32("updateSubpost") != item.Id || Context.Session.GetInt32("updateSubpost") == null)
-                    {
-                        <div style="min-height: 9rem; display: flex; flex-direction: row;">
-                            @if (item.ImagePath != null)
-                            {
-
-                                <div style="margin-left:1.5rem; margin-top: -2rem;">
-                                    <img src="@item.ImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
-                                </div>
-                            }
-                            <div>
-                                @if (item.ReplyText != null)
-                                {
-                                    <div style="background-color: lightgray; display: flex; flex-direction:row; margin-top: -2rem; margin-left: 2rem; word-break: break-word;">
-                                        <p style="font-style: italic; margin-bottom: -0.1rem;">@item.ReplyText</p>
-                                    </div>
-                                       
-                                    <div style="word-break: break-word;">
-                                        <p style="margin-top: 0.5rem; margin-left: 2rem; ">
-                                            @item.Text
-                                        </p>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div style="word-break: break-word;">
-                                        <p style="margin-top: -2rem; margin-left: 2rem; ">
-                                            @item.Text
-                                        </p>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    }
-                    else if (Context.Session.GetInt32("updateSubpost") == item.Id)
-                    {
-                        <form asp-controller="Post" asp-action="UpdateSubPost">
-
-                            <input type="hidden" asp-for="@Model.SubPost.Id" value="@Model.SubPost.Id" />
-                            <input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
-                            <input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")">
-                            <input type="hidden" asp-for="@Model.SubPost.ImagePath" value="@Model.SubPost.ImagePath" />
+				<div class="post-content">
 
 
-                            <div style="display: flex; flex-direction: column;">
-                                <div style="display: flex; justify-content: center;">
-                                    <div class="post" style="width: 50rem; height: 10rem;">
-                                        <textarea class="textarea-styling" asp-for="@Model.SubPost.Text"></textarea>
-                                    </div>
-                                </div>
-                                <button type="submit" class="button-to-right">Update</button>
-                            </div>
-                        </form>
-                    }
+					<br />
+					@if (Context.Session.GetInt32("updateSubpost") != item.Id || Context.Session.GetInt32("updateSubpost") == null)
+					{
+						<div style="position: relative;min-height: 9rem; display: flex; flex-direction: row;">
+							@if (item.ImagePath != null)
+							{
 
-                </div>
-            </div>
-        }
-    }
+								<div style="margin-left:1.5rem; margin-top: -2rem;">
+									<img src="@item.ImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
+								</div>
+							}
+							<div>
+								@if (item.ReplyText != null)
+								{
+									<div style="background-color: lightgray; display: flex; flex-direction:row; margin-top: -2rem; margin-left: 2rem; word-break: break-word;">
+										<p style="font-style: italic; margin-bottom: -0.1rem;">@item.ReplyText</p>
+									</div>
 
-    @if (Context.Session.GetInt32("UserId") > 0 && Model.SubPost.Id == 0)
-    {
-        <br />
-        <form asp-controller="Post" asp-action="CreateSubPost" method="post" enctype="multipart/form-data">
+									<div style="word-break: break-word;">
+										<p style="margin-top: 0.5rem; margin-left: 2rem; ">
+											@item.Text
+										</p>
+									</div>
+								}
+								else
+								{
+									<div style="word-break: break-word;">
+										<p style="margin-top: -2rem; margin-left: 2rem; ">
+											@item.Text
+										</p>
+									</div>
+								}
+							</div>
+							<form asp-controller="Post" asp-action="CreateSubPost" method="get" enctype="multipart/form-data">
+								<label for="replyToggle2" class="pinned-reply">									
+									<a asp-controller="Post" asp-action="ReadPost" method="get">Reply</a>
+								</label>
+							</form>
+							<form asp-controller="Post" asp-action="CreateSubPost" method="post" enctype="multipart/form-data">
+								<input type="checkbox" class="replyToggle2" id="replyToggle2" hidden>
+								<div class="replyBox2">
+									<div style="background-color: lightgray; display: flex; flex-direction:row; min-height:1.7rem; word-break: break-word; max-width: 20rem;">
+										<p style="margin-right:-1rem; min-width:10rem;">@Model.Post.Member.UserName </p>
+										<p style="font-style: italic; min-width:10rem;">
+											"@item.Text"
+										</p>
+									</div>
 
-            <input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
-            <input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")">
+									<textarea rows="5" cols="100" placeholder="Type your answer here..." asp-for="@Model.SubPost.Text" required></textarea>
 
-            <div style="display: flex; flex-direction: column;">
-                <div style="display: flex; justify-content: center;">
-                    <div class="post" style="width: 50rem; height: 10rem;">
+									<input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
+									<input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")" />
+									<input type="hidden" name="reply" value="Answer to @Model.Post.Member.UserName &quot;@Model.Post.Text&quot;" />
+									<br>
+									<button type="submit">Reply</button>
+								</div>
+							</form>
+						</div>
+					}
+					else if (Context.Session.GetInt32("updateSubpost") == item.Id)
+					{
+						<form asp-controller="Post" asp-action="UpdateSubPost">
+
+							<input type="hidden" asp-for="@Model.SubPost.Id" value="@Model.SubPost.Id" />
+							<input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
+							<input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")">
+							<input type="hidden" asp-for="@Model.SubPost.ImagePath" value="@Model.SubPost.ImagePath" />
+							<input type="hidden" asp-for="@Model.SubPost.ReplyText" value="@Model.SubPost.ReplyText" />
 
 
-                        <textarea class="textarea-styling" asp-for="@Model.SubPost.Text"></textarea>
+							<div style="display: flex; flex-direction: column;">
+								<div style="display: flex; justify-content: center;">
+									<div class="post" style="width: 50rem; height: 10rem;">
+										<textarea class="textarea-styling" asp-for="@Model.SubPost.Text"></textarea>
+									</div>
+								</div>
+								<button type="submit" class="button-to-right">Update</button>
+							</div>
+						</form>
+					}
 
-                    </div>
-                </div>
-                <input asp-for="@Model.UploadedImage" class="input-to-right" /><br />
-                <button type="submit" class="button-to-right">Reply</button>
-            </div>
-        </form>
-    }
+				</div>
+			</div>
+		}
+	}
+
+	@if (Context.Session.GetInt32("UserId") > 0 && Model.SubPost.Id == 0)
+	{
+		<br />
+		<form asp-controller="Post" asp-action="CreateSubPost" method="post" enctype="multipart/form-data">
+
+			<input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
+			<input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")">
+
+			<div style="display: flex; flex-direction: column;">
+				<div style="display: flex; justify-content: center;">
+					<div class="post" style="width: 50rem; height: 10rem;">
+
+
+						<textarea class="textarea-styling" asp-for="@Model.SubPost.Text"></textarea>
+
+					</div>
+				</div>
+				<input asp-for="@Model.UploadedImage" class="input-to-right" /><br />
+				<button type="submit" class="button-to-right">Reply</button>
+			</div>
+		</form>
+	}
 </div>
 

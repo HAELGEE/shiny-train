@@ -604,12 +604,12 @@ body.dark .SubcategoriesStyle {
 .replyBox {
     display: none;
     position: fixed; /* alltid på samma plats */
-    top: 20%; /* mitten vertikalt */
-    left: 38%;  mitten horisontellt 
+    top: 40%; /* mitten vertikalt */
+    left: 50%;  /*mitten horisontellt */
     transform: translate(-50%, -50%); /* exakt centrerat */
     background: white;
     padding: 20px;
-    min-width: 47rem;
+    min-width: 50rem;
     border: 1px solid #ccc;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     z-index: 1000; /* ovanpå allt annat */
@@ -624,5 +624,33 @@ body.dark .SubcategoriesStyle {
 }
 
 .replyToggle:checked ~ .replyBox {
+    display: block;
+}
+
+.pinned-reply {
+    position: absolute; /* alltid på samma plats */
+    bottom: 0;
+    right: 1rem;
+    background-color: dodgerblue;
+    color: white;
+    padding: 5px;
+    cursor: pointer;    
+}
+.replyBox2 {
+    display: none;
+    position: fixed; /* alltid på samma plats */
+    top: 40%; /* mitten vertikalt */
+    left: 50%; /*mitten horisontellt */
+    transform: translate(-50%, -50%); /* exakt centrerat */
+    background: white;
+    padding: 20px;
+    min-width: 50rem;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 1000; /* ovanpå allt annat */
+}
+
+
+.replyToggle2:checked ~ .replyBox2 {
     display: block;
 }
