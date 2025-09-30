@@ -352,7 +352,7 @@ public class MemberController : Controller
 
     [HttpPost("CreateChatt")]
     public async Task<IActionResult> CreateChatt(Chatt chat, string userName)
-    {
+    {        
         if (chat.SenderId > 0 && userName != null)
         {
             chat.SenderMember = await _memberService.GetOneMemberAsync((int)chat.SenderId);
