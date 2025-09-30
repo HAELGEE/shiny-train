@@ -293,7 +293,7 @@ public class PostController : Controller
         }
 
         subPost.ReplyText = reply;
-        subPost.ReplyId = replyId;
+        subPost.ParentId = replyId;
         var userId = HttpContext.Session.GetInt32("UserId");
         if (userId == null)
         {
