@@ -352,16 +352,15 @@ public class MemberController : Controller
 
     [HttpPost("CreateChatt")]
     public async Task<IActionResult> CreateChatt(Chatt chat, string userName)
-    {        
+    {
         if (chat.SenderId > 0 && userName != null)
         {
             chat.SenderMember = await _memberService.GetOneMemberAsync((int)chat.SenderId);
             chat.ReceiverMember = await _memberService.GetMemberByUsernameAsync(userName);
 
             if (chat.ReceiverMember == null)
-            {               
                 return RedirectToAction(nameof(Profile));
-            }
+
 
 
             await _memberService.CreateChattWithUserAsync(chat);
