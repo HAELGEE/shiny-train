@@ -505,6 +505,7 @@ body.dark .SubcategoriesStyle {
 
 /* Meddelandena fyller allt utrymme över inputfältet */
 .chat-messages {
+    max-height: 50rem;
     flex: 1; /* <-- detta trycker ner .chat-input */
     overflow-y: auto;
     padding: 0.5rem;
