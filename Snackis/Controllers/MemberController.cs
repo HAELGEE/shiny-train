@@ -357,6 +357,13 @@ public class MemberController : Controller
         {
             chat.SenderMember = await _memberService.GetOneMemberAsync((int)chat.SenderId);
             chat.ReceiverMember = await _memberService.GetMemberByUsernameAsync(userName);
+
+            if (chat.ReceiverMember == null)
+            {               
+                return RedirectToAction(nameof(Profile));
+            }
+
+
             await _memberService.CreateChattWithUserAsync(chat);
         }
         return RedirectToAction(nameof(Profile), new { receiverId = chat.ReceiverId });

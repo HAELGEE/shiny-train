@@ -110,6 +110,8 @@ SMÅ FIX
 
 ** KLAR ** Reply knappen för post behöver ändras när man är på liten skärm.
 
+Krashar om man anger felaktig användarnamn vid skap av chatt
+
 ---------------------------------------------------------------------------------------------------------------------
 
 

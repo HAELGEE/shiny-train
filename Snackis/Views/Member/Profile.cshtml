@@ -39,6 +39,7 @@
                            placeholder="Type Username here.."
                            required
                            style="width:100%;box-sizing:border-box;padding:.5rem;border:1px solid #ccc;border-radius:6px;" />
+                    <span asp-validation-for="@Model.Member.UserName" class="text-danger"></span>
 
                     <label for="conversationText" style="display:block;margin:0.5rem 0 0.25rem;font-size:.9rem;">Text to Member</label>
                     <input type="text" asp-for="@Model.Chat.Text"
@@ -77,8 +78,6 @@
                 }
             </ul>
         </div>
-
-        <!-- NY wrapper för chatten -->
 
         <div class="chat-area">
             @if (Model.ChattMessages != null)
