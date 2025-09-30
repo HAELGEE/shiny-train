@@ -128,6 +128,8 @@
 										<input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
 										<input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")" />
 										<input type="hidden" name="reply" value="Answer to @Model.Post.Member.UserName &quot;@Model.Post.Text&quot;" />
+										<input type="hidden" name="replyId" value="@Model.Post.Id" />
+
 										<br>
 										<button type="submit">Reply</button>
 									</div>
@@ -262,6 +264,7 @@
 									<input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
 									<input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")" />
 									<input type="hidden" name="reply" value="Answer to @item.Member.UserName &quot;@item.Text&quot;" />
+									<input type="hidden" name="replyId" value="@item.Id" />
 									<br>
 									<button type="submit">Reply</button>
 									<input asp-for="@Model.UploadedImage" class="input-to-right" /><br />
@@ -278,6 +281,8 @@
 							<input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")">
 							<input type="hidden" asp-for="@Model.SubPost.ImagePath" value="@Model.SubPost.ImagePath" />
 							<input type="hidden" asp-for="@Model.SubPost.ReplyText" value="@Model.SubPost.ReplyText" />
+							<input type="hidden" asp-for="@Model.SubPost.ReplyId" value="@Model.SubPost.ReplyId" />
+
 
 
 							<div style="display: flex; flex-direction: column;">

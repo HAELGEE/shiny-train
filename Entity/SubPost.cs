@@ -9,6 +9,7 @@ public class SubPost
     [Required]
     public string Text { get; set; }
     public string? ReplyText { get; set; }
+    public int? ReplyId { get; set; }
     public bool Reported { get; set; } = false;
     public string? ImagePath { get; set; }
 
