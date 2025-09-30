@@ -1,5 +1,6 @@
 ﻿using ApplicationService.Interface;
 using Entity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Snackis.Controllers;
@@ -49,17 +50,23 @@ public class PostController : Controller
     }
 
     [HttpGet("ReadPost")]
-    public async Task<IActionResult> ReadPost(int id, int subPostId)
+    public async Task<IActionResult> ReadPost(int id, int subPostId, int replyId)
     {
         var post = await _postService.GetOnePostAsync(id);
+
         var subPosts = await _postService.GettingSubPostFromPostByIdAsync(post.Id);
 
         var subPost = new SubPost();
 
         if (subPostId > 0)
         {
-            subPost = await _postService.GetOneSubPostAsync(subPostId);
+            subPost = await _postService.GetOneSubPostAsync((int)subPostId);
         }
+        //else if (replyId > 0)
+        //{
+        //    subPost = await _postService.GetOneSubPostAsync((int)replyId);
+        //    HttpContext.Session.SetInt32("ReplySubpost", (int)HttpContext.Session.GetInt32("UserId"));
+        //}
 
         var subCategory = await _categoryService.GetOneSubCategoriesAsync((int)post.SubCategoryId!);
 

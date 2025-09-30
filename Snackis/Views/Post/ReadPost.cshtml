@@ -245,26 +245,25 @@
 									</div>
 								}
 							</div>
-							<form asp-controller="Post" asp-action="CreateSubPost" method="get" enctype="multipart/form-data">
-								<label for="replyToggle2" class="pinned-reply">									
-									<a asp-controller="Post" asp-action="ReadPost" method="get">Reply</a>
-								</label>
-							</form>
+							
+							
 							<form asp-controller="Post" asp-action="CreateSubPost" method="post" enctype="multipart/form-data">
-								<input type="checkbox" class="replyToggle2" id="replyToggle2" hidden>
+								<label for="@item.Id" class="pinned-reply">
+									Reply
+								</label>
+
+								<input type="checkbox" class="replyToggle2" id="@item.Id" hidden>
 								<div class="replyBox2">
-									<div style="background-color: lightgray; display: flex; flex-direction:row; min-height:1.7rem; word-break: break-word; max-width: 20rem;">
-										<p style="margin-right:-1rem; min-width:10rem;">@Model.Post.Member.UserName </p>
-										<p style="font-style: italic; min-width:10rem;">
-											"@item.Text"
-										</p>
+									<div style="background-color: lightgray; display: flex; flex-direction:row; min-height:1.7rem; word-break: break-word; max-width: 50rem;">
+										<p style="margin-right:-1rem; min-width:10rem;">Answer to @item.Member.UserName </p>
+										<p style="font-style: italic; min-width:10rem;">" @item.Text" </p>
 									</div>
 
 									<textarea rows="5" cols="100" placeholder="Type your answer here..." asp-for="@Model.SubPost.Text" required></textarea>
 
 									<input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
 									<input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")" />
-									<input type="hidden" name="reply" value="Answer to @Model.Post.Member.UserName &quot;@Model.Post.Text&quot;" />
+									<input type="hidden" name="reply" value="Answer to @item.Member.UserName &quot;@item.Text&quot;" />
 									<br>
 									<button type="submit">Reply</button>
 								</div>
