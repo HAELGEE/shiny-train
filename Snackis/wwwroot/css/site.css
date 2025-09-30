@@ -421,18 +421,6 @@ body.dark .SubcategoriesStyle {
         margin-left: 20rem;
     }
 
-
-/*@media (max-width: 2300px) {
-    .button-to-right {
-        margin-left: 4rem;
-    }
-}
-@media (max-width: 2100px) {
-    .button-to-right {
-        margin-left: 0rem;
-    }
-}*/
-
 .textarea-styling {
     display: flex;
     flex: auto;
@@ -468,12 +456,7 @@ body.dark .SubcategoriesStyle {
 
 
 /*CHATT*/
-/*@media (max-width: 1540px) {
-    .chat-container {
-        margin-left: 10rem;
-        margin-right: -1rem;
-    }
-}*/
+
 @media (max-width: 1550px) {
     .chat-container {
         margin-left: 0rem;
@@ -597,9 +580,10 @@ body.dark .SubcategoriesStyle {
     .three-in-row>div:last-child{
         width: 40rem;
         margin-left: 11rem;
-        margin-top: -5rem;
-    }
+        margin-top: 1rem;
+    }    
 }
+
 
 .replyBox {
     display: none;
@@ -665,3 +649,26 @@ body.dark .SubcategoriesStyle {
     .replyToggle2:checked ~ .replyBox2 {
         display: block;
     }
+
+.profile-page {
+    display: flex; 
+    flex-direction:row; 
+    justify-content: space-evenly;
+}
+
+@media (max-width: 1550px) {
+    .profile-page {
+        display: flex;
+        flex-direction: column;
+        margin-right: -8rem;
+        /*        background-color:pink;*/
+        width: 100%;
+    }
+    .chat-container{
+        display:none;
+    }
+    .profile-page>div:last-child{
+        margin-top: 3rem;
+        margin-left: 20rem;
+    }
+}

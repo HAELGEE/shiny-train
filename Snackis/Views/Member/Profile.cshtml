@@ -3,7 +3,7 @@
     ViewData["Title"] = "Profile";
 
 }
-<div style="display: flex; flex-direction:row; justify-content: space-evenly;">
+<div class="profile-page">
 
     <!-- CHATTEN TILL VÄNSTER -->
     <div class="chat-container" style="flex: auto; flex-direction:row;">
@@ -152,10 +152,11 @@
 
     <!-- Höger tom spalt -->
     <div style="display: flex; width: 30%;">
-        <p><b>Info</b>
+        <p>
+            <b>Info</b>
             <br />
             @Model.Member.UserInfo
-            </p>
+        </p>
     </div>
 </div>
 
