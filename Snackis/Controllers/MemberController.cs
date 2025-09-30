@@ -345,7 +345,6 @@ public class MemberController : Controller
 
         member.Id = id;
 
-
         await _memberService.UpdateMemberAsync(member, null);
 
         return RedirectToAction(nameof(Profile), "Member");
