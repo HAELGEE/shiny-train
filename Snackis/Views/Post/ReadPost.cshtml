@@ -118,11 +118,9 @@
 									<input type="checkbox" class="replyToggle" id="replyToggle" hidden>
 
 									<div class="replyBox">
-										<div style="background-color: lightgray; display: flex; flex-direction:row; min-height:1.7rem; word-break: break-word; max-width: 20rem;">
+										<div class="replyBoxChatt">
 											<p style="margin-right:0.5rem; min-width:10rem;">Answer to @Model.Post.Member.UserName </p>
-											<p style="font-style: italic; min-width:10rem;">
-												"@Model.Post.Text"
-											</p>
+											<p style="font-style: italic; min-width:10rem; max-width:40rem;">"@Model.Post.Text"</p>
 										</div>
 
 										<textarea rows="5" cols="100" placeholder="Type your answer here..." asp-for="@Model.SubPost.Text" required></textarea>
@@ -245,8 +243,8 @@
 									</div>
 								}
 							</div>
-							
-							
+
+
 							<form asp-controller="Post" asp-action="CreateSubPost" method="post" enctype="multipart/form-data">
 								<label for="@item.Id" class="pinned-reply">
 									Reply
@@ -254,9 +252,9 @@
 
 								<input type="checkbox" class="replyToggle2" id="@item.Id" hidden>
 								<div class="replyBox2">
-									<div style="background-color: lightgray; display: flex; flex-direction:row; min-height:1.7rem; word-break: break-word; max-width: 50rem;">
-										<p style="margin-right:-1rem; min-width:10rem;">Answer to @item.Member.UserName </p>
-										<p style="font-style: italic; min-width:10rem;">" @item.Text" </p>
+									<div class="replyBoxChatt">
+										<p style="margin-right:-1rem; min-width:10rem;">Answer to @item.Member.UserName </p>										
+											<p style="font-style: italic; min-width:10rem;">"@item.Text" </p>										
 									</div>
 
 									<textarea rows="5" cols="100" placeholder="Type your answer here..." asp-for="@Model.SubPost.Text" required></textarea>

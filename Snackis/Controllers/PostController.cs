@@ -50,7 +50,7 @@ public class PostController : Controller
     }
 
     [HttpGet("ReadPost")]
-    public async Task<IActionResult> ReadPost(int id, int subPostId, int replyId)
+    public async Task<IActionResult> ReadPost(int id, int subPostId)
     {
         var post = await _postService.GetOnePostAsync(id);
 
@@ -62,11 +62,6 @@ public class PostController : Controller
         {
             subPost = await _postService.GetOneSubPostAsync((int)subPostId);
         }
-        //else if (replyId > 0)
-        //{
-        //    subPost = await _postService.GetOneSubPostAsync((int)replyId);
-        //    HttpContext.Session.SetInt32("ReplySubpost", (int)HttpContext.Session.GetInt32("UserId"));
-        //}
 
         var subCategory = await _categoryService.GetOneSubCategoriesAsync((int)post.SubCategoryId!);
 

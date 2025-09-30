@@ -605,11 +605,11 @@ body.dark .SubcategoriesStyle {
     display: none;
     position: fixed; /* alltid på samma plats */
     top: 40%; /* mitten vertikalt */
-    left: 50%;  /*mitten horisontellt */
+    left: 50%; /*mitten horisontellt */
     transform: translate(-50%, -50%); /* exakt centrerat */
     background: white;
     padding: 20px;
-    min-width: 50rem;
+    /*    min-width: 50rem;*/
     border: 1px solid #ccc;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     z-index: 1000; /* ovanpå allt annat */
@@ -644,13 +644,24 @@ body.dark .SubcategoriesStyle {
     transform: translate(-50%, -50%); /* exakt centrerat */
     background: white;
     padding: 20px;
-    min-width: 50rem;
     border: 1px solid #ccc;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     z-index: 1000; /* ovanpå allt annat */
 }
-
-
-.replyToggle2:checked ~ .replyBox2 {
-    display: block;
+.replyBoxChatt {
+    background-color: lightgray;
+    display: flex;
+    flex-direction: row;
+    min-height: 1.7rem;
+    max-width: 47.3rem;
 }
+
+    .replyBoxChatt > p:last-child {
+        word-wrap: break-word; /* äldre stöd */
+        overflow-wrap: break-word; /* modern standard */
+        white-space: normal; /* se till att inte hålla allt på en rad */
+    }
+
+    .replyToggle2:checked ~ .replyBox2 {
+        display: block;
+    }
