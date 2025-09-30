@@ -35,8 +35,8 @@ eller vi skapelse att den säger till att det inte går att använda
 
 ** Klar ** Man skall bara öka antalet "Views i post" 1 gång per profil.                                      
 
-Fixa ett träd där det flyttas höger för varje svar.             <-- Om jag hinner och Orkar
-eller fixa så att det blir en Quote till den man svarar. typ ( svarade "(snedtext) Jag vill spela" (från dig) Jag med :))
+** KLAR ** Fixa ett träd där det flyttas höger för varje svar.             <-- Om jag hinner och Orkar
+** KLAR ** eller fixa så att det blir en Quote till den man svarar. typ ( svarade "(snedtext) Jag vill spela" (från dig) Jag med :))
 ---------------------------------------------------------------------------------------------------------------------
 
 /Blogg/Användare
@@ -93,9 +93,9 @@ Kunna sätta Bans på användare beroende på hur många reports dom fått på sig    <
 /Owner
 ---------------------------------------------------------------------------------------------------------------------
 
-Kunna radera användare
+** KLAR ** Kunna radera användare
 
-Kunna lägg till nya admins via en lista
+** KLAR ** Kunna lägg till nya admins via en lista
 
 ---------------------------------------------------------------------------------------------------------------------
 

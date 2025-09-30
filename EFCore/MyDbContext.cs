@@ -5,8 +5,6 @@ namespace EFCore;
 
 public class MyDbContext : DbContext
 {
-
-
     public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
     {
     }
@@ -27,30 +25,30 @@ public class MyDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<MemberView>()
-            .HasOne(mv => mv.Member)
-            .WithMany(m => m.MemberViews)
-            .HasForeignKey(mv => mv.MemberId)
-            .OnDelete(DeleteBehavior.Restrict);
+             .HasOne(mv => mv.Member)
+             .WithMany(m => m.MemberViews)
+             .HasForeignKey(mv => mv.MemberId)
+             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<MemberView>()
-            .HasOne(mv => mv.Visitor)
-            .WithMany()
-            .HasForeignKey(mv => mv.VisitorId)
-            .OnDelete(DeleteBehavior.Restrict);
+             .HasOne(mv => mv.Visitor)
+             .WithMany()
+             .HasForeignKey(mv => mv.VisitorId)
+             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Chatt>()
-         .HasOne(c => c.SenderMember)
-         .WithMany()
-         .HasForeignKey(c => c.SenderId)
-         .OnDelete(DeleteBehavior.Restrict)
-         .HasConstraintName("FK_Chatt_SenderMember");
+             .HasOne(c => c.SenderMember)
+             .WithMany()
+             .HasForeignKey(c => c.SenderId)
+             .OnDelete(DeleteBehavior.Restrict)
+             .HasConstraintName("FK_Chatt_SenderMember");
 
         modelBuilder.Entity<Chatt>()
-        .HasOne(c => c.ReceiverMember)
-        .WithMany(m => m.Chatt)
-        .HasForeignKey(c => c.ReceiverId)
-        .OnDelete(DeleteBehavior.Restrict)
-        .HasConstraintName("FK_Chatt_ReceiverMember");
+            .HasOne(c => c.ReceiverMember)
+            .WithMany(m => m.Chatt)
+            .HasForeignKey(c => c.ReceiverId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Chatt_ReceiverMember");
 
 
     }

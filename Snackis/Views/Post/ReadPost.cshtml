@@ -109,11 +109,11 @@
 					@if (Context.Session.GetInt32("UserId") > 0)
 					{
 						<div style="margin-top: 2rem;">
-							<div style="margin-bottom: -2.5rem; margin-left: 0.5rem;">
+							<div style="margin-bottom: -2.5rem; margin-left: 0.5rem;" class="changelabel">
 
 								<form asp-controller="Post" asp-action="CreateSubPost" method="post" enctype="multipart/form-data">
 									<label for="replyToggle" class="reply-button">
-										Reply this Post
+										Reply
 									</label>
 									<input type="checkbox" class="replyToggle" id="replyToggle" hidden>
 
