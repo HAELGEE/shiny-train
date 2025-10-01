@@ -244,15 +244,15 @@ public class PostController : Controller
         var member = await _memberService.GetOneMemberAsync((int)HttpContext.Session.GetInt32("UserId"));
         if (member.TotalPosts == 10)
         {
-            await _memberService.UpdateMemberWithAchivementAsync(member, "10 posts", "This member have succefully posted 10 posts");
+            await _memberService.UpdateMemberWithAchivementAsync(member, "Post Newbie", "This member have succefully posted 10 posts");
         }
         else if (member.TotalPosts == 50)
         {
-            await _memberService.UpdateMemberWithAchivementAsync(member, "50 posts", "This member have succefully posted 50 posts");
+            await _memberService.UpdateMemberWithAchivementAsync(member, "Post Rookie", "This member have succefully posted 50 posts");
         }
         else if(member.TotalPosts == 100)
         {
-            await _memberService.UpdateMemberWithAchivementAsync(member, "100 posts", "This member have succefully posted 100 posts");
+            await _memberService.UpdateMemberWithAchivementAsync(member, "Post Master", "This member have succefully posted 100 posts");
         }
 
         await _postService.CreatePostAsync(fullViewModel.Post);
@@ -321,15 +321,15 @@ public class PostController : Controller
         var member = await _memberService.GetOneMemberAsync((int)HttpContext.Session.GetInt32("UserId"));
         if (member.TotalReply == 10)
         {
-            await _memberService.UpdateMemberWithAchivementAsync(member, "10 Replies", "This member have succefully Replied to 10 posts");
+            await _memberService.UpdateMemberWithAchivementAsync(member, "Reply Newbie", "This member have succefully Replied to 10 posts");
         }
         else if (member.TotalReply == 50)
         {
-            await _memberService.UpdateMemberWithAchivementAsync(member, "50 Replies", "This member have succefully Replied to 50 posts");
+            await _memberService.UpdateMemberWithAchivementAsync(member, "Reply Rookie", "This member have succefully Replied to 50 posts");
         }
         else if (member.TotalReply == 100)
         {
-            await _memberService.UpdateMemberWithAchivementAsync(member, "100 Replies", "This member have succefully Replied to 100 posts");
+            await _memberService.UpdateMemberWithAchivementAsync(member, "Reply Master", "This member have succefully Replied to 100 posts");
         }
 
 

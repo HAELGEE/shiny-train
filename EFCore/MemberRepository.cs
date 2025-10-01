@@ -65,7 +65,40 @@ public class MemberRepository : IMemberRepository
                 }
             }
 
-            if(!trueCheck)
+            if (title == "Post Rookie" || title == "Post Master")
+            {
+                foreach (var achiv in member.Achivements)
+                {
+                    if (achiv.Title == "Post Newbie")
+                    {
+                        _dbContext.Achivements.Remove(achiv);
+                    }
+
+                    if (achiv.Title == "Post Rookie")
+                    {
+                        _dbContext.Achivements.Remove(achiv);
+                    }
+                }
+            }
+
+            if (title == "Reply Rookie" || title == "Reply Master")
+            {
+                foreach (var achiv in member.Achivements)
+                {
+                    if (achiv.Title == "Reply Newbie")
+                    {
+                        _dbContext.Achivements.Remove(achiv);
+                    }
+
+                    if (achiv.Title == "Reply Rookie")
+                    {
+                        _dbContext.Achivements.Remove(achiv);
+                    }
+                }
+            }
+            
+
+            if (!trueCheck)
             {
                 var achivement = new Achivement
                 {
