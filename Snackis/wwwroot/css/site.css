@@ -657,6 +657,11 @@ body.dark .SubcategoriesStyle {
     justify-content: space-evenly;
 }
 
+.profile-page > div:last-child {
+    margin-left: -8rem;
+    margin-right: -4rem;
+}
+
 @media (max-width: 1550px) {
     .profile-page {
         display: flex;
@@ -670,6 +675,18 @@ body.dark .SubcategoriesStyle {
     }
     .profile-page>div:last-child{
         margin-top: 3rem;
-        margin-left: 20rem;
+        margin-left: 12.5rem;
     }
+    
 }
+
+table {
+    display: flex;
+    flex-direction: column;
+    border-collapse: separate;
+    border-spacing: 20px 10px; /* 30px mellan kolumner, 10px mellan rader */
+}
+thead{    
+    margin-bottom: -1rem;
+}
+    

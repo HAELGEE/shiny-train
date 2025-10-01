@@ -4,6 +4,7 @@ using EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251001103929_update11")]
+    partial class update11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,26 +33,13 @@ namespace EFCore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+                    b.Property<bool>("Make10Post")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MemderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Make10SubPost")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MemberId");
 
                     b.ToTable("Achivements");
                 });
@@ -131,6 +121,9 @@ namespace EFCore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AchivementId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Birthday")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -185,6 +178,8 @@ namespace EFCore.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AchivementId");
 
                     b.HasIndex("UserName", "Email")
                         .IsUnique();
@@ -374,17 +369,6 @@ namespace EFCore.Migrations
                     b.ToTable("SubPost");
                 });
 
-            modelBuilder.Entity("Entity.Achivement", b =>
-                {
-                    b.HasOne("Entity.Member", "Member")
-                        .WithMany("Achivements")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Member");
-                });
-
             modelBuilder.Entity("Entity.Chatt", b =>
                 {
                     b.HasOne("Entity.Member", "ReceiverMember")
@@ -417,6 +401,15 @@ namespace EFCore.Migrations
                     b.Navigation("Member");
 
                     b.Navigation("Post");
+                });
+
+            modelBuilder.Entity("Entity.Member", b =>
+                {
+                    b.HasOne("Entity.Achivement", "Achivement")
+                        .WithMany("Members")
+                        .HasForeignKey("AchivementId");
+
+                    b.Navigation("Achivement");
                 });
 
             modelBuilder.Entity("Entity.MemberView", b =>
@@ -501,6 +494,11 @@ namespace EFCore.Migrations
                     b.Navigation("Member");
                 });
 
+            modelBuilder.Entity("Entity.Achivement", b =>
+                {
+                    b.Navigation("Members");
+                });
+
             modelBuilder.Entity("Entity.Category", b =>
                 {
                     b.Navigation("SubCategories");
@@ -508,8 +506,6 @@ namespace EFCore.Migrations
 
             modelBuilder.Entity("Entity.Member", b =>
                 {
-                    b.Navigation("Achivements");
-
                     b.Navigation("Chatt");
 
                     b.Navigation("Likes");

@@ -14,13 +14,13 @@ public class MemberRepository : IMemberRepository
         _dbContext = dbContext;
     }
 
-    public async Task<List<Member>> GetAllMembersAsync() => await _dbContext.Member.OrderBy(m => m.UserName).ToListAsync();
-    public async Task<Member> GetOneMemberAsync(int id) => await _dbContext.Member.Where(m => m.Id == id).Include(m => m.MemberViews).SingleOrDefaultAsync();
-    public async Task<Member> GetMemberByUsernameAsync(string userName) => await _dbContext.Member.Where(m => m.UserName == userName).Include(m => m.MemberViews).SingleOrDefaultAsync();
+    public async Task<List<Member>> GetAllMembersAsync() => await _dbContext.Member.OrderBy(m => m.UserName).Include(m => m.Achivements).ToListAsync();
+    public async Task<Member> GetOneMemberAsync(int id) => await _dbContext.Member.Where(m => m.Id == id).Include(m => m.MemberViews).Include(m => m.Achivements).SingleOrDefaultAsync();
+    public async Task<Member> GetMemberByUsernameAsync(string userName) => await _dbContext.Member.Where(m => m.UserName == userName).Include(m => m.MemberViews).Include(m => m.Achivements).SingleOrDefaultAsync();
     public async Task<List<Member>> GetAdminMembersAsync() => await _dbContext.Member.Where(m => m.IsAdmin == true).ToListAsync();
     public async Task<Member> GetAdminMemberAsync(int id) => await _dbContext.Member.Where(m => m.IsAdmin == true && m.Id == id).SingleOrDefaultAsync();
-    public async Task<Member> GetMemberByEmailAsync(string email) => await _dbContext.Member.Where(m => m.Email == email).Include(m => m.MemberViews).SingleOrDefaultAsync();
-    public async Task<Member> GetMemberByUsernamePasswordAsync(string username, string password) => await _dbContext.Member.Where(m => m.UserName == username && m.Password == password).FirstOrDefaultAsync();
+    public async Task<Member> GetMemberByEmailAsync(string email) => await _dbContext.Member.Where(m => m.Email == email).Include(m => m.MemberViews).Include(m => m.Achivements).SingleOrDefaultAsync();
+    public async Task<Member> GetMemberByUsernamePasswordAsync(string username, string password) => await _dbContext.Member.Where(m => m.UserName == username && m.Password == password).Include(m => m.Achivements).FirstOrDefaultAsync();
     public async Task UpdateMemberAsync(Member member, string? image)
     {
         if (image != member.ProfileImagePath && image != "/uploads/standardProfile.png" && member.ProfileImagePath != "/uploads/standardProfile.png" && image != null)
@@ -38,6 +38,53 @@ public class MemberRepository : IMemberRepository
         _dbContext.Member.Update(member);
         await _dbContext.SaveChangesAsync();
     }
+
+
+    public async Task UpdateMemberWithAchivementAsync(Member member, string title, string description)
+    {
+
+        if (member.Achivements.Count == 0)
+        {
+            var achivement = new Achivement
+            {
+                Title = title,
+                Description = description,
+                Member = member,
+                MemderId = member.Id,
+            };
+            member.Achivements.Add(achivement);
+        }
+        else
+        {
+            bool trueCheck = false;
+            foreach (var achive in member.Achivements)
+            {
+                if (achive.Title == title && achive.MemderId == member.Id)
+                {
+                    trueCheck = true; break;
+                }
+            }
+
+            if(!trueCheck)
+            {
+                var achivement = new Achivement
+                {
+                    Title = title,
+                    Description = description,
+                    Member = member,
+                    MemderId = member.Id,
+                };
+                member.Achivements.Add(achivement);
+            }
+        }
+
+        member.PasswordValidation = "";
+
+        _dbContext.Member.Update(member);
+        await _dbContext.SaveChangesAsync();
+    }
+
+
     public async Task UpdateMemberAdminrightsAsync(int id, bool isAdmin)
     {
         var member = await GetOneMemberAsync(id);

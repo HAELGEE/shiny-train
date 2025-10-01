@@ -147,9 +147,39 @@
         <a asp-controller="Member" asp-action="Update" asp-route-Id="@Model.Member.Id">Update info</a>
     </div>
 
-    <!-- Höger tom spalt -->
-    <div style="display: flex; width: 30%;">
+    <!-- Höger -->
+    <div class="höger" style="display: flex; width: 50%; flex-direction:column;">
+        <div style="display: flex; justify-content: center;">
+            <h6 style="margin-bottom: -1rem;">Achivements</h6>
+        </div>
+        <hr />
+
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th><u>Title</u></th>
+                        <th><u>Description</u></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        @foreach (var achive in Model.Member.Achivements)
+                        {
+                        <tr>
+                            <td>@achive.Title</td>
+                            <td>@achive.Description</td>                            
+                    </tr>
+                        }
+                </tbody>
+            </table>
+        </div>
+
+        <br />
+        <br />
         <p>
+            <br />
+
             <b>Info</b>
             <br />
             @Model.Member.UserInfo

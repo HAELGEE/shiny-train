@@ -85,6 +85,7 @@ public class Member
     public ICollection<SubPost>? SubPosts { get; set; }
     public ICollection<Likes>? Likes { get; set; }
     public ICollection<Chatt>? Chatt { get; set; }
+    public ICollection<Achivement>? Achivements { get; set; }
 
 }
 public class ValidDateAttribute : ValidationAttribute

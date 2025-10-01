@@ -14,6 +14,7 @@ public interface IMemberRepository
     Task<Member> GetMemberByEmailAsync(string email);
     Task<Member> GetMemberByUsernamePasswordAsync(string username, string password);
     Task UpdateMemberAsync(Member member, string? image);
+    Task UpdateMemberWithAchivementAsync(Member member, string title, string description);
     Task UpdateMemberAdminrightsAsync(int id, bool isAdmin);
     Task UpdateReportsForMemberAsync(int id);
     Task UpdateProfilePostCounterAsync(int id);

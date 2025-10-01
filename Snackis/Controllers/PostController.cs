@@ -37,6 +37,7 @@ public class PostController : Controller
 
         return false;
     }
+    
 
     [HttpPost("LikeButton")]
     public async Task<IActionResult> LikeButton(int postId, int memberId)
@@ -240,8 +241,21 @@ public class PostController : Controller
 
         }
 
-        await _postService.CreatePostAsync(fullViewModel.Post);
+        var member = await _memberService.GetOneMemberAsync((int)HttpContext.Session.GetInt32("UserId"));
+        if (member.TotalPosts == 10)
+        {
+            await _memberService.UpdateMemberWithAchivementAsync(member, "10 posts", "This member have succefully posted 10 posts");
+        }
+        else if (member.TotalPosts == 50)
+        {
+            await _memberService.UpdateMemberWithAchivementAsync(member, "50 posts", "This member have succefully posted 50 posts");
+        }
+        else if(member.TotalPosts == 100)
+        {
+            await _memberService.UpdateMemberWithAchivementAsync(member, "100 posts", "This member have succefully posted 100 posts");
+        }
 
+        await _postService.CreatePostAsync(fullViewModel.Post);
         return RedirectToAction("ReadPost", new { id = fullViewModel.Post.Id });
     }
 
@@ -300,10 +314,24 @@ public class PostController : Controller
             return RedirectToAction("Login", "Member");
         }
 
-
         await _memberService.UpdateProfileSubReplyCounterAsync((int)userId);
         await _postService.UpdatePostReplyCounterAsync((int)subPost.PostId);
         await _postService.CreateSubPostAsync(subPost);
+
+        var member = await _memberService.GetOneMemberAsync((int)HttpContext.Session.GetInt32("UserId"));
+        if (member.TotalReply == 10)
+        {
+            await _memberService.UpdateMemberWithAchivementAsync(member, "10 Replies", "This member have succefully Replied to 10 posts");
+        }
+        else if (member.TotalReply == 50)
+        {
+            await _memberService.UpdateMemberWithAchivementAsync(member, "50 Replies", "This member have succefully Replied to 50 posts");
+        }
+        else if (member.TotalReply == 100)
+        {
+            await _memberService.UpdateMemberWithAchivementAsync(member, "100 Replies", "This member have succefully Replied to 100 posts");
+        }
+
 
         return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId });
     }

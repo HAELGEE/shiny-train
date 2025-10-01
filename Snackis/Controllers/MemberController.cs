@@ -32,6 +32,7 @@ public class MemberController : Controller
         }
         return adminCheck;
     }
+        
 
 
     [HttpGet("profile")]
@@ -43,9 +44,9 @@ public class MemberController : Controller
             return RedirectToAction(nameof(Login), "Member");
 
 
-
-
         var member = await _memberService.GetOneMemberAsync((int)userId);
+
+
 
         FullViewModel viewModel = new FullViewModel();
         if (member != null)

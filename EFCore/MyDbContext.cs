@@ -19,6 +19,7 @@ public class MyDbContext : DbContext
     public DbSet<MemberView> MemberViews { get; set; }
     public DbSet<Likes> Likes { get; set; }
     public DbSet<Chatt> Chatt { get; set; }
+    public DbSet<Achivement> Achivements { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -55,6 +55,10 @@ public class MemberService : IMemberService
     {
         await _memberRepository.UpdateMemberAsync(member, image);
     }
+    public async Task UpdateMemberWithAchivementAsync(Member member, string title, string description)
+    {
+        await _memberRepository.UpdateMemberWithAchivementAsync(member, title, description);
+    }
     public async Task UpdateMemberAdminrightsAsync(int id, bool isAdmin)
     {
         await _memberRepository.UpdateMemberAdminrightsAsync(id, isAdmin);
