@@ -104,13 +104,6 @@ Kunna sätta Bans på användare beroende på hur många reports dom fått på sig    <
 SMÅ FIX
 ---------------------------------------------------------------------------------------------------------------------
 
-** KLAR ** Skall fixa så att listan av members i admin sänks under i vyn tex på mobil
-
-** KLAR ** skall fixa så admin på Guestpage där man kan göra grejer på användaren som admin att det hamnar under i vyn tex på mobil
-
-** KLAR ** Reply knappen för post behöver ändras när man är på liten skärm.
-
-Krashar om man anger felaktig användarnamn vid skap av chatt
 
 ---------------------------------------------------------------------------------------------------------------------
 
