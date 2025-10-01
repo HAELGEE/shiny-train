@@ -667,7 +667,6 @@ body.dark .SubcategoriesStyle {
         display: flex;
         flex-direction: column;
         margin-right: -8rem;
-        /*        background-color:pink;*/
         width: 100%;
     }
     .chat-container{
