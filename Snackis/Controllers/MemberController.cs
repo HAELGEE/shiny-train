@@ -353,10 +353,13 @@ public class MemberController : Controller
     [HttpPost("CreateChatt")]
     public async Task<IActionResult> CreateChatt(Chatt chat, string userName)
     {
-        if (chat.SenderId > 0 && userName != null)
+        if (chat.SenderId > 0 && userName != null || chat.SenderId > 0 && chat.ReceiverId != null)
         {
             chat.SenderMember = await _memberService.GetOneMemberAsync((int)chat.SenderId);
-            chat.ReceiverMember = await _memberService.GetMemberByUsernameAsync(userName);
+            if (chat.ReceiverId != null)
+                chat.ReceiverMember = await _memberService.GetOneMemberAsync((int)chat.ReceiverId);
+            else if (userName != null)
+                chat.ReceiverMember = await _memberService.GetMemberByUsernameAsync(userName);
 
             if (chat.ReceiverMember == null)
                 return RedirectToAction(nameof(Profile));

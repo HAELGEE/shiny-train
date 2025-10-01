@@ -25,6 +25,7 @@ public class Entities
     public string? WarningMessage { get; set; }
 
     public IFormFile? UploadedImage { get; set; }
+    public Chatt? Chat { get; set; }
 
 
 

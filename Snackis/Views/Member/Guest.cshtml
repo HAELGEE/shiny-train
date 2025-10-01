@@ -1,11 +1,12 @@
 ﻿@model Entities
 @{
-	ViewData["Title"] = "Guest";
+	ViewData["Title"] = "Guest";	
 }
 <div class="three-in-row">
 	<div style="display: flex; width: 20rem;">
-
 	</div>
+
+
 
 	<div style="display: flex; flex-direction:column; align-items:center; width: 80%;">
 		<h1>@ViewData["Title"] Page</h1>
@@ -26,6 +27,49 @@
 		<br />
 		<p><b>Total post: </b>@Model.Member.TotalPosts</p>
 		<p><b>Total replies: </b>@Model.Member.TotalReply</p>
+		<br />
+		<input type="button" value="Start chatt" onclick="document.getElementById('conversationBox').style.display = 'block'" style="max-height:2rem; background-color: cornflowerblue" />
+		<div id="conversationBox" style="
+                  display:none;
+                  position:fixed;
+                  top:20%;
+                  left:40%;
+                  transform:translate(-50%, -50%);
+                  background:#fff;
+                  padding:1rem;
+                  border:1px solid #ccc;
+                  border-radius:8px;
+                  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+                  z-index:1000;
+                  max-width:400px;
+                  width:90%;
+                ">
+			<header class="conversation-box__header" aria-label="Skapa konversation" style="display:flex; flex-direction: row; justify-content:space-between;">
+				<h3 style="margin:0;font-size:1rem;">Create Conversation</h3>
+				<button type="button" class="conversation-box__close" aria-label="Stäng" style="background:red;" onclick="this.closest('#conversationBox').style.display='none'">✕</button>
+			</header>
+
+			<form asp-controller="Member" asp-action="CreateChatt">
+
+				<input type="hidden" asp-for="@Model.Chat.SenderId" value="@Context.Session.GetInt32("UserId")" />
+				<input type="hidden" asp-for="@Model.Chat.ReceiverId" value="@Model.Member.Id" />				
+
+				<label for="conversationText" style="display:block;margin:0.5rem 0 0.25rem;font-size:.9rem;">Text to Member</label>
+				<input type="text" asp-for="@Model.Chat.Text"
+					   id="conversationText"
+					   placeholder="Chatt message here.."
+					   required
+					   style="width:100%;box-sizing:border-box;padding:.5rem;border:1px solid #ccc;border-radius:6px;" />
+
+				<input type="hidden" asp-for="@Model.Chat.SenderId" value="@Model.Member.Id" />
+
+				<div style="display:flex;gap:.5rem;margin-top:.75rem;justify-content:flex-end;">
+					<button type="submit" class="conversation-box__create" style="padding:.5rem .75rem;border-radius:6px;border:1px solid #2b6cb0;background:#2b6cb0;color:#fff;">
+						Create
+					</button>
+				</div>
+			</form>
+		</div>
 	</div>
 
 	<div style="display: flex; width: 20rem; flex-direction:column;">
