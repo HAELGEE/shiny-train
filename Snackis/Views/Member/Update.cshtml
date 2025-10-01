@@ -5,21 +5,17 @@
 <div>
     <form asp-controller="Member" asp-action="Update">
         @* Hidden stuff *@
-        <input type="hidden" asp-for="UserName"></input>
-        <span asp-validation-for="UserName"></span>
-        <input type="hidden" asp-for="Birthday"></input>
-        <span asp-validation-for="Birthday"></span>
-        <input type="hidden" asp-for="Email"></input>
-        <span asp-validation-for="Email"></span>
-        <input type="hidden" asp-for="Id"></input>
-        <span asp-validation-for="Id"></span>
-        <input type="hidden" asp-for="IsOwner"></input>
-        <input type="hidden" asp-for="IsAdmin"></input>
+        <input type="hidden" asp-for="UserName" />
+        <input type="hidden" asp-for="Birthday" />
+        <input type="hidden" asp-for="Email" />
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="IsOwner" />
+        <input type="hidden" asp-for="IsAdmin" />
         <input type="hidden" asp-for="RegisteryDate"/>
         <input type="hidden" asp-for="TotalPosts"/>
         <input type="hidden" asp-for="TotalReply" />
         <input type="hidden" asp-for="Reports" />
-        <input type="hidden" asp-for="ProfileImagePath" value="@Model.ProfileImagePath"></input>
+        <input type="hidden" asp-for="ProfileImagePath" value="@Model.ProfileImagePath" />
         
 
 
