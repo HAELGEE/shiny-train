@@ -15,7 +15,10 @@
         <span asp-validation-for="Id"></span>
         <input type="hidden" asp-for="IsOwner"></input>
         <input type="hidden" asp-for="IsAdmin"></input>
-        <input type="hidden" asp-for="RegisteryDate"></input>
+        <input type="hidden" asp-for="RegisteryDate"/>
+        <input type="hidden" asp-for="TotalPosts"/>
+        <input type="hidden" asp-for="TotalReply" />
+        <input type="hidden" asp-for="Reports" />
         <input type="hidden" asp-for="ProfileImagePath" value="@Model.ProfileImagePath"></input>
         
 
