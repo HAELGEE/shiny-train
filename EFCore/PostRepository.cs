@@ -155,7 +155,7 @@ public class PostRepository : IPostRepository
         var post = await GetOnePostAsync(postId);
         var member = await _context.Member.Where(m => m.Id == memberId).FirstOrDefaultAsync();
 
-        if (viewCheck == null && post.MemberId != memberId)
+        if (viewCheck == null && post.MemberId != memberId && memberId > 0)
         {
             var view = new PostView
             {

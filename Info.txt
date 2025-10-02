@@ -104,7 +104,9 @@ Kunna sätta Bans på användare beroende på hur många reports dom fått på sig    <
 SMÅ FIX
 ---------------------------------------------------------------------------------------------------------------------
 
+Trycker man på reply utan något i så krashar det "SqlException: Cannot insert the value NULL into column 'Text', table 'Snackis.dbo.SubPost'; column does not allow nulls. INSERT fails."
 
+MAN SER REPLY UTAN ATT VARA INLOGGAD PÅ SUBPOSTER
 
 ---------------------------------------------------------------------------------------------------------------------
 
