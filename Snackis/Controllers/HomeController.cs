@@ -21,71 +21,11 @@ public class HomeController : Controller
    
     public async Task<IActionResult> Index()
     {
-        var recentPosts = await _postService.Getting10RecentPostByReplyAsync();
+        var addToPost = await _postService.GettingAll25RecentPostsAsync();
         var categories = await _categoryService.GetAllCategoriesAsync();
         var subCategories = await _categoryService.GetAllSubCategoriesAsync();
         var top10 = await _postService.Getting10RecentPostByReplyAsync();
 
-        var members = await _memberService.GetAllMembersAsync();
-
-        var addToPost = await _postService.GettingAll25RecentPostsAsync();
-
-        if (members.Count == 0 && categories.Count == 0 && subCategories.Count == 0)
-        {
-            var admin = new Member
-            {
-                FirstName = "admin",
-                LastName = "admin",
-                Email = "admin@admin.se",
-                Birthday = "11111111",
-                IsAdmin = true,
-                IsOwner = true,
-                Password = "password",
-                UserName = "Admin",
-            };
-            await _memberService.CreateMemberAsync(admin);
-
-            var catogry1 = new Category
-            {
-                Name = "Cars",
-            };
-            var catogry2 = new Category
-            {
-                Name = "Hobbys",
-            };
-            var catogry3 = new Category
-            {
-                Name = "Gaming",
-            };
-
-            await _categoryService.CreateCategoryAsync(catogry1);
-            await _categoryService.CreateCategoryAsync(catogry2);
-            await _categoryService.CreateCategoryAsync(catogry3);
-                 
-            var subCategory1 = new SubCategory
-            {
-                CategoryId = 1,
-                Name = "Volvo",
-            };
-            var subCategory2 = new SubCategory
-            {
-                CategoryId = 2,
-
-                Name = "Fotball",
-            };
-            var subCategory3 = new SubCategory
-            {
-                CategoryId = 3,
-                Name = "Dota2",
-            };
-
-
-            await _categoryService.CreateSubCategoryAsync(subCategory1);
-            await _categoryService.CreateSubCategoryAsync(subCategory2);
-            await _categoryService.CreateSubCategoryAsync(subCategory3);
-
-            return RedirectToAction(nameof(Index));
-        }
 
         var fullModel = new FullViewModel
         {

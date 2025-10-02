@@ -14,10 +14,14 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        //builder.Services.AddDbContext<MyDbContext>(options =>
+        //       options.UseSqlServer(builder.Configuration["Azure:DbKey"])
+        //       );
+
+
         builder.Services.AddDbContext<MyDbContext>(options =>
-               options.UseSqlServer(builder.Configuration["Azure:DbKey"])
-               );
-               
+        options.UseSqlServer(builder.Configuration.GetConnectionString("MyDbContext"))
+        );
 
 
         builder.Services.AddScoped<IMemberRepository, MemberRepository>();
@@ -45,6 +49,7 @@ public class Program
             app.UseHsts();
         }
 
+
         app.UseSession();
         app.UseHttpsRedirection();
         app.UseRouting();
@@ -57,6 +62,14 @@ public class Program
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}")
             .WithStaticAssets();
+
+        //using (var scope = app.Services.CreateScope())
+        //{
+        //    var categoryService = scope.ServiceProvider.GetRequiredService<ICategoryService>();
+        //    var memberService = scope.ServiceProvider.GetRequiredService<IMemberService>();
+
+        //    DbInitializer.SeedAsync(categoryService, memberService).GetAwaiter().GetResult();
+        //}
 
         app.Run();
     }

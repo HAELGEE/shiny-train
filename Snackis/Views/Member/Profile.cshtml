@@ -163,14 +163,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    @if (Model.Member.Achivements.Count > 0)
+                    {
                         @foreach (var achive in Model.Member.Achivements)
                         {
-                        <tr>
-                            <td>@achive.Title</td>
-                            <td>@achive.Description</td>                            
-                    </tr>
+                            <tr>
+                                <td>@achive.Title</td>
+                                <td>@achive.Description</td>
+                            </tr>
                         }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>No Achivement yet!</td>                            
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
