@@ -8,7 +8,7 @@
         <div class="chat-users" style="color:black">
             <p><b>Users</b></p>
 
-            <input type="button" value="Create chatt" onclick="document.getElementById('conversationBox').style.display = 'block'" style="margin-top: -1rem; margin-bottom:-1.5rem; background-color: cornflowerblue" />
+            <input class="btn btn-primary" type="button" value="Create chatt" onclick="document.getElementById('conversationBox').style.display = 'block'" style="margin-top: -2rem; margin-bottom:-1.5rem;" />
             <div id="conversationBox" style="
                   display:none;
                   position:fixed;
@@ -26,7 +26,7 @@
                 ">
                 <header class="conversation-box__header" aria-label="Skapa konversation" style="display:flex; flex-direction: row; justify-content:space-between;">
                     <h3 style="margin:0;font-size:1rem;">Create Conversation</h3>
-                    <button type="button" class="conversation-box__close" aria-label="Stäng" style="background:red;" onclick="this.closest('#conversationBox').style.display='none'">✕</button>
+                    <button class="btn btn-primary" type="button" class="conversation-box__close" aria-label="Stäng" style="background:red;" onclick="this.closest('#conversationBox').style.display='none'">✕</button>
                 </header>
 
                 <form asp-controller="Member" asp-action="CreateChatt">
@@ -49,7 +49,7 @@
                     <input type="hidden" asp-for="@Model.Chat.SenderId" value="@Model.Member.Id" />
 
                     <div style="display:flex;gap:.5rem;margin-top:.75rem;justify-content:flex-end;">
-                        <button type="submit" class="conversation-box__create" style="padding:.5rem .75rem;border-radius:6px;border:1px solid #2b6cb0;background:#2b6cb0;color:#fff;">
+                        <button class="btn btn-primary" type="submit" class="conversation-box__create" style="padding:.5rem .75rem;border-radius:6px;border:1px solid #2b6cb0;background:#2b6cb0;color:#fff;">
                             Create
                         </button>
                     </div>
@@ -69,7 +69,7 @@
 
                         <li>
                             <a asp-controller="Member" asp-action="Profile" asp-route-receiverId="@otherUser.Id">
-                                <input type="button" value="@otherUser.UserName" onclick="toggleChat()" style="background-color: aquamarine" />
+                                <input class="btn btn-primary" type="button" value="@otherUser.UserName" onclick="toggleChat()" style="background-color: mediumaquamarine; color:black;" />
                             </a>
                         </li>
                     }
@@ -109,7 +109,7 @@
                         <input type="hidden" asp-for="@Model.Chat.ReceiverId" value="@Model.ReceiverMemberID" />
 
                         <input type="text" placeholder="Type message here..." asp-for="@Model.Chat.Text" />
-                        <button type="submit">Send</button>
+                        <button class="btn btn-primary" type="submit">Send</button>
                     </form>
                 </div>
             }
@@ -119,6 +119,7 @@
     <!-- PROFILSIDA MITTEN -->
     <div style="display: flex; flex-direction:column; align-items:center; width: 50rem; margin-right:7.8rem;">
         <h1>@ViewData["Title"] Page</h1>
+        <a asp-controller="Member" asp-action="Update" asp-route-Id="@Model.Member.Id" class="icon-link"><button class="btn btn-primary">Update info</button></a>
         <br />
         <img src="@Model.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
         <form asp-controller="Member" asp-action="Profile" method="post" enctype="multipart/form-data">
@@ -144,7 +145,7 @@
         <p><b>Total reports: </b>@Model.Member.Reports</p>
 
         <br />
-        <a asp-controller="Member" asp-action="Update" asp-route-Id="@Model.Member.Id">Update info</a>
+        
     </div>
 
     <!-- Höger -->

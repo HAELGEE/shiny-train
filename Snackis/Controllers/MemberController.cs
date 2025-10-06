@@ -267,6 +267,7 @@ public class MemberController : Controller
 
         var posts = await _postService.GetAllReportsAsync();
         var members = await _memberService.GetAllMembersAsync();
+        var subposts = await _postService.GetAllSubpostReportsAsync();
 
         var reports = await _memberService.GettingAllReportsAsync();
 
@@ -286,6 +287,7 @@ public class MemberController : Controller
             WarningMessage = warningText,
             Posts = posts,
             Members = members,
+            SubPosts = subposts
         };
 
         return View(view);
@@ -342,7 +344,7 @@ public class MemberController : Controller
     public async Task<IActionResult> Update(int id, Member member)
     {
         if (!ModelState.IsValid)
-            return View();
+            return View(member);
 
         member.Id = id;
 

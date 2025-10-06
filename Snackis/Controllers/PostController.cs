@@ -37,7 +37,7 @@ public class PostController : Controller
 
         return false;
     }
-    
+
 
     [HttpPost("LikeButton")]
     public async Task<IActionResult> LikeButton(int postId, int memberId)
@@ -99,7 +99,8 @@ public class PostController : Controller
     [HttpGet("UnReport")]
     public async Task<IActionResult> UnReport(int id, int reporterId)
     {
-        if (id > 0 || reporterId > 0)
+        
+        if (id == 0 || reporterId == 0)
             return RedirectToAction("Index", "Home");
 
 
@@ -189,6 +190,16 @@ public class PostController : Controller
         {
             var post = await _postService.GetOneSubPostAsync(id);
 
+            var childs = await _postService.GetAllChildSubpostsAsync(id);
+
+            if (childs != null)
+            {
+                foreach (var sb in childs)
+                {
+                    sb.ParentSubpostId = 0;
+                }
+            }
+
             await _postService.DeleteSubPostAsync(post);
         }
 
@@ -250,7 +261,7 @@ public class PostController : Controller
         {
             await _memberService.UpdateMemberWithAchivementAsync(member, "Post Rookie", "This member have succefully posted 50 posts");
         }
-        else if(member.TotalPosts == 100)
+        else if (member.TotalPosts == 100)
         {
             await _memberService.UpdateMemberWithAchivementAsync(member, "Post Master", "This member have succefully posted 100 posts");
         }
@@ -283,7 +294,7 @@ public class PostController : Controller
     }
 
     [HttpPost("CreateSubPost")]
-    public async Task<IActionResult> CreateSubPost(SubPost subPost, IFormFile? UploadedImage, string reply, int replyId)
+    public async Task<IActionResult> CreateSubPost(SubPost subPost, IFormFile? UploadedImage, int replyPostId, int replySubpostId)
     {
         if (subPost.Text == null && subPost.MemberId == null)
             return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId });
@@ -306,8 +317,16 @@ public class PostController : Controller
 
         }
 
-        subPost.ReplyText = reply;
-        subPost.ParentId = replyId;
+        if (replyPostId == 0)
+            subPost.ParentPostId = null;
+        else
+            subPost.ParentPostId = replyPostId;
+
+        if (replySubpostId == 0)
+            subPost.ParentSubpostId = null;
+        else
+            subPost.ParentSubpostId = replySubpostId;
+
         var userId = HttpContext.Session.GetInt32("UserId");
         if (userId == null)
         {
@@ -366,6 +385,29 @@ public class PostController : Controller
         return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId });
     }
 
+    [HttpGet("ReportSubpost")]
+    public async Task<IActionResult> ReportSubpost(int id, int reporterId, int postId)
+    {
+        if (id == 0 || reporterId == 0)
+            return RedirectToAction("Index", "Home");
 
+        await _postService.ReportSubpostAsync(id, reporterId);
+
+        return RedirectToAction(nameof(ReadPost), new { Id = postId });
+    }
+
+    [HttpGet("UnReportSubpost")]
+    public async Task<IActionResult> UnReportSubpost(int id, int reporterId, int postId)
+    {
+
+        if (id == 0 || reporterId == 0)
+            return RedirectToAction("Index", "Home");
+
+
+        HttpContext.Session.SetInt32("updateSubpost", 0);
+        await _postService.UnReportSubpostAsync(id, reporterId);
+
+        return RedirectToAction(nameof(ReadPost), new { Id = postId });
+    }
 
 }

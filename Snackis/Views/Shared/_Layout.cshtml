@@ -22,52 +22,54 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Snackis.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body style="background-color: lightgray;">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: dimgrey;">
             <div class="container">
                 <div class="box left">
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><h3>Snackis</h3></a>
-                    
+
                 </div>
                 <div class="box middle">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <ul class="navbar-nav flex-grow-1" style="align-items:center;">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="Register">Register</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="Profile">Profile</a>
-                        </li>
-                        @if (!string.IsNullOrWhiteSpace(userName) && Context.Session.GetInt32("IsAdmin") == 1)
-                        {
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav flex-grow-1" style="align-items:center;">
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="Admin">Admin</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><b>Home</b></a>
                             </li>
-                        }                        
-                    </ul>                    
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="Register"><b>Register</b></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="Profile"><b>Profile</b></a>
+                            </li>
+                            @if (!string.IsNullOrWhiteSpace(userName) && Context.Session.GetInt32("IsAdmin") == 1)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="Admin"><b>Admin</b></a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
                 </div>
                 <div class="box-right">
                     <label class="switch">
-                        <input type="checkbox" id="theme-toggle">
-                        <span class="slider"></span>
+                        @* <input type="checkbox" id="theme-toggle">
+                        <span class="slider"></span> *@
                     </label>
 
                     @if (string.IsNullOrEmpty(userName))
-                        {
-                            <a asp-controller="Member" asp-action="Login">Sign In</a>
-                        }
-                        else
-                        {
-                            <a asp-controller="Member" asp-action="Login">Sign Out</a>
-                        }
-                    
+                    {
+                        <a asp-controller="Member" asp-action="Login" class="btn btn-primary" style="color:white;">Sign In</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Member" asp-action="Login" class="btn btn-primary" style="color:white;">Sign Out</a>
+                    }
+
                 </div>
             </div>
         </nav>
@@ -78,12 +80,12 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top border-black footer text-muted">
         <div class="container">
             <b>&copy; 2025 - Snackis - <a asp-area="" asp-controller="Home" asp-action="Info">Info</a></b>
         </div>
     </footer>
-     
+
 
     @* Toggle script för Darkmode och LightMode *@
     <script>
@@ -110,6 +112,7 @@
 
     </script>
 
+    
     @* Script för Livechatts funktion *@
     <script>
         let connection = new signalR.HubConnectionBuilder()
@@ -135,6 +138,17 @@
         });
 
 
+    </script>
+
+    <script>
+        const dropdownButton = document.getElementById('platsDropdown');
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+          item.addEventListener('click', function(e) {
+            e.preventDefault();
+            dropdownButton.textContent = this.textContent; // Ändra knappens text
+            dropdownButton.dataset.value = this.dataset.value; // Spara valt värde
+          });
+        });
     </script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

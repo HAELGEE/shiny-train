@@ -9,48 +9,34 @@
     <form asp-controller="Member" asp-action="Register">
 
         <label asp-for="FirstName"></label>
-        <br />
-        <input type="text" asp-for="FirstName"></input>
+        <input type="text" asp-for="FirstName" class="form-control"></input>
         <span asp-validation-for="FirstName"></span>
-        <br />
 
         <label asp-for="LastName"></label>
-        <br />
-        <input type="text" asp-for="LastName"></input>
+        <input type="text" asp-for="LastName" class="form-control"></input>
         <span asp-validation-for="LastName"></span>
-        <br />
 
         <label asp-for="Birthday"></label>
-        <br />
-        <input type="text" asp-for="Birthday"></input>
+        <input type="text" asp-for="Birthday" class="form-control"></input>
         <span asp-validation-for="Birthday"></span>
-        <br />
 
         <label asp-for="Email"></label>
-        <br />
-        <input type="text" asp-for="Email"></input>
+        <input type="text" asp-for="Email" class="form-control"></input>
         <span asp-validation-for="Email" class="text-danger"></span>
-        <br />
 
         <label asp-for="UserName"></label>
-        <br />
-        <input type="text" asp-for="UserName"></input>
+        <input type="text" asp-for="UserName" class="form-control"></input>
         <span asp-validation-for="UserName" class="text-danger"></span>
-        <br />
 
         <label asp-for="Password"></label>
-        <br />
-        <input type="password" asp-for="Password"></input>
+        <input type="password" asp-for="Password" class="form-control"></input>
         <span asp-validation-for="Password"></span>
-        <br />
 
         <label asp-for="PasswordValidation"></label>
-        <br />
-        <input type="password" asp-for="PasswordValidation"></input>
+        <input type="password" asp-for="PasswordValidation" class="form-control"></input>
         <span asp-validation-for="PasswordValidation"></span>
-        <br />
 
         <br />
-        <button type="submit">Create</button>
+        <button class="btn btn-primary" type="submit">Create</button>
     </form>
 </div>

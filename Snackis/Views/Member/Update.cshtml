@@ -20,36 +20,26 @@
 
 
         <label asp-for="FirstName"></label>
-        <br />
-        <input type="text" asp-for="FirstName"></input>
+        <input type="text" asp-for="FirstName" class="form-control"></input>
         <span asp-validation-for="FirstName"></span>
-        <br />
 
         <label asp-for="LastName"></label>
-        <br />
-        <input type="text" asp-for="LastName"></input>
+        <input type="text" asp-for="LastName" class="form-control"></input>
         <span asp-validation-for="LastName"></span>
-        <br />
 
 
         <label asp-for="Password"></label>
-        <br />
-        <input type="password" asp-for="Password"></input>
+        <input type="password" asp-for="Password" required class="form-control"></input>
         <span asp-validation-for="Password"></span>
-        <br />
         <label asp-for="PasswordValidation"></label>
-        <br />
-        <input type="password" asp-for="PasswordValidation"></input>
+        <input type="password" asp-for="PasswordValidation" required class="form-control"></input>
         <span asp-validation-for="PasswordValidation"></span>
-        <br />
         
         <label asp-for="UserInfo"></label>
-        <br />
-        <textarea asp-for="UserInfo"  style="width: 20rem; height: 5rem;"></textarea>
+        <textarea asp-for="UserInfo" style="width: 20rem; height: 5rem;" class="form-control"></textarea>
 
-        <br />
         <div asp-validation-summary="All" class="text-danger" style="margin-top: 1rem;">
-            <button type="submit">Update</button>
+            <button class="btn btn-primary" type="submit">Update</button>
         </div>
     </form>
 </div>

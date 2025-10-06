@@ -9,8 +9,11 @@ public class SubPost
     [Required]
     public string Text { get; set; }
     public string? ReplyText { get; set; }
-    public int? ParentId { get; set; }
+    public int? ParentPostId { get; set; }
+    public int? ParentSubpostId { get; set; }
     public bool Reported { get; set; } = false;
+    public int? ReporterId { get; set; }
+    public int TotalReports { get; set; } = 0;
     public string? ImagePath { get; set; }
 
     public DateTime Created { get; set; } = DateTime.UtcNow;
@@ -20,5 +23,6 @@ public class SubPost
     public int? PostId { get; set; }
     public int? MemberId { get; set; }
     public Member? Member { get; set; }
+    public ICollection<Reports>? ReporterIds { get; set; }
 
 }

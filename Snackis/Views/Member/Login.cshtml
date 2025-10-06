@@ -18,11 +18,11 @@
         <span asp-validation-for="Password"></span>
         <br />
         <div asp-validation-summary ="All" class="text-danger" style="margin-top: 1rem;">
-            <button type="submit">Login</button>
-            <button><a asp-controller="Member" asp-action="Register" style="color: black; text-decoration: none;">Register</a></button>
+            <button class="btn btn-primary" type="submit">Login</button>
+            <button class="btn btn-primary"><a asp-controller="Member" asp-action="Register" style="color: white; text-decoration: none;">Register</a></button>
 
         </div>
     </form>
-            <button><a asp-controller="Member" asp-action="ForgotPassword" style="color: black; text-decoration: none;">Forgot Password</a></button>
+    <button class="btn btn-primary"><a asp-controller="Member" asp-action="ForgotPassword" style="color: white; text-decoration: none;">Forgot Password</a></button>
 
 </div>

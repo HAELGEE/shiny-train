@@ -17,7 +17,7 @@
             <input type="hidden" asp-for="category.Id"></input>
 
             <div asp-validation-summary="All" class="text-danger" style="margin-top: 1rem;">
-                <button type="submit">Update</button>
+                <button class="btn btn-primary" type="submit">Update</button>
             </div>
         </form>
     }
@@ -27,11 +27,11 @@
 
             @if (Model.Categories.Count() > 0)
             {
-                <p>Wich Category name do you want to update?</p>
+                <h5>Wich Category name do you want to update?</h5>
                 <br />
                 @foreach (var item in Model.Categories)
                 {
-                    <p>@item.Name <a asp-controller="Category" asp-action="UpdateCategory" asp-route-id="@item.Id">Update</a></p>
+                    <h5>@item.Name <a asp-controller="Category" asp-action="UpdateCategory" asp-route-id="@item.Id" class="btn btn-primary" style="margin-left: 1rem;">Update</a></h5>
                 }
             }
         </form>

@@ -3,6 +3,8 @@
 namespace Entity;
 public class FullViewModel
 {
+    public int searchType { get; set; } = 0;
+    public string Text { get; set; } = "";
     public Member? Member { get; set; }
     public List<Category>? Categorys { get; set; } = new();
     public List<SubCategory>? SubCategorys { get; set; }
@@ -16,5 +18,13 @@ public class FullViewModel
     public Chatt? Chat {  get; set; }
     public int? ReceiverMemberID { get; set; }
     public IFormFile? UploadedImage { get; set; }
+
+    /* SEARCH STUFF */
+    public List<Member>? Members { get; set; }
+    public List<Post>? PostTitle { get; set; }
+    public List<Post>? PostText { get; set; }
+
+   
+
 
 }

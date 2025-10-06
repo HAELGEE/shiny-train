@@ -90,6 +90,20 @@ public class PostService : IPostService
     {
         await _postRepository.UpdateSubPostAsync(subPost);
     }
-
-    
+    public async Task<List<SubPost>> GetAllChildSubpostsAsync(int id)
+    {
+        return await _postRepository.GetAllChildSubpostsAsync(id);
+    }
+    public async Task ReportSubpostAsync(int postId, int reporterId)
+    {
+        await _postRepository.ReportSubpostAsync(postId, reporterId);
+    }
+    public async Task UnReportSubpostAsync(int postId, int reporterId)
+    {
+        await _postRepository.UnReportSubpostAsync(postId, reporterId);
+    }
+    public async Task<List<SubPost>> GetAllSubpostReportsAsync()
+    {
+        return await _postRepository.GetAllSubpostReportsAsync();
+    }
 }

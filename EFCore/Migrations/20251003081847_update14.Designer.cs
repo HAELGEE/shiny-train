@@ -4,6 +4,7 @@ using EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251003081847_update14")]
+    partial class update14
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -301,16 +304,11 @@ namespace EFCore.Migrations
                     b.Property<int?>("PostId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SubPostId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("MemberId");
 
                     b.HasIndex("PostId");
-
-                    b.HasIndex("SubPostId");
 
                     b.ToTable("Reports");
                 });
@@ -369,15 +367,9 @@ namespace EFCore.Migrations
                     b.Property<bool>("Reported")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ReporterId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TotalReports")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -490,15 +482,9 @@ namespace EFCore.Migrations
                         .WithMany("ReporterIds")
                         .HasForeignKey("PostId");
 
-                    b.HasOne("Entity.SubPost", "SubPost")
-                        .WithMany("ReporterIds")
-                        .HasForeignKey("SubPostId");
-
                     b.Navigation("Member");
 
                     b.Navigation("Post");
-
-                    b.Navigation("SubPost");
                 });
 
             modelBuilder.Entity("Entity.SubCategory", b =>
@@ -559,11 +545,6 @@ namespace EFCore.Migrations
             modelBuilder.Entity("Entity.SubCategory", b =>
                 {
                     b.Navigation("Posts");
-                });
-
-            modelBuilder.Entity("Entity.SubPost", b =>
-                {
-                    b.Navigation("ReporterIds");
                 });
 #pragma warning restore 612, 618
         }

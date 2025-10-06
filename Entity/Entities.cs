@@ -9,6 +9,7 @@ public class Entities
     public List<Category>? Categories { get; set; } = new();
     public SubCategory? SubCategory { get; set; } = new();
     public List<SubCategory>? SubCategories { get; set; }
+    //public List<SubCategory>? SubCategoriesByParents { get; set; }
 
     public List<Member>? Admins { get; set; } = new();
     public Member? Admin { get; set; } = new();

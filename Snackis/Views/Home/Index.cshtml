@@ -7,7 +7,9 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
+
     @* Here the categories lays *@
+
     <div class="CategoryBox">
         @if (Model.Categorys != null)
         {
@@ -33,9 +35,42 @@
             }
         }
     </div>
+    <br />
 
+    <div class="d-flex">
+        <form asp-controller="Home" asp-action="Index" class="w-100">
+            <div class="row g-2 align-items-center">
+                <!-- Select dropdown -->
+                <div class="col-auto">
+                    <select class="form-select" name="search">
+                        <option value="1">Users</option>
+                        <option value="2">Title</option>
+                        <option value="3">Text</option>
+                        <option value="0">All recent Posts</option>
+                    </select>
+                </div>
+
+                <!-- Search input -->
+                <div class="col-auto">
+                    <input class="form-control" name="text" placeholder="Search..." />
+                </div>
+
+                <!-- Submit button -->
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+
+            <!-- Hidden fields - fixade även dessa -->
+            <input type="hidden" name="Categorys" value="@Model.Categorys" />
+            <input type="hidden" name="SubCategorys" value="@Model.SubCategorys" />
+            <input type="hidden" name="Top10Posts" value="@Model.Top10Posts" />
+        </form>
+    </div>
+
+    <br />
     <div class="posts">
-        @if (Model.Posts != null)
+        @if (Model.Posts != null && Model.searchType == 0)
         {
             @foreach (var item in Model.Posts)
             {
@@ -89,17 +124,81 @@
                 </div>
             }
         }
+        else if (Model.searchType == 1)
+        {
+            <h5>Username</h5>
+            @foreach (var item in Model.Members)
+            {
+                <div class="post">
+                    <div class="post-content">
+                        <p style="margin-bottom: -1px;">
+
+                            <a asp-controller="Member" asp-action="Guest" asp-route-id="@item.Id">@item.UserName</a>
+
+
+                        </p>
+                    </div>
+                </div>
+            }
+        }
+        else if (Model.searchType == 2)
+        {
+            <h5>Title</h5>
+            @foreach (var item in Model.PostTitle)
+            {
+                <div class="post">
+                    <div class="post-content">
+                        <p style="margin-bottom: -1px;">
+
+                            <a asp-controller="Post" asp-action="ReadPost" asp-route-id="@item.Id" style="text-decoration: none;">@item.Description</a>
+                            <b>By</b>
+                            <a asp-controller="Member" asp-action="Guest" asp-route-id="@item.Member.Id">@item.Member.UserName</a>
+                            -
+                            <b>@item.Created.ToLocalTime()</b>
+
+
+                        </p>
+                    </div>
+                </div>
+            }
+
+        }
+        else if (Model.searchType == 3)
+        {
+            if (Model.Text != null)
+            {
+                <h5>Text "@Model.Text" was found in </h5>
+            }
+
+            @foreach (var item in Model.PostText)
+            {
+                <div class="post">
+                    <div class="post-content">
+                        <p style="margin-bottom: -1px;">
+
+                            <a asp-controller="Post" asp-action="ReadPost" asp-route-id="@item.Id" style="text-decoration: none;">@item.Description</a>
+                            <b>By</b>
+                            <a asp-controller="Member" asp-action="Guest" asp-route-id="@item.Member.Id">@item.Member.UserName</a>
+                            -
+                            <b>@item.Created.ToLocalTime()</b>
+
+
+                        </p>
+                    </div>
+                </div>
+            }
+        }
     </div>
 
 
 </div>
 
 @* Top 10 post by reply here *@
-<div class="recent-post-pinned">
-    <div class="recent-post-pinned-header">
+<div class="recent-post-pinned" style="background-color:darkgray;" ">
+    <div class="recent-post-pinned-header" style="background-color: grey;">
         <h3>Top Posts:</h3>
     </div>
-    <div style="margin: 0.4rem;">
+    <div style="margin: 0.4rem; background-color:darkgray;">
         @if (Model.Top10Posts != null)
         {
             @foreach (var item in Model.Top10Posts)
@@ -109,3 +208,5 @@
         }
     </div>
 </div>
+
+

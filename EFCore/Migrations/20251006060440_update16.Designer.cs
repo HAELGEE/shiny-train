@@ -4,6 +4,7 @@ using EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251006060440_update16")]
+    partial class update16
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -376,9 +379,6 @@ namespace EFCore.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TotalReports")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("MemberId");
@@ -490,15 +490,13 @@ namespace EFCore.Migrations
                         .WithMany("ReporterIds")
                         .HasForeignKey("PostId");
 
-                    b.HasOne("Entity.SubPost", "SubPost")
+                    b.HasOne("Entity.SubPost", null)
                         .WithMany("ReporterIds")
                         .HasForeignKey("SubPostId");
 
                     b.Navigation("Member");
 
                     b.Navigation("Post");
-
-                    b.Navigation("SubPost");
                 });
 
             modelBuilder.Entity("Entity.SubCategory", b =>

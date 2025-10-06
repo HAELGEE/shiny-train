@@ -20,6 +20,12 @@ public class PostRepository : IPostRepository
         .Include(p => p.ReporterIds)
         .ToListAsync();
 
+    public async Task<List<SubPost>> GetAllSubpostReportsAsync() => await _context.SubPost
+        .Where(p => p.Reported == true)
+        .Include(p => p.Member)
+        .Include(p => p.ReporterIds)
+        .ToListAsync();
+
     public async Task<Post> GetOnePostAsync(int id) => await _context.Post
         .Where(p => p.Id == id)
         .Include(p => p.Member)
@@ -200,7 +206,7 @@ public class PostRepository : IPostRepository
 
     // Subpost
 
-    public async Task<SubPost> GetOneSubPostAsync(int id) => await _context.SubPost.Where(sp => sp.Id == id).FirstOrDefaultAsync();
+    public async Task<SubPost> GetOneSubPostAsync(int id) => await _context.SubPost.Where(sp => sp.Id == id).Include(sb => sb.ReporterIds).FirstOrDefaultAsync();
     public async Task<List<SubPost>> GettingSubPostFromPostByIdAsync(int id) => await _context.SubPost
         .Where(sp => sp.PostId == id)
         .Include(sp => sp.Member)
@@ -234,6 +240,57 @@ public class PostRepository : IPostRepository
     {
         _context.Update(subPost);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<List<SubPost>> GetAllChildSubpostsAsync(int id) => await _context.SubPost.Where(sb => sb.ParentSubpostId == id).ToListAsync();
+
+    public async Task ReportSubpostAsync(int SubpostId, int reporterId)
+    {
+        var subpost = await GetOneSubPostAsync(SubpostId);
+
+        var member = await _context.Member.Where(m => m.Id == subpost.MemberId).FirstOrDefaultAsync();
+        bool check = false;
+
+        foreach (var report in subpost.ReporterIds)
+        {
+            if (report.MemberId == reporterId)
+            {
+                check = true; break;
+            }
+        }
+
+        if (!check)
+        {
+            subpost.Reported = true;
+
+            var report = new Reports
+            {
+                MemberId = reporterId,
+                SubPostId = subpost.Id,
+            };
+
+            _context.Reports.Add(report);
+            _context.Update(subpost);
+            await _context.SaveChangesAsync();
+        }
+    }
+    public async Task UnReportSubpostAsync(int SubpostId, int reporterId)
+    {
+        var subpost = await GetOneSubPostAsync(SubpostId);
+
+        var unreportMembers = await _context.Reports.Where(r => r.SubPostId == SubpostId).ToListAsync();
+
+        if (unreportMembers != null)
+        {
+            foreach (var report in unreportMembers)
+            {
+                _context.Reports.Remove(report);
+            }
+
+            subpost.Reported = false;
+            _context.Update(subpost);
+            await _context.SaveChangesAsync();
+        }
     }
 
 }

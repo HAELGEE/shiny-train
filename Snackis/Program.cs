@@ -31,6 +31,8 @@ public class Program
         builder.Services.AddScoped<IPostService, PostService>();
         builder.Services.AddScoped<IPostRepository, PostRepository>();
         builder.Services.AddScoped<IReportsRepository, ReportsRepository>();
+        builder.Services.AddScoped<IHomeRepository, HomeRepository>();
+        builder.Services.AddScoped<IHomeService, HomeService>();
 
 
         builder.Services.AddSession();

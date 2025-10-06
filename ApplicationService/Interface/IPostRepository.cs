@@ -27,6 +27,10 @@ public interface IPostRepository
     Task DeleteSubPostAsync(SubPost subPost);
     Task<SubPost> GetOneSubPostAsync(int id);
     Task UpdateSubPostAsync(SubPost subPost);
+    Task<List<SubPost>> GetAllChildSubpostsAsync(int id);
+    Task ReportSubpostAsync(int postId, int reporterId);
+    Task UnReportSubpostAsync(int postId, int reporterId);
+    Task<List<SubPost>> GetAllSubpostReportsAsync();
 
 
 }

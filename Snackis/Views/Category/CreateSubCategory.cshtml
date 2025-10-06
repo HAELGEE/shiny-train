@@ -19,7 +19,7 @@
 
             <br />
             <div asp-validation-summary="All" class="text-danger" style="margin-top: 1rem;">
-                <button type="submit">Create</button>
+                <button class="btn btn-primary" type="submit">Create</button>
             </div>
         </form>
     }
@@ -30,10 +30,10 @@
             @if (Model.Categories.Count() > 0)
             {
                 <br />
-                <p>In wich Category do you want to create a new Subcategory?</p>
+                <h5>In wich Category do you want to create a new Subcategory?</h5>
                 @foreach (var category in Model.Categories)
                 {
-                    <p>@category.Name <a asp-controller="Category" asp-action="CreateSubCategory" asp-route-id="@category.Id">Create</a></p>
+                    <h5>@category.Name <a asp-controller="Category" asp-action="CreateSubCategory" asp-route-id="@category.Id" class="btn btn-primary" style="margin-left: 1rem;">Create</a></h5>
 
                 }
             }

@@ -32,10 +32,10 @@ body {
 
 
 /*NAVBAR*/
-.navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 {
+.navbar.navbar-expand-sm.navbar-toggleable-sm.navbar-light.bg-white.border-bottom.box-shadow.mb-3 {
     display: flex;
-    justify-content: center; /* centrerar horisontellt */
-    align-items: center; /* centrerar vertikalt */
+    justify-content: center;
+    align-items: center;
 }
 
 .box {
@@ -47,11 +47,13 @@ body {
     justify-content: center; /* centrerar horisontellt */
     align-items: center; /* centrerar vertikalt */
 }
-.middle{
-    flex:auto;
-    right:4rem;
+
+.middle {
+    flex: auto;
+    right: 4rem;
     margin-left: 8rem;
 }
+
 @media (max-width: 767px) {
     .middle {
         margin-left: 4rem;
@@ -69,17 +71,24 @@ body {
     position: absolute; /* placerar den relativt till närmaste förälder med position: relative */
     top: var(--navbar-height, 100px); /* justera så den hamnar direkt under navbaren */
     right: 80px;
-    width: 30rem;
+    width: 23rem;
     max-height: calc(100vh - var(--navbar-height, 60px));
     background: #f2f2f2; /* bara för att se den */
+
+   
 
     overflow-y: auto; /* gör rutan scroll-bar om innehållet blir för långt */
     border: 1px solid #ccc;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
+@media (max-width: 1875px){
+    .recent-post-pinned{
+        width: 15rem;
+    }
+}
 
-@media (max-width: 1750px) {
+@media (max-width: 1700px) {
     .recent-post-pinned {
         display: none;
     }
@@ -167,7 +176,7 @@ body {
 body.dark-mode .navbar,
 body.dark-mode .navbar * {
     color: #fff !important; /* Tvingar vit text */
-    background-color: #000 !important; 
+    background-color: #000 !important;
 }
 
 
@@ -181,6 +190,7 @@ body.dark-mode .recent-post-pinned {
     background: #1e1e1e; /* Mörkgrå bakgrund */
     color: #f5f5dc !important; /* Krämvit text */
 }
+
 input:checked + .slider {
     /*    background-color: #555;*/
     background-color: dimgrey !important;
@@ -195,11 +205,12 @@ input:checked + .slider {
 .box-right {
     display: flex;
     align-items: center;
-    gap: 1rem; 
+    gap: 1rem;
 }
+
     .box-right a {
         text-decoration: none;
-        color: blue; 
+        color: blue;
     }
 
 
@@ -227,7 +238,7 @@ input:checked + .slider {
     border-radius: 6px;
     cursor: pointer;
     transition: background 0.2s, border-color 0.2s;
-    position: relative;    
+    position: relative;
 }
 
     /* Hover-effekt */
@@ -241,7 +252,6 @@ input:checked + .slider {
     display: none;
     flex-direction: column; /* gör så att de staplas i höjd */
     gap: 6px;
-
     position: absolute; /*gör att de inte påverkar containerns höjd */
     top: 100%; /* lägg under knappen */
     left: 0;
@@ -249,7 +259,7 @@ input:checked + .slider {
     border: 1px solid #999;
     border-radius: 4px;
     padding: 5px;
-    min-width: 80px;    
+    min-width: 80px;
     z-index: 100;
 }
 
@@ -263,7 +273,7 @@ input:checked + .slider {
 
 /* När man hovrar över kategori → visa subkategorierna i en kolumn */
 .CategoryStyle:hover > .SubcategoriesBox {
-    display: flex;    
+    display: flex;
 }
 
 /* Samma stil på subkategorierna */
@@ -276,7 +286,6 @@ input:checked + .slider {
     transition: background 0.2s, border-color 0.2s;
     top: 100%;
     left: 0;
-    
     padding: 5px;
     z-index: 10;
     min-width: 80px;
@@ -304,14 +313,7 @@ body.dark .SubcategoriesStyle {
         border-color: #888;
     }
 
-.posts {
-    border: 1px solid #333;
-    padding: 15px;
-    max-width: 70rem; /* max bredd på stora skärmar */
-    width: 70rem; /* Gör bredare */
-    margin: 0 auto; /* Centrerar */
-    box-sizing: border-box;
-}
+
 
 .post {
     border: 1px solid #aaa;
@@ -324,11 +326,10 @@ body.dark .SubcategoriesStyle {
     box-sizing: border-box;
     flex-wrap: wrap; /* gör att innehållet bryter rad på små skärmar */
 }
+
 .posts2 {
-    border: 1px solid #333;
-    padding: 15px;
-    max-width: 70rem; /* max bredd på stora skärmar */
-    width: 70rem; /* Gör bredare */
+    max-width: 85rem; /* max bredd på stora skärmar */
+    width: 85rem; /* Gör bredare */
     margin: 0 auto; /* Centrerar */
     box-sizing: border-box;
 }
@@ -342,55 +343,37 @@ body.dark .SubcategoriesStyle {
 
 /* For index page */
 @media (max-width: 2300px) {
-    .posts {        
+    .posts {
         width: 60rem;
     }
 }
+
 @media (max-width: 2150px) {
     .posts {
         width: 35rem;
     }
 }
 
-.input-to-right {
-    margin-left: 9rem;
-}
-.button-to-right {
-    margin-left: 9rem;
-    width: 5rem;
-}
+
 
 /* Readpost page */
 @media (max-width: 1600px) {
     .posts2 {
         width: 60rem;
     }
-    .input-to-right {
-        margin-left: 4rem;
-    }
-    .button-to-right {
-        margin-left: 4rem;
-    }
-    
 }
+
+
 @media (max-width: 1200px) {
     .posts2 {
-        width: 35rem;
+        width: 60rem;
     }
-    .input-to-right {
-        margin-left: 0rem;
-    }
-    .button-to-right {
-        margin-left: 0rem;
-    }
-    
 }
 
 
 .post-content {
     flex: 1; /* låter texten ta så mycket plats som behövs */
     min-width: 200px; /* förhindrar att den blir för liten */
-   
 }
 
 /* Metadata */
@@ -407,30 +390,31 @@ body.dark .SubcategoriesStyle {
         border: 1px solid #ccc;
         padding: 2px 6px;
         border-radius: 4px;
+        border-color: dimgray;
     }
 
-.three-in-row{
-    display: flex;    
-    justify-content:space-evenly;
-           
+.three-in-row {
+    display: flex;
+    justify-content: space-evenly;
 }
-    .three-in-row > div:first-child {       
-        margin-right:20rem;
+
+    .three-in-row > div:first-child {
+        margin-right: 20rem;
     }
-    .three-in-row > div:last-child {        
+
+    .three-in-row > div:last-child {
         margin-left: 20rem;
     }
 
 .textarea-styling {
     display: flex;
     flex: auto;
-    min-height: 8.5rem; 
-    max-height: 8.5rem; 
+    min-height: 8.5rem;
+    max-height: 8.5rem;
     padding: 1rem;
 }
 
-.div-box-post-header
-{
+.div-box-post-header {
     display: flex;
     flex: auto;
     margin-left: 50rem;
@@ -448,6 +432,7 @@ body.dark .SubcategoriesStyle {
         margin-left: 40rem;
     }
 }
+
 @media (max-width: 1200px) {
     .div-box-post-header {
         margin-left: 17rem;
@@ -464,6 +449,7 @@ body.dark .SubcategoriesStyle {
         visibility: hidden;
     }
 }
+
 .chat-container {
     display: flex;
     flex-direction: row;
@@ -551,7 +537,7 @@ body.dark .SubcategoriesStyle {
     flex-direction: row;
 }
 
-.lika-stor{
+.lika-stor {
     flex: 1;
     flex-direction: column;
 }
@@ -561,7 +547,7 @@ body.dark .SubcategoriesStyle {
         display: flex;
         width: 40rem;
         margin-left: 21rem;
-        justify-content:center;
+        justify-content: center;
         flex-direction: column-reverse;
     }
 }
@@ -574,15 +560,16 @@ body.dark .SubcategoriesStyle {
         width: 40rem;
         margin-left: 10rem;
         justify-content: center;
-        flex-direction: column;        
-    }    
+        flex-direction: column;
+    }
 }
+
 @media (max-width: 1400px) {
-    .three-in-row>div:last-child{
+    .three-in-row > div:last-child {
         width: 40rem;
         margin-left: 11rem;
         margin-top: 1rem;
-    }    
+    }
 }
 
 
@@ -619,8 +606,9 @@ body.dark .SubcategoriesStyle {
     background-color: dodgerblue;
     color: white;
     padding: 5px;
-    cursor: pointer;    
+    cursor: pointer;
 }
+
 .replyBox2 {
     display: none;
     position: fixed; /* alltid på samma plats */
@@ -633,6 +621,7 @@ body.dark .SubcategoriesStyle {
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     z-index: 1000; /* ovanpå allt annat */
 }
+
 .replyBoxChatt {
     background-color: lightgray;
     display: flex;
@@ -647,20 +636,20 @@ body.dark .SubcategoriesStyle {
         white-space: normal; /* se till att inte hålla allt på en rad */
     }
 
-    .replyToggle2:checked ~ .replyBox2 {
-        display: block;
-    }
+.replyToggle2:checked ~ .replyBox2 {
+    display: block;
+}
 
 .profile-page {
-    display: flex; 
-    flex-direction:row; 
+    display: flex;
+    flex-direction: row;
     justify-content: space-evenly;
 }
 
-.profile-page > div:last-child {
-    margin-left: -8rem;
-    margin-right: -4rem;
-}
+    .profile-page > div:last-child {
+        margin-left: -8rem;
+        margin-right: -4rem;
+    }
 
 @media (max-width: 1550px) {
     .profile-page {
@@ -669,23 +658,214 @@ body.dark .SubcategoriesStyle {
         margin-right: -8rem;
         width: 100%;
     }
-    .chat-container{
-        display:none;
+
+    .chat-container {
+        display: none;
     }
-    .profile-page>div:last-child{
+
+    .profile-page > div:last-child {
         margin-top: 3rem;
         margin-left: 12.5rem;
     }
-    
 }
 
 table {
     display: flex;
     flex-direction: column;
-    border-collapse: separate;
     border-spacing: 20px 10px; /* 30px mellan kolumner, 10px mellan rader */
+    border-collapse: separate;
 }
-thead{    
+
+thead {
     margin-bottom: -1rem;
 }
-    
+
+th {
+    padding-right: 61px;
+}
+
+@media (max-width: 768px) {
+    /* Make top nav wrap */
+    nav {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    /* Make category tabs wrap */
+    .category-tabs {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .text-center {
+        width: 100%;
+    }
+
+    .CategoryBox {
+        width: 28rem;
+        /*        margin-left: 20px;*/
+    }
+    /* Fix posts table */
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+.posts, .post2 {
+    border: 1px solid #333;
+    padding: 15px;
+    max-width: 70rem; /* max bredd på stora skärmar */
+    width: 100%; /* Gör bredare */
+    margin: 0 auto; /* Centrerar */
+    box-sizing: border-box;
+    /*    margin-left: 20px;*/
+}
+
+html, body {
+    overflow-x: hidden;
+}
+
+/* Overlay meny som täcker hela skärmen */
+.category-overlay {
+    display: none; /* default av */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6); /* halvtransparent bakgrund */
+    z-index: 2000;
+}
+
+.category-list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 70%; /* själva menyn */
+    height: 100%;
+    background: #fff;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.category-item {
+    padding: 0.5rem;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Subcategories */
+.subcategory-list {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%; /* läggs till höger */
+    width: 70%;
+    height: 100%;
+    background: #f9f9f9;
+    padding: 1rem;
+    overflow-y: auto;
+    z-index: 2100;
+}
+
+.category-item.active > .subcategory-list {
+    display: block;
+}
+
+/* Döljs på desktop */
+@media (min-width: 768px) {
+    .category-toggler, .category-overlay {
+        display: none !important;
+    }
+}
+
+
+@media (max-width: 1050px) {
+    .posts2 {
+        transform: scale(0.9); /* krymper hela containern proportionerligt */
+        transform-origin: top center; /* styr varifrån den krymper */
+    }
+
+    .post {
+        transform: scale(0.9); /* krymper hela containern proportionerligt */
+        transform-origin: top center; /* styr varifrån den krymper */
+    }
+
+    .change {
+        transform: scale(0.9); /* krymper hela containern proportionerligt */
+        transform-origin: top center; /* styr varifrån den krymper */
+        margin-top: -1.5rem;
+    }
+
+    .input-to-right {
+        margin-top: -0.5rem;
+        margin-left: 2.5rem;
+        transform: scale(0.9);
+        transform-origin: top left; /* styr varifrån den krymper */
+    }
+
+    .yes {
+        margin-top: -2rem;
+    }
+}
+
+@media (max-width: 875px) {
+    .posts2 {
+        transform: scale(0.9); /* krymper hela containern proportionerligt */
+    }
+
+    .post {
+        transform: scale(0.9); /* krymper hela containern proportionerligt */
+    }
+
+    .change {
+        transform: scale(0.9); /* krymper hela containern proportionerligt */
+    }
+}
+
+@media (max-width: 768px) {
+    .post {
+        transform: scale(0.75);       
+        margin: 0rem;
+    }
+
+    .CategoryBox{
+        margin-left:8rem;
+    }
+
+    .posts2 {
+        transform: scale(0.75);
+    }
+
+    .change {
+        transform: scale(0.75);
+        margin-top: -4rem;
+    }
+
+    .input-to-right {
+        margin-top: -2.5rem;
+        margin-left: 6rem;
+        transform: scale(0.75);
+    }
+
+    .yes {
+        margin-top: -5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .posts2 {
+        transform: scale(0.7);
+    }
+
+    .post {
+        transform: scale(0.7);
+    }
+
+    .change {
+        transform: scale(0.7);
+    }
+}

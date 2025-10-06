@@ -14,7 +14,7 @@
     @if (Context.Session.GetInt32("UserId") > 0)
     {
         <a asp-controller="Post" asp-action="CreatePost" asp-route-id="@Model.SubCategory.Id">
-            <button style="margin-bottom: 1rem;">
+            <button class="btn btn-primary" style="margin-bottom: 1rem;">
                 Create Post
             </button>
         </a>
