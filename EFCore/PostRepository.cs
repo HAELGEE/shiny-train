@@ -20,6 +20,8 @@ public class PostRepository : IPostRepository
         .Include(p => p.ReporterIds)
         .ToListAsync();
 
+    public async Task<List<Post>> GetAllPosts() => await _context.Post.ToListAsync();
+
     public async Task<List<SubPost>> GetAllSubpostReportsAsync() => await _context.SubPost
         .Where(p => p.Reported == true)
         .Include(p => p.Member)

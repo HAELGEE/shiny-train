@@ -864,9 +864,24 @@ html, body {
 }
 
 @media (max-width: 768px) {
-    .answerContainer {
+    .adminMain {
+        width: 100%;
+        max-width: 680px;
     }
-
+    .lika-stor-container {
+        width: 100%;
+        margin: 0 auto;
+    }
+    .lika-stor {
+        width: 100%;
+        margin: 0 auto;
+    }
+    .reportDiv {
+        max-width: 680px;
+        width: 100%;
+        margin: 0 auto;
+        word-wrap: break-word;
+    }
     .replyBox {
         width: 30rem;
     }
@@ -993,11 +1008,7 @@ html, body {
         max-width: 680px;
     }
 
-    .lika-stor {
-        display: grid;
-        width: 100%;
-        max-width: 680px;
-    }
+    
 }
 
 .linjeUnder {
@@ -1117,6 +1128,7 @@ html, body {
         word-wrap: break-word;
         width: 100%;
         max-width: 360px;
+       
     }
 
     .input-to-right {
@@ -1124,7 +1136,7 @@ html, body {
         margin: 0 auto;
         word-wrap: break-word;
         max-width: 360px;
-       
+       margin-left: 15rem;
     }
 
     .lika-stor {

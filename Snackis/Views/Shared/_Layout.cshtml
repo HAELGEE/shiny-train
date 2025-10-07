@@ -1,6 +1,7 @@
 ﻿@{
     var userId = Context.Session.GetInt32("UserId");
     var userName = Context.Session.GetString("UserName");
+    var count = ViewBag.PostCount;
 }
 
 <!DOCTYPE html>
@@ -69,7 +70,9 @@
                     {
                         <a asp-controller="Member" asp-action="Login" class="btn btn-primary" style="color:white;">Sign Out</a>
                     }
-
+                    <div id="stats">
+                       @* HÄR SKALL LOGIK FÖR STATISTIK LIGGA *@
+                    </div>
                 </div>
             </div>
         </nav>

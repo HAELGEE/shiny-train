@@ -21,7 +21,10 @@ public class PostService : IPostService
     {
         return await _postRepository.GetOnePostAsync(id);
     }
-
+    public async Task<List<Post>> GetAllPosts()
+    {
+        return await _postRepository.GetAllPosts();
+    }
     public async Task<List<Post>> GettingAll25RecentPostsAsync()
     {
         return await _postRepository.GettingAll25RecentPostsAsync();

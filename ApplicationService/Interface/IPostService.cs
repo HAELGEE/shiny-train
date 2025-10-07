@@ -6,6 +6,7 @@ public interface IPostService
 {
     // Post
     Task<List<Post>> GetAllReportsAsync();
+    Task<List<Post>> GetAllPosts();
     Task<Post> GetOnePostAsync(int id);
     Task<List<Post>> GettingAll25RecentPostsAsync();
     Task<List<Post>> GettingAllPostForSubCategoryAsync(int categoryId);

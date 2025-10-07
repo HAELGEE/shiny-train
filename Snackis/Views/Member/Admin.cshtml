@@ -2,9 +2,9 @@
 @{
     ViewData["Title"] = "Admin Page";
 }
-<main style="width: 80rem;">
+<main style="width: 80rem;" class="adminMain">
     <div class="lika-stor-container">
-        <div class="lika-stor" >
+        <div class="lika-stor">
             <div style="flex:1; flex-direction: column;">
                 @if (Model.Members != null)
                 {
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="lika-stor">
-            <p>CRUD for Category</p>
+            <p style="margin-left: 10rem;">CRUD for Category</p>
             <div class="three-in-row">
                 <button class="btn btn-primary" style="margin-right: 0.5rem; width: 11rem; height: 2.5rem;"><a style="color: white; text-decoration: none;" asp-controller="Category" asp-action="CreateCategory">Create Category</a></button>
                 <button class="btn btn-primary" style="margin-right: 0.5rem; width: 11rem; height: 2.5rem; background-color: red;"><a style="color: white; text-decoration: none;" asp-controller="Category" asp-action="DeleteCategory">Delete Category</a></button>
@@ -43,7 +43,7 @@
                 <h3>@Model.WarningMessage</h3>
             }
             <br />
-            <p>CRUD for SubCategory</p>
+            <p style="margin-left: 10rem;">CRUD for SubCategory</p>
             <div class="three-in-row">
                 <button class="btn btn-primary" style="margin-right: 0.5rem; width: 11rem; height: 2.5rem;"><a style="color: white; text-decoration: none;" asp-controller="Category" asp-action="CreateSubCategory">Create SubCategory</a></button>
                 <button class="btn btn-primary" style="margin-right: 0.5rem; width: 11rem; height: 2.5rem; background-color: red;"><a style="color: white; text-decoration: none;" asp-controller="Category" asp-action="DeleteSubCategory">Delete SubCategory</a></button>
@@ -52,49 +52,53 @@
 
             <br />
             <br />
-            <h5>Post being Reported</h5>
+            <div class="reportDiv">
+                <h5>Post being Reported</h5>
 
-            @if (Model.Posts != null)
-            {
-                @foreach (var post in Model.Posts)
+                @if (Model.Posts != null)
                 {
-                    @if (post.Reported == true)
+                    @foreach (var post in Model.Posts)
                     {
-                        <p>
-                            Post wich being reported:
-                            <a asp-controller="Post" asp-action="ReadPost" asp-route-id="@post.Id" style="margin-right: 1rem;">@post.Description</a>
+                        @if (post.Reported == true)
+                        {
+                            <p>
+                                Post wich being reported:
+                                <a asp-controller="Post" asp-action="ReadPost" asp-route-id="@post.Id" style="margin-right: 1rem;">@post.Description</a>
 
-                            Total reports: @post.TotalReports
+                                Total reports: @post.TotalReports
 
 
-                            <a asp-controller="Post" asp-action="DeletePost" asp-route-id="@post.Id" style="margin-left: 2rem;">DELETE</a>
+                                <a asp-controller="Post" asp-action="DeletePost" asp-route-id="@post.Id" style="margin-left: 2rem;">DELETE</a>
 
-                        </p>
+                            </p>
+                        }
                     }
                 }
-            }
+            </div>
             <hr />
-            <h5>Subpost being Reported</h5>
+            <div class="reportDiv">
+                <h5>Subpost being Reported</h5>
 
-            @if (Model.SubPosts != null)
-            {
-                @foreach (var subpost in Model.SubPosts)
+                @if (Model.SubPosts != null)
                 {
-                    @if (subpost.Reported == true)
+                    @foreach (var subpost in Model.SubPosts)
                     {
-                        <p>
-                            Subpost wich being reported with Id:
-                            <a asp-controller="Post" asp-action="ReadPost" asp-route-id="@subpost.PostId" style="margin-right: 1rem;">@subpost.Id</a>
+                        @if (subpost.Reported == true)
+                        {
+                            <p>
+                                Subpost wich being reported with Id:
+                                <a asp-controller="Post" asp-action="ReadPost" asp-route-id="@subpost.PostId" style="margin-right: 1rem;">@subpost.Id</a>
 
-                            Total reports: @subpost.TotalReports
+                                Total reports: @subpost.TotalReports
 
 
-                            <a asp-controller="Post" asp-action="DeletePost" asp-route-id="@subpost.Id" style="margin-left: 2rem;">DELETE</a>
+                                <a asp-controller="Post" asp-action="DeletePost" asp-route-id="@subpost.Id" style="margin-left: 2rem;">DELETE</a>
 
-                        </p>
+                            </p>
+                        }
                     }
                 }
-            }
+            </div>
             <hr />
         </div>
         <div class="lika-stor"></div>
