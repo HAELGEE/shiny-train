@@ -75,15 +75,15 @@ body {
     max-height: calc(100vh - var(--navbar-height, 60px));
     background: #f2f2f2; /* bara för att se den */
 
-   
+
 
     overflow-y: auto; /* gör rutan scroll-bar om innehållet blir för långt */
     border: 1px solid #ccc;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-@media (max-width: 1875px){
-    .recent-post-pinned{
+@media (max-width: 1875px) {
+    .recent-post-pinned {
         width: 15rem;
     }
 }
@@ -407,6 +407,13 @@ body.dark .SubcategoriesStyle {
     }
 
 .textarea-styling {
+    display: flex;
+    flex: auto;
+    min-height: 8.5rem;
+    max-height: 8.5rem;
+    padding: 1rem;
+}
+.textarea-style {
     display: flex;
     flex: auto;
     min-height: 8.5rem;
@@ -787,6 +794,7 @@ html, body {
     box-sizing: border-box;
     flex-wrap: wrap; /* gör att innehållet bryter rad på små skärmar */
 }
+
 .chatt4 {
     border: 1px solid #aaa;
     padding: 10px;
@@ -801,10 +809,9 @@ html, body {
     height: 10rem;
 }
 
+.dragon{
 
-
-
-
+}
 /* Döljs på desktop */
 @media (min-width: 768px) {
     .category-toggler, .category-overlay {
@@ -857,12 +864,12 @@ html, body {
 }
 
 @media (max-width: 768px) {
-    .post {            
+    .post {
         margin: 0rem;
     }
 
-    .CategoryBox{
-        margin-left:7.2rem;
+    .CategoryBox {
+        margin-left: 7.2rem;
     }
 
 
@@ -874,91 +881,163 @@ html, body {
     .input-to-right {
         margin-top: -2.5rem;
         margin-left: 6rem;
-       
     }
 
     .yes {
         margin-top: -5rem;
     }
 }
-.linjeUnder{
+
+.linjeUnder {
     border-bottom: none;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
+    .answerContainer{
+
+    }
+    .replyBox {
+        width: 30rem;
+    }
+    .replyBox2 {
+        width: 30rem;
+    }
+    .replyTextArea {
+        width: 27rem;
+    }
+    .replyTextArea2 {
+        width: 27rem;
+    }
+    .textarea-style{
+        width:100%
+    }
     .posts {
-        width: 60%;
-        max-width: 600px;
+        width: 100%;
+        max-width: 360px;
         margin: 0 auto;
         word-wrap: break-word;
     }
+
     .CategoryBox {
-        width: 60%;
-        max-width: 600px;
+        width: 100%;
+        max-width: 360px;
         margin: 0 auto;
         word-wrap: break-word;
     }
+
     .d-flex {
-        width: 55%;
-        max-width: 600px;
+        width: 100%;
+        max-width: 360px;
         margin: 0 auto;
         word-wrap: break-word;
     }
+
     .posts2 {
         width: 60%;
-        max-width: 600px;
+        max-width: 360px;
         margin: 0 auto;
         word-wrap: break-word;
     }
+
     .post3 {
-        width: 45%;
-        max-width: 600px;
+        width: 100%;
+        max-width: 360px;
         margin: 0 auto;
         word-wrap: break-word;
     }
+
     .change {
-        width: 60%;
-        max-width: 600px;
+        width: 100%;
+        max-width: 360px;
         margin: 0 auto;
         margin-top: 2rem;
         word-wrap: break-word;
     }
+
     .linjeUnder {
         width: 100%;
         border-bottom: 2px solid darkgray; /* ditt “<hr>”-streck */
         margin-bottom: 20px; /* lite luft under */
         padding-bottom: 10px; /* lite luft ovanför */
+        max-width: 360px;
     }
-    .textUnder
-    {
+
+    .textUnder {
         width: 100%;
         margin: 0 auto;
-        margin-left:-1rem;
+        margin-left: -1rem;
+        max-width: 360px;
     }
+
     .chattRuta {
-        width: 60%;
-        max-width: 600px;
+        width: 100%;
+        max-width: 360px;
         margin: 0 auto;
         word-wrap: break-word;
     }
+
+    .textarea-styling {
+        min-height: 8.5rem;
+        max-height: 8.5rem;
+        margin-left: 14rem;
+        max-width: 20rem;
+        padding: 0.5rem;
+    }
+    
     .post4 {
-/*        max-width: 260px;*/
+        /*        max-width: 260px;*/
         margin: 0 auto;
-        word-wrap: break-word;        
-        display:grid ;
-   
+        word-wrap: break-word;
+        display: grid;
+        width: 100%;
+        max-width: 360px;
+    }
+    .dragon2{        
+        margin-left:2rem;
+        margin-right: 2rem;
+    }
+    .dragon{
+        margin-left:-2rem;
     }
     .yes {
         margin: 0 auto;
         margin-top: 0rem;
         word-wrap: break-word;
-        max-width: -4000px;
+        width: 100%;
+        max-width: 360px;
     }
+
     .input-to-right {
+        width: 100%;
         margin: 0 auto;
         word-wrap: break-word;
-/*        margin-left: -2rem;*/
+        max-width: 360px;
+       
     }
-    
-}
 
+    .lika-stor {
+        display: grid;
+        width: 100%;
+        max-width: 360px;
+    }
+
+    @media (max-width: 360px) {
+        .answerContainer {
+        }
+
+        .replyBox {
+            width: 26rem;
+        }
+
+        .replyBox2 {
+            width: 26rem;
+        }
+
+        .replyTextArea {
+            width: 23rem;
+        }
+
+        .replyTextArea2 {
+            width: 23rem;
+        }
+    }

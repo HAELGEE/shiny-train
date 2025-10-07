@@ -11,7 +11,7 @@
 
     <div class="d-flex">
 
-        <div class="col-3 justify-content-center align-items-center">
+        <div class="col-3 justify-content-center align-items-center dragon">
             @if (Context.Session.GetInt32("UserId") == Model.Post.MemberId || Context.Session.GetInt32("IsAdmin") == 1)
             {
                 <a asp-controller="Post" asp-action="UpdatePost" asp-route-id="@Model.Post.Id"><button type="submit" class="btn btn-primary">Update</button></a>
@@ -61,7 +61,7 @@
             }
         </div>
 
-        <div class="post-meta col-7 justify-content-center align-items-center">
+        <div class="post-meta col-7 justify-content-center align-items-center dragon2">
             @*  LIKES *@
             @if (Model.Post.Likes != null)
             {
@@ -99,7 +99,7 @@
         </div>
 
         @* GILLA KNAPP *@
-        <div>
+        <div class="dragon3">
             @if (Context.Session.GetInt32("UserId") > 0)
             {
                 <form asp-controller="Post" asp-action="LikeButton">
@@ -194,7 +194,7 @@
                                         <p style="font-style: italic; min-width:10rem; max-width:40rem;">"@Model.Post.Text"</p>
                                     </div>
 
-                                    <textarea rows="5" cols="100" placeholder="Type your answer here..." asp-for="@Model.SubPost.Text" required></textarea>
+                                    <textarea rows="5" cols="100" placeholder="Type your answer here..." class="replyTextArea" asp-for="@Model.SubPost.Text" required></textarea>
 
                                     <input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
                                     <input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")" />
@@ -202,7 +202,7 @@
                                     <input type="hidden" name="replyPostId" value="@Model.Post.Id" />
 
                                     <br>
-                                    <button type="submit">Reply</button>
+                                    <button type="submit" class="btn btn-primary">Reply</button>
                                 </div>
                             </form>
                         </div>
@@ -352,7 +352,7 @@
                                         <p style="font-style: italic; min-width:10rem;">"@item.Text" </p>
                                     </div>
 
-                                    <textarea rows="5" cols="100" placeholder="Type your answer here..." asp-for="@Model.SubPost.Text" required></textarea>
+                                    <textarea rows="5" cols="100" placeholder="Type your answer here..." class="replyTextArea" asp-for="@Model.SubPost.Text" required></textarea>
 
                                     <input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
                                     <input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")" />
@@ -381,13 +381,13 @@
 
 
 
-                        <div style="display: flex; flex-direction: column;">
+                        <div style="display: flex; flex-direction: column;" class="answerContainer">
                             <div style="display: flex; justify-content: center;">
-                                <div class="post" style="width: 50rem; height: 10rem;">
-                                    <textarea class="textarea-styling" asp-for="@Model.SubPost.Text"></textarea>
+                                <div class="answerBox" style="width: 50rem; height: 10rem;">
+                                    <textarea class="textarea-style" asp-for="@Model.SubPost.Text"></textarea>
                                 </div>
                             </div>
-                            <button type="submit" class="button-to-right">Update</button>
+                            <button type="submit" class="btn btn-primary button-to-right">Update</button>
                         </div>
                     </form>
                 }
