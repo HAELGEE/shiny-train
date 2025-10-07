@@ -38,10 +38,10 @@
     <br />
 
     <div class="d-flex">
-        <form asp-controller="Home" asp-action="Index" class="w-100">
+        <form asp-controller="Home" asp-action="Search" method="get" class="w-100">
             <div class="row g-2 align-items-stretch">
                 <div class="col-12 col-md-3">
-                    <select class="form-select w-100" name="search">
+                    <select class="form-select w-100" name="searchType">
                         <option value="1">Users</option>
                         <option value="2">Title</option>
                         <option value="3">Text</option>

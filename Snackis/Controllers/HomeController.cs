@@ -24,7 +24,8 @@ public class HomeController : Controller
     }
 
 
-    public async Task<IActionResult> Index(int search, string text)
+    //public async Task<IActionResult> Index(int search, string text)
+    public async Task<IActionResult> Index(FullViewModel fullModel)
     {
         var addToPost = await _postService.GettingAll25RecentPostsAsync();
         var categories = await _categoryService.GetAllCategoriesAsync();
@@ -32,33 +33,33 @@ public class HomeController : Controller
         var top10 = await _postService.Getting10RecentPostByReplyAsync();
 
 
-        var fullModel = new FullViewModel
+        fullModel.Posts = addToPost;
+        fullModel.Categorys = categories.ToList();
+        fullModel.SubCategorys = subCategories.ToList();
+        fullModel.Top10Posts = top10;
+
+        if (fullModel.searchType == 1)
         {
-            Posts = addToPost,
-            Categorys = categories.ToList(),
-            SubCategorys = subCategories.ToList(),
-            Top10Posts = top10,
-            searchType = search,
-            Text = text
-        };
-        if (search == 1)
-        {
-            fullModel.Members = await _homeService.GetMemberByUsernameAsync(text);            
+            fullModel.Members = await _homeService.GetMemberByUsernameAsync(fullModel.Text);
         }
-        else if (search == 2)
+        else if (fullModel.searchType == 2)
         {
-            fullModel.PostTitle = await _homeService.GetPostByTitleAsync(text);
+            fullModel.PostTitle = await _homeService.GetPostByTitleAsync(fullModel.Text);
         }
-        else if (search == 3)
+        else if (fullModel.searchType == 3)
         {
-            fullModel.PostText = await _homeService.GetSubpostAndPostByTextAsync(text);
+            fullModel.PostText = await _homeService.GetSubpostAndPostByTextAsync(fullModel.Text);
         }
 
 
         return View(fullModel);
     }
 
-
+    [HttpGet("Search")]
+    public async Task<IActionResult> Search(FullViewModel fullModel)
+    {
+        return RedirectToAction(nameof(Index), fullModel);
+    }
 
 
 
