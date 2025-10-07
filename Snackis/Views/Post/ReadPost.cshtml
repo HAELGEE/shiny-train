@@ -131,8 +131,8 @@
 
 </div>
 
-<div class="post">
-    <div>
+<div class="post3">
+    <div class="linjeUnder">
         <div style="flex-direction:column; justify-items: center;">
             <div>
                 <img src="@Model.Post.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
@@ -243,8 +243,8 @@
                 }
             }
         </div>
-        <div class="post">
-            <div>
+        <div class="post3">
+            <div class="linjeUnder">
                 <div style="flex: 1; flex-direction:column; justify-items: center;">
                     <div>
                         <img src="@item.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
@@ -278,7 +278,7 @@
                             </div>
                         }
 
-                        <div>
+                        <div class="textUnder">
                             @if (item.ParentSubpostId != null && item.ParentSubpostId != 0)
                             {
                                 var parent = Model.SubPosts.FirstOrDefault(s => s.Id == item.ParentSubpostId);
@@ -398,13 +398,13 @@
     }
 }
 
-@if (Context.Session.GetInt32("UserId") > 0 && Model.SubPost.Id == 0)
-{
-    <br />
-    <div style="display: flex; flex-direction: column;">
-        <div style="display: flex; justify-content: center;" class="yes"> 
+<br />
+<div style="display: flex; flex-direction: column;" class="chattRuta">
+    <div style="display: flex; justify-content: center;" class="yes">
+        @if (Context.Session.GetInt32("UserId") > 0 && Model.SubPost.Id == 0)
+        {
             <form asp-controller="Post" asp-action="CreateSubPost" method="post" enctype="multipart/form-data">
-                <div class="post" style="width: 50rem; height: 10rem;">
+                <div class="chatt4">
 
                     <input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
                     <input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Context.Session.GetInt32("UserId")">
@@ -415,12 +415,12 @@
 
                 </div>
                 <div class="input-to-right">
-                    <input asp-for="@Model.UploadedImage"  /><br />
+                    <input asp-for="@Model.UploadedImage" /><br />
                     <button type="submit" class="btn btn-primary">Reply</button>
                 </div>
             </form>
-        </div>
+        }
     </div>
-}
+</div>
 
 

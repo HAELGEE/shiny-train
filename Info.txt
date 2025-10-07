@@ -106,8 +106,6 @@ SMÅ FIX
 
 Göra en lista i Admin för reports av subposter också  <-- SNYGGARE!
 
-Fixa ett sökfält där man kan söka på Titel eller text i posts
-
 En öppna och stäng knapp för chatten. Samt att den går öppna på telefon skärmar
 
 Göra en mailfunktion inom forumet

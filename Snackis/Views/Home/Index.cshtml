@@ -39,10 +39,9 @@
 
     <div class="d-flex">
         <form asp-controller="Home" asp-action="Index" class="w-100">
-            <div class="row g-2 align-items-center">
-                <!-- Select dropdown -->
-                <div class="col-auto">
-                    <select class="form-select" name="search">
+            <div class="row g-2 align-items-stretch">
+                <div class="col-12 col-md-3">
+                    <select class="form-select w-100" name="search">
                         <option value="1">Users</option>
                         <option value="2">Title</option>
                         <option value="3">Text</option>
@@ -51,12 +50,12 @@
                 </div>
 
                 <!-- Search input -->
-                <div class="col-auto">
+                <div class="col-12 col-md-6">
                     <input class="form-control" name="text" placeholder="Search..." />
                 </div>
 
                 <!-- Submit button -->
-                <div class="col-auto">
+                <div class="col-12 col-md-3">
                     <button type="submit" class="btn btn-primary">Search</button>
                 </div>
             </div>
