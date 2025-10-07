@@ -864,27 +864,139 @@ html, body {
 }
 
 @media (max-width: 768px) {
-    .post {
-        margin: 0rem;
+    .answerContainer {
+    }
+
+    .replyBox {
+        width: 30rem;
+    }
+
+    .replyBox2 {
+        width: 30rem;
+    }
+
+    .replyTextArea {
+        width: 27rem;
+    }
+
+    .replyTextArea2 {
+        width: 27rem;
+    }
+
+    .textarea-style {
+        width: 100%
+    }
+
+    .posts {
+        width: 100%;
+        max-width: 680px;
+        margin: 0 auto;
+        word-wrap: break-word;
     }
 
     .CategoryBox {
-        margin-left: 7.2rem;
+        width: 100%;
+        max-width: 680px;
+        margin: 0 auto;
+        word-wrap: break-word;
     }
 
+    .d-flex {
+        width: 100%;
+        max-width: 680px;
+        margin: 0 auto;
+        word-wrap: break-word;
+    }
+
+    .posts2 {
+        width: 60%;
+        max-width: 680px;
+        margin: 0 auto;
+        word-wrap: break-word;
+    }
+
+    .post3 {
+        width: 100%;
+        max-width: 680px;
+        margin: 0 auto;
+        word-wrap: break-word;
+    }
 
     .change {
-        transform: scale(0.75);
-        margin-top: -4rem;
+        width: 100%;
+        max-width: 680px;
+        margin: 0 auto;
+        margin-top: 2rem;
+        word-wrap: break-word;
     }
 
-    .input-to-right {
-        margin-top: -2.5rem;
-        margin-left: 6rem;
+    .linjeUnder {
+        width: 100%;
+        border-bottom: 2px solid darkgray; /* ditt “<hr>”-streck */
+        margin-bottom: 20px; /* lite luft under */
+        padding-bottom: 10px; /* lite luft ovanför */
+        max-width: 680px;
+    }
+
+    .textUnder {
+        width: 100%;
+        margin: 0 auto;
+        margin-left: -1rem;
+        max-width: 680px;
+    }
+
+    .chattRuta {
+        width: 100%;
+        max-width: 680px;
+        margin: 0 auto;
+        word-wrap: break-word;
+    }
+
+    .textarea-styling {
+        min-height: 8.5rem;
+        max-height: 8.5rem;
+        margin-left: 14rem;
+        max-width: 20rem;
+        padding: 0.5rem;
+    }
+
+    .post4 {
+        /*        max-width: 260px;*/
+        margin: 0 auto;
+        word-wrap: break-word;
+        display: grid;
+        width: 100%;
+        max-width: 680px;
+    }
+
+    .dragon2 {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+
+    .dragon {
+        margin-left: -2rem;
     }
 
     .yes {
-        margin-top: -5rem;
+        margin: 0 auto;
+        margin-top: 0rem;
+        word-wrap: break-word;
+        width: 100%;
+        max-width: 680px;
+    }
+
+    .input-to-right {
+        width: 100%;
+        margin: 0 auto;
+        word-wrap: break-word;
+        max-width: 680px;
+    }
+
+    .lika-stor {
+        display: grid;
+        width: 100%;
+        max-width: 680px;
     }
 }
 
