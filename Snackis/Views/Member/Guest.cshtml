@@ -28,7 +28,7 @@
 		<p><b>Total post: </b>@Model.Member.TotalPosts</p>
 		<p><b>Total replies: </b>@Model.Member.TotalReply</p>
 		<br />
-		<input type="button" value="Start chatt" onclick="document.getElementById('conversationBox').style.display = 'block'" style="max-height:2rem; background-color: cornflowerblue" />
+		<input type="button" class="btn btn-primary" value="Start chatt" onclick="document.getElementById('conversationBox').style.display = 'block'" style=" background-color: cornflowerblue" />
 		<div id="conversationBox" style="
                   display:none;
                   position:fixed;
@@ -46,7 +46,7 @@
                 ">
 			<header class="conversation-box__header" aria-label="Skapa konversation" style="display:flex; flex-direction: row; justify-content:space-between;">
 				<h3 style="margin:0;font-size:1rem;">Create Conversation</h3>
-				<button type="button" class="conversation-box__close" aria-label="Stäng" style="background:red;" onclick="this.closest('#conversationBox').style.display='none'">✕</button>
+				<button type="button" class="conversation-box__close btn btn-primary" aria-label="Stäng" style="background:red;" onclick="this.closest('#conversationBox').style.display='none'">✕</button>
 			</header>
 
 			<form asp-controller="Member" asp-action="CreateChatt">
@@ -64,7 +64,7 @@
 				<input type="hidden" asp-for="@Model.Chat.SenderId" value="@Model.Member.Id" />
 
 				<div style="display:flex;gap:.5rem;margin-top:.75rem;justify-content:flex-end;">
-					<button type="submit" class="conversation-box__create" style="padding:.5rem .75rem;border-radius:6px;border:1px solid #2b6cb0;background:#2b6cb0;color:#fff;">
+					<button type="submit" class="conversation-box__create btn btn-primary" style="padding:.5rem .75rem;border-radius:6px;border:1px solid #2b6cb0;background:#2b6cb0;color:#fff;">
 						Create
 					</button>
 				</div>
@@ -90,7 +90,7 @@
 			if (Model.Admin.Id == Context.Session.GetInt32("UserId"))
 			{
 				<p>Warnings on profile: @Model.Member.Reports</p>
-				<a asp-controller="Member" asp-action="memberWarning" asp-route-id="@Model.Member.Id"><button type="Submit" style="width: 8rem;">Warn Member</button></a>
+				<a asp-controller="Member" asp-action="memberWarning" asp-route-id="@Model.Member.Id"><button type="Submit" class="btn btn-primary" style="width: 8rem;">Warn Member</button></a>
 
 			}
 			if (Model.Admin.IsOwner)
@@ -104,14 +104,14 @@
 						Make this user an Admin:
 						<input type="checkbox" id="IsAdmin" name="IsAdmin" value="true" @(Model.Member.IsAdmin ? " checked" : "") />
 					</p>
-					<button type="submit">Submit</button>
+					<button type="submit" class="btn btn-primary">Submit</button>
 				</form>
 				<br />
 				<br />
 				<form asp-controller="Member" asp-action="DeleteUser">
 					<input type="hidden" name="userIdToRemove" value="@Model.Member.Id" />
-					
-					<button type="submit" style="background:red; color:black;">Delete User</button>
+
+					<button type="submit" class="btn btn-primary" style="background:red; color:black;">Delete User</button>
 				</form>
 			}
 

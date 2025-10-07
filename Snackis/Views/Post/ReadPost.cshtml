@@ -189,6 +189,10 @@
                                 <input type="checkbox" class="replyToggle" id="replyToggle" hidden>
 
                                 <div class="replyBox">
+                                 <button type="button" class="conversation-box__close btn btn-primary"
+                                        aria-label="Stäng"
+                                        style="background:red;"
+                                        onclick="document.getElementById('replyToggle').checked = false;">✕</button>
                                     <div class="replyBoxChatt">
                                         <p style="margin-right:0.5rem; min-width:10rem;">Answer to @Model.Post.Member.UserName </p>
                                         <p style="font-style: italic; min-width:10rem; max-width:40rem;">"@Model.Post.Text"</p>
@@ -346,7 +350,14 @@
                                 </label>
 
                                 <input type="checkbox" class="replyToggle2" id="@item.Id" hidden>
-                                <div class="replyBox2">
+                                <div class="replyBox2" >
+
+                                <button type="button" class="conversation-box__close btn btn-primary"
+                                    aria-label="Stäng"
+                                    style="background:red;"
+                                    onclick="document.getElementById('@item.Id').checked = false;">✕
+                                </button>
+
                                     <div class="replyBoxChatt">
                                         <p style="margin-right:-1rem; min-width:10rem;">Answer to @item.Member.UserName </p>
                                         <p style="font-style: italic; min-width:10rem;">"@item.Text" </p>
