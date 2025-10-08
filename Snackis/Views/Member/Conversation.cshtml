@@ -36,7 +36,7 @@
                     <input type="hidden" asp-for="@Model.Chat.SenderId" value="@Model.Member.Id" />
                     <input type="hidden" asp-for="@Model.Chat.ReceiverId" value="@Model.ReceiverMemberID" />
 
-                    <input type="text" placeholder="Type message here..." asp-for="@Model.Chat.Text" />
+                    <input class="form-control" type="text" placeholder="Type message here..." asp-for="@Model.Chat.Text" required />
                     <button class="btn btn-primary" type="submit">Send</button>
                 </form>
             </div>

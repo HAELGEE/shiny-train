@@ -80,7 +80,7 @@ public class PostRepository : IPostRepository
             }
         }
 
-        if(post.Views.Count > 0)
+        if (post.Views.Count > 0)
         {
             foreach (var view in post.Views)
             {
@@ -293,6 +293,35 @@ public class PostRepository : IPostRepository
             _context.Update(subpost);
             await _context.SaveChangesAsync();
         }
+    }
+
+    public void DeleteImage(Post post, SubPost subPost)
+    {
+        if (post != null)
+        {
+            if (post.ImagePath != null && post.ImagePath != "/uploads/standardProfile.png")
+            {
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", post.ImagePath.TrimStart('/'));
+
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+            }
+        }
+        if (subPost != null)
+        {
+            if (subPost.ImagePath != null && subPost.ImagePath != "/uploads/standardProfile.png")
+            {
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", subPost.ImagePath.TrimStart('/'));
+
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+            }
+        }
+
     }
 
 }

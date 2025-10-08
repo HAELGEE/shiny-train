@@ -19,6 +19,7 @@ public class FullViewModel
     public int? ReceiverMemberID { get; set; }
     public IFormFile? UploadedImage { get; set; }
 
+
     /* SEARCH STUFF */
     public List<Member>? Members { get; set; }
     public List<Post>? PostTitle { get; set; }

@@ -109,4 +109,8 @@ public class PostService : IPostService
     {
         return await _postRepository.GetAllSubpostReportsAsync();
     }
+    public void DeleteImage(Post post, SubPost subPost)
+    {
+        _postRepository.DeleteImage(post, subPost);
+    }
 }

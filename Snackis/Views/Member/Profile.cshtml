@@ -5,17 +5,17 @@
 }
 <div class="profile-page">
     
-
+    <div style ="display: flex; width: 20%;"></div>
     <!-- PROFILSIDA MITTEN -->
-    <div style="display: flex; flex-direction:column; align-items:center; width: 50rem; margin-right:7.8rem;">
+    <div style="display: flex; flex-direction:column; align-items:center; width: 50rem;" class="mitt">
         <h1>@ViewData["Title"] Page</h1>
         <a asp-controller="Member" asp-action="Update" asp-route-Id="@Model.Member.Id" class="icon-link"><button class="btn btn-primary">Update info</button></a>
         <br />
         <img src="@Model.Member.ProfileImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
         <form asp-controller="Member" asp-action="Profile" method="post" enctype="multipart/form-data">
 
-            <input asp-for="UploadedImage" style="margin-left: 9rem;" /><br />
-            <input type="submit" class="btn btn-success" value="Change Picture" style="margin-left: 9rem; margin-top: 0.3rem;" />
+            <input class="form-control" asp-for="UploadedImage" style=" width: 15rem;"/>
+            <input type="submit" class="btn btn-success" value="Change Picture" style="margin-top: 0.3rem;" />
         </form>
         <br />
         <br />

@@ -164,7 +164,7 @@
 
 
             <div style="min-height: 9rem; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid lightgray; padding: 1rem; position: relative;">
-                <div>
+                <div class="helleluja" style="display:flex;">
                     @if (Model.Post.ImagePath != null)
                     {
                         <div style="margin-left:1.5rem;">
@@ -172,7 +172,8 @@
                         </div>
                     }
 
-                    <p style="margin-top: -0.15rem; margin-left: 2rem; word-break: break-word;">                        
+                    <p class="phelleluja" style="margin-top: -0.15rem; margin-left: 2rem; word-break: break-word;">
+
                         @Html.Raw(Model.Post.Text)
                     </p>
 
@@ -189,10 +190,12 @@
                                 <input type="checkbox" class="replyToggle" id="replyToggle" hidden>
 
                                 <div class="replyBox">
-                                 <button type="button" class="conversation-box__close btn btn-primary"
-                                        aria-label="Stäng"
-                                        style="background:red;"
-                                        onclick="document.getElementById('replyToggle').checked = false;">✕</button>
+                                    <button type="button" class="conversation-box__close btn btn-primary"
+                                            aria-label="Stäng"
+                                            style="background:red;"
+                                            onclick="document.getElementById('replyToggle').checked = false;">
+                                        ✕
+                                    </button>
                                     <div class="replyBoxChatt">
                                         <p style="margin-right:0.5rem; min-width:10rem;">Answer to @Model.Post.Member.UserName </p>
                                         <p style="font-style: italic; min-width:10rem; max-width:40rem;">"@Model.Post.Text"</p>
@@ -273,7 +276,7 @@
                 <br />
                 @if (Context.Session.GetInt32("updateSubpost") != item.Id || Context.Session.GetInt32("updateSubpost") == null)
                 {
-                    <div style="position: relative;min-height: 9rem; display: flex; flex-direction: row;">
+                    <div class="subpostBox" style="position: relative;min-height: 9rem; display: flex; flex-direction: row;">
                         @if (item.ImagePath != null)
                         {
 
@@ -299,7 +302,7 @@
 
                                 <div style="word-break: break-word;">
                                     <p style="margin-top: 0.5rem; margin-left: 2rem; ">
-                                         @Html.Raw(item.Text)
+                                        @Html.Raw(item.Text)
                                     </p>
                                 </div>
                             }
@@ -350,13 +353,14 @@
                                 </label>
 
                                 <input type="checkbox" class="replyToggle2" id="@item.Id" hidden>
-                                <div class="replyBox2" >
+                                <div class="replyBox2">
 
-                                <button type="button" class="conversation-box__close btn btn-primary"
-                                    aria-label="Stäng"
-                                    style="background:red;"
-                                    onclick="document.getElementById('@item.Id').checked = false;">✕
-                                </button>
+                                    <button type="button" class="conversation-box__close btn btn-primary"
+                                            aria-label="Stäng"
+                                            style="background:red;"
+                                            onclick="document.getElementById('@item.Id').checked = false;">
+                                        ✕
+                                    </button>
 
                                     <div class="replyBoxChatt">
                                         <p style="margin-right:-1rem; min-width:10rem;">Answer to @item.Member.UserName </p>
@@ -380,27 +384,41 @@
                 }
                 else if (Context.Session.GetInt32("updateSubpost") == item.Id)
                 {
-                    <form asp-controller="Post" asp-action="UpdateSubPost">
+                    <div>
+                        <form asp-controller="Post" asp-action="UpdateSubPost" enctype="multipart/form-data">
+                            @if (item.ImagePath != null)
+                            {
 
-                        <input type="hidden" asp-for="@Model.SubPost.Id" value="@Model.SubPost.Id" />
-                        <input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
-                        <input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Model.SubPost.MemberId">
-                        <input type="hidden" asp-for="@Model.SubPost.ImagePath" value="@Model.SubPost.ImagePath" />
-                        <input type="hidden" asp-for="@Model.SubPost.ReplyText" value="@Model.SubPost.ReplyText" />
-                        <input type="hidden" asp-for="@Model.SubPost.ParentPostId" value="@Model.SubPost.ParentPostId" />
-                        <input type="hidden" asp-for="@Model.SubPost.ParentSubpostId" value="@Model.SubPost.ParentSubpostId" />
-
-
-
-                        <div style="display: flex; flex-direction: column;" class="answerContainer">
-                            <div style="display: flex; justify-content: center;">
-                                <div class="answerBox" style="width: 50rem; height: 10rem;">
-                                    <textarea class="textarea-style" asp-for="@Model.SubPost.Text"></textarea>
+                                <div style="margin-left:1.5rem; margin-bottom: 0.5rem;">
+                                    <img src="@item.ImagePath" alt="Profile picture" style="width:150px;height:150px;object-fit:cover;" />
                                 </div>
+                            }
+                            else
+                            {
+                                <div></div>
+                            }
+
+                            <input type="hidden" asp-for="@Model.SubPost.Id" value="@Model.SubPost.Id" />
+                            <input type="hidden" asp-for="@Model.SubPost.PostId" value="@Model.Post.Id" />
+                            <input type="hidden" asp-for="@Model.SubPost.MemberId" value="@Model.SubPost.MemberId">
+                            <input type="hidden" asp-for="@Model.SubPost.ImagePath" value="@Model.SubPost.ImagePath" />
+                            <input type="hidden" asp-for="@Model.SubPost.ReplyText" value="@Model.SubPost.ReplyText" />
+                            <input type="hidden" asp-for="@Model.SubPost.ParentPostId" value="@Model.SubPost.ParentPostId" />
+                            <input type="hidden" asp-for="@Model.SubPost.ParentSubpostId" value="@Model.SubPost.ParentSubpostId" />
+
+
+
+                            <div class="answerContainer">
+                                <div>
+                                    <div class="answerBox" style=" margin-bottom: 0.5rem; margin-left:1.6rem;">
+                                        <textarea class="textarea-style2" asp-for="@Model.SubPost.Text" style="width: 100;" required></textarea>
+                                    </div>
+                                </div>
+                                <input class="form-control" asp-for="UploadedImage" style="width: 20rem;"/><br />
+                                <button type="submit" class="btn btn-primary button-to-right" style="margin-left:1.5rem;">Update</button>
                             </div>
-                            <button type="submit" class="btn btn-primary button-to-right">Update</button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 }
 
             </div>

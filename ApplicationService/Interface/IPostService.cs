@@ -31,4 +31,5 @@ public interface IPostService
     Task ReportSubpostAsync(int postId, int reporterId);
     Task UnReportSubpostAsync(int postId, int reporterId);
     Task<List<SubPost>> GetAllSubpostReportsAsync();
+    void DeleteImage(Post post, SubPost subPost);
 }

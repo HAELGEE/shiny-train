@@ -8,6 +8,7 @@
     }
 }
 
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
@@ -427,6 +428,13 @@ body.dark .SubcategoriesStyle {
     padding: 1rem;
 }
 .textarea-style {
+    display: flex;
+    flex: auto;
+    min-height: 8.5rem;
+    max-height: 8.5rem;
+    padding: 1rem;
+}
+.textarea-style2 {
     display: flex;
     flex: auto;
     min-height: 8.5rem;
@@ -884,6 +892,20 @@ html, body {
         width: 100%;
         max-width: 680px;
     }
+    .höger{
+        width: 100%;
+
+    }
+    .subpostBox{
+        display:flex;
+        flex-direction:column;
+    }
+    .answerBox {
+        width: 10rem;
+    }
+    .helleluja {
+        flex-direction: column;
+    }   
     .lika-stor-container {
         width: 100%;
         margin: 0 auto;
@@ -915,7 +937,11 @@ html, body {
     }
 
     .textarea-style {
-        width: 100%
+        width: 100%;
+    }
+    .textarea-style2 {        
+        max-width: 20rem;
+        min-width: 20rem;        
     }
 
     .posts {
@@ -931,7 +957,9 @@ html, body {
         margin: 0 auto;
         word-wrap: break-word;
     }
-
+    .profile-page{
+        margin-left:-6rem;
+    }
     .d-flex {
         width: 100%;
         max-width: 680px;
@@ -1056,7 +1084,11 @@ html, body {
         margin: 0 auto;
         word-wrap: break-word;
     }
-
+    .textarea-style2 {
+        
+        max-width: 15rem;
+        min-width: 15rem;
+    }
     .CategoryBox {
         width: 100%;
         max-width: 360px;

@@ -8,15 +8,14 @@
 
         <label asp-for="UserName"></label>
         <br />
-        <input type="text" asp-for="UserName">
+        <input class="form-control" type="text" asp-for="UserName">
         <span asp-validation-for="UserName"></span>
-        <br />
+        
 
         <label asp-for="Password"></label>
         <br />
-        <input type="password" asp-for="Password" />
-        <span asp-validation-for="Password"></span>
-        <br />
+        <input class="form-control" type="password" asp-for="Password" />
+        <span asp-validation-for="Password"></span>        
         <div asp-validation-summary ="All" class="text-danger" style="margin-top: 1rem;">
             <button class="btn btn-primary" type="submit">Login</button>
             <button class="btn btn-primary"><a asp-controller="Member" asp-action="Register" style="color: white; text-decoration: none;">Register</a></button>

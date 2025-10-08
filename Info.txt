@@ -104,11 +104,7 @@ Kunna sätta Bans på användare beroende på hur många reports dom fått på sig    <
 SMÅ FIX
 ---------------------------------------------------------------------------------------------------------------------
 
-Text hamnar under bild
-
 Fixa styling på Profilsida samt message sida
-
-Vid updatering av skapad post så försvinner bild!
 
 Går ej ta bort bild via admin!
 

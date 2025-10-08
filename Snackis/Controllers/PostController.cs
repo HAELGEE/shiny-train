@@ -2,6 +2,7 @@
 using Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System.Text.RegularExpressions;
 
 
@@ -310,17 +311,37 @@ public class PostController : Controller
         }
         var post = await _postService.GetOnePostAsync(id);
 
-
-        return View(post);
+        var fvm = new FullViewModel { Post = post };
+        return View(fvm);
     }
 
     [HttpPost("UpdatePost")]
-    public async Task<IActionResult> UpdatePost(Post post)
+    public async Task<IActionResult> UpdatePost(FullViewModel fvm)
     {
+        string filename = "";
+        if (fvm.UploadedImage != null)
+        {
+            if (fvm.Post.ImagePath != null)
+                _postService.DeleteImage(fvm.Post, null);
 
-        await _postService.UpdatePostAsync(post);
+            // Valfritt sätt att göra bildnamnet unikt
+            filename = Random.Shared.Next(0, 99999).ToString() + "_" + $"ID={HttpContext.Session.GetInt32("UserId")}"
+                + "_" + fvm.UploadedImage.FileName;
 
-        return RedirectToAction(nameof(ReadPost), new { Id = post.Id });
+            using (var fileStream = new FileStream("./wwwroot/uploads/" + filename, FileMode.Create))
+            {
+                await fvm.UploadedImage.CopyToAsync(fileStream);
+            }
+
+
+            fvm.Post.ImagePath = "/uploads/" + filename;
+
+        }
+
+
+        await _postService.UpdatePostAsync(fvm.Post);
+
+        return RedirectToAction(nameof(ReadPost), new { Id = fvm.Post.Id });
     }
 
     [HttpPost("CreateSubPost")]
@@ -402,14 +423,30 @@ public class PostController : Controller
     }
 
     [HttpPost("UpdateSubPost")]
-    public async Task<IActionResult> UpdateSubPost(SubPost subPost)
+    public async Task<IActionResult> UpdateSubPost(IFormFile? UploadedImage, SubPost subPost)
     {
+        string filename = "";
+        if (UploadedImage != null)
+        {
+            if (subPost.ImagePath != null)
+                _postService.DeleteImage(null, subPost);
+
+            // Valfritt sätt att göra bildnamnet unikt
+            filename = Random.Shared.Next(0, 99999).ToString() + "_" + $"ID={HttpContext.Session.GetInt32("UserId")}"
+                + "_" + UploadedImage.FileName;
+
+            using (var fileStream = new FileStream("./wwwroot/uploads/" + filename, FileMode.Create))
+            {
+                await UploadedImage.CopyToAsync(fileStream);
+            }
+
+
+            subPost.ImagePath = "/uploads/" + filename;
+
+        }
         HttpContext.Session.SetInt32("updateSubpost", 0);
 
-        if (!ModelState.IsValid)
-            return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId });
-
-
+        
         await _postService.UpdateSubPostAsync(subPost);
 
         return RedirectToAction(nameof(ReadPost), new { Id = subPost.PostId });
