@@ -1,0 +1,82 @@
+﻿@model FullViewModel
+
+@{
+    ViewData["Title"] = "Messages";
+}
+
+<div class="messages">
+    <details class="accordion-collapse">
+        <summary class="accordion-collapse">Send Message</summary>
+        <div class="box">
+            <form asp-controller="Member" asp-action="CreateChatt">
+                <label for="conversationId" style="display:block;margin:0.5rem 0 0.25rem;font-size:.9rem;">Message to?</label>
+                <input id="conversationId"
+                       name="userName"
+                       type="text"
+                       placeholder="Type Username here.."
+                       required
+                       style="width:100%;box-sizing:border-box;padding:.5rem;border:1px solid #ccc;border-radius:6px;" />
+                <span asp-validation-for="@Model.Member.UserName" class="text-danger"></span>
+
+                <label for="conversationText" style="display:block;margin:0.5rem 0 0.25rem;font-size:.9rem;">Text to Member</label>
+                <input type="text" asp-for="@Model.Chat.Text"
+                       id="conversationText"
+                       placeholder="Chatt message here.."
+                       required
+                       style="width:100%;box-sizing:border-box;padding:.5rem;border:1px solid #ccc;border-radius:6px;" />
+
+                <input type="hidden" asp-for="@Model.Chat.SenderId" value="@Model.Member.Id" />
+
+                <div style="display:flex;gap:.5rem;margin-top:.75rem;justify-content:flex-end;">
+                    <button class="btn btn-primary" type="submit" class="conversation-box__create" style="padding:.5rem .75rem;border-radius:6px;border:1px solid #2b6cb0;background:#2b6cb0;color:#fff;">
+                        Send
+                    </button>
+                </div>
+            </form>
+        </div>
+    </details>
+    <hr />
+
+    <div class="row">
+
+        <table class="minimalistBlack">
+            <thead class="border-bottom">
+                <tr>
+                    <th>Conversation with</th>
+
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody class="row-cols-1" style="margin-top: 1rem;">
+                @if (Model.Chatts != null)
+                {
+                    foreach (var chatt in Model.Chatts)
+                    {
+                        var otherUser = chatt.SenderId == Model.Member.Id
+                        ? chatt.ReceiverMember
+                        : chatt.SenderMember;
+                        <tr>
+                            <td>@otherUser.UserName</td>
+
+                            <td>
+                                <form asp-controller="Member" asp-action="Conversation" method="get">
+                                    <input type="hidden" name="receiverId" value="@otherUser.Id" />
+                                    <button type="submit" class="btn btn-primary">Open</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form asp-controller="Member" asp-action="Messages" method="post">
+                                    <button type="submit" asp-route-receiverId="@otherUser.Id" class="btn btn-primary" style="background-color: red;">Delete</button>
+                                </form>
+                            </td>
+
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+
+    </div>
+</div>

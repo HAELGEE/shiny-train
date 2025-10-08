@@ -104,7 +104,7 @@ Kunna sätta Bans på användare beroende på hur många reports dom fått på sig    <
 SMÅ FIX
 ---------------------------------------------------------------------------------------------------------------------
 
-Göra en lista i Admin för reports av subposter också  <-- SNYGGARE!
+Göra alla svarta borders snygga så det ser ut som att dom ligger på bakgrunden (Som ett berg typ)
 
 En öppna och stäng knapp för chatten. Samt att den går öppna på telefon skärmar
 

@@ -172,8 +172,8 @@
                         </div>
                     }
 
-                    <p style="margin-top: -0.15rem; margin-left: 2rem; word-break: break-word;">
-                        @Model.Post.Text
+                    <p style="margin-top: -0.15rem; margin-left: 2rem; word-break: break-word;">                        
+                        @Html.Raw(Model.Post.Text)
                     </p>
 
                 </div>
@@ -299,7 +299,7 @@
 
                                 <div style="word-break: break-word;">
                                     <p style="margin-top: 0.5rem; margin-left: 2rem; ">
-                                        @item.Text
+                                         @Html.Raw(item.Text)
                                     </p>
                                 </div>
                             }
@@ -313,7 +313,7 @@
 
                                 <div style="word-break: break-word;">
                                     <p style="margin-top: 0.5rem; margin-left: 2rem; ">
-                                        @item.Text
+                                        @Html.Raw(item.Text)
                                     </p>
                                 </div>
                             }
@@ -327,7 +327,7 @@
 
                                 <div style="word-break: break-word;">
                                     <p style="margin-top: 0.5rem; margin-left: 2rem; ">
-                                        @item.Text
+                                        @Html.Raw(item.Text)
                                     </p>
                                 </div>
                             }
@@ -335,7 +335,7 @@
                             {
                                 <div style="word-break: break-word;">
                                     <p style=" margin-left: 2rem; margin-top: -2rem;">
-                                        @item.Text
+                                        @Html.Raw(item.Text)
                                     </p>
                                 </div>
                             }

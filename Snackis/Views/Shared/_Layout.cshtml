@@ -25,7 +25,8 @@
 </head>
 <body style="background-color: lightgray;">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: dimgrey;">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #acacac; border-bottom: 4px inset rgba(28,110,164,0.64);
+border-radius: 0px 0px 20px 20px;">
             <div class="container">
                 <div class="box left">
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><h3>Snackis</h3></a>
@@ -47,6 +48,12 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="Profile"><b>Profile</b></a>
                             </li>
+                            @if (!string.IsNullOrEmpty(userName))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="Messages"><b>Messages</b></a>
+                                </li>
+                            }
                             @if (!string.IsNullOrWhiteSpace(userName) && Context.Session.GetInt32("IsAdmin") == 1)
                             {
                                 <li class="nav-item">

@@ -1,0 +1,45 @@
+﻿@model FullViewModel
+
+@{
+    ViewData["Title"] = "Chat";
+}
+
+<div>
+    <div class="chat-area" style="border: 1px outset black">
+        @if (Model.ChattMessages != null)
+        {
+            <div class="chat-messages" id="chat-messages" style="background-color: lightgrey;">
+                @foreach (var message in Model.ChattMessages)
+                {
+                    @if (message.SenderId == Model.Member.Id)
+                    {
+                        <div class="message me" style="color:black">
+                            <b>@Model.Member.UserName</b> @message.TimeCreated.ToString("yyyy/MM/dd - HH:mm") <br />
+                            <hr style="margin-top: 0rem;" />
+
+                            @message.Text
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="message other" style="color:black">
+                            <b style="justify-self: flex-end">@message.SenderMember.UserName</b> @message.TimeCreated.ToString("yyyy/MM/dd - HH:mm") <br />
+                            <hr style="margin-top: 0rem;" />
+                            @message.Text
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="chat-input" style="background-color: lightgrey;">
+                <form asp-controller="Member" asp-action="SendMessage">
+                    <input type="hidden" asp-for="@Model.Chat.SenderId" value="@Model.Member.Id" />
+                    <input type="hidden" asp-for="@Model.Chat.ReceiverId" value="@Model.ReceiverMemberID" />
+
+                    <input type="text" placeholder="Type message here..." asp-for="@Model.Chat.Text" />
+                    <button class="btn btn-primary" type="submit">Send</button>
+                </form>
+            </div>
+        }
+    </div> 
+</div>

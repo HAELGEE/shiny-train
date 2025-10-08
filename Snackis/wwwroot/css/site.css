@@ -30,13 +30,23 @@ body {
     text-align: start;
 }
 
-
 /*NAVBAR*/
 .navbar.navbar-expand-sm.navbar-toggleable-sm.navbar-light.bg-white.border-bottom.box-shadow.mb-3 {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+summary {
+    cursor: pointer;
+    color: blue;
+    user-select: none;
+    font-weight: bold;
+    /* ta bort standardpil */
+    list-style: none;
+}
+
+
 
 .box {
     flex: 1; /* alla tre får samma bredd */
@@ -222,11 +232,14 @@ input:checked + .slider {
     gap: 10px;
     flex-wrap: wrap;
     align-items: flex-start;
-    border: 1px solid #333;
     padding: 10px;
     margin-bottom: 15px;
     display: flex;
     font-weight: bold;
+    border: 4px solid #555555;
+    border-radius: 20px 20px 20px 20px;
+    -webkit-box-shadow: 0px 0px 0px 5px #A0A0A0, inset 0px 10px 27px -8px #141414, 0px 0px 0px 0px rgba(0,0,0,0);
+    box-shadow: 0px 0px 0px 5px #A0A0A0, inset 0px 10px 27px -8px #141414, 0px 0px 0px 0px rgba(0,0,0,0);
 }
 
 /* varje kategori */
@@ -721,7 +734,10 @@ th {
 }
 
 .posts, .post2 {
-    border: 1px solid #333;
+    border: 2px solid #555555;
+    border-radius: 20px 20px 20px 20px;
+    -webkit-box-shadow: 0px 0px 0px 5px #A0A0A0, inset 0px 10px 27px -8px #141414, 0px 0px 0px 0px rgba(0,0,0,0);
+    box-shadow: 0px 0px 0px 5px #A0A0A0, inset 0px 10px 27px -8px #141414, 0px 0px 0px 0px rgba(0,0,0,0);
     padding: 15px;
     max-width: 70rem; /* max bredd på stora skärmar */
     width: 100%; /* Gör bredare */
@@ -1016,8 +1032,8 @@ html, body {
 }
 
 @media (max-width: 450px) {
-    .answerContainer{
-
+    .messages{
+        width:20rem;
     }
     .replyBox {
         width: 30rem;

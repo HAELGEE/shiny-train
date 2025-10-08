@@ -33,6 +33,8 @@ public class Program
         builder.Services.AddScoped<IReportsRepository, ReportsRepository>();
         builder.Services.AddScoped<IHomeRepository, HomeRepository>();
         builder.Services.AddScoped<IHomeService, HomeService>();
+        builder.Services.AddScoped<IConversationRepository, ConversationRepository>();
+        builder.Services.AddScoped<IConversationService, ConversationService>();
 
 
         builder.Services.AddSession();

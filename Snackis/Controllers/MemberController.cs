@@ -12,11 +12,13 @@ public class MemberController : Controller
 {
     private readonly IMemberService _memberService;
     private readonly IPostService _postService;
+    private readonly IConversationService _conversationService;
 
-    public MemberController(IMemberService memberService, IPostService postService)
+    public MemberController(IMemberService memberService, IPostService postService, IConversationService conversationService)
     {
         _memberService = memberService;
         _postService = postService;
+        _conversationService = conversationService;
     }
 
     async Task<bool> IsAdmin()
@@ -32,11 +34,11 @@ public class MemberController : Controller
         }
         return adminCheck;
     }
-        
+
 
 
     [HttpGet("profile")]
-    public async Task<IActionResult> Profile(int receiverId, Chatt chatt)
+    public async Task<IActionResult> Profile()
     {
         var userId = HttpContext.Session.GetInt32("UserId");
 
@@ -45,26 +47,13 @@ public class MemberController : Controller
 
 
         var member = await _memberService.GetOneMemberAsync((int)userId);
-
-
-
         FullViewModel viewModel = new FullViewModel();
+
         if (member != null)
         {
             ViewBag.Member = member;
 
             viewModel.Member = member;
-            viewModel.Chatts = await _memberService.AllChatForMemberAsync((int)userId);
-
-            viewModel.Chat = new Chatt();
-
-
-            if ((int)userId > 0 && receiverId > 0)
-            {
-                viewModel.ChattMessages = await _memberService.GetAllChattMessagesFromReceiverIdAsync((int)userId, receiverId);
-                viewModel.ReceiverMemberID = receiverId;
-            }
-
         }
 
         return View(viewModel);
@@ -365,13 +354,13 @@ public class MemberController : Controller
                 chat.ReceiverMember = await _memberService.GetMemberByUsernameAsync(userName);
 
             if (chat.ReceiverMember == null)
-                return RedirectToAction(nameof(Profile));
+                return RedirectToAction(nameof(Messages));
 
 
 
             await _memberService.CreateChattWithUserAsync(chat);
         }
-        return RedirectToAction(nameof(Profile), new { receiverId = chat.ReceiverId });
+        return RedirectToAction(nameof(Messages), new { receiverId = chat.ReceiverId });
     }
 
     [HttpPost("SendMessage")]
@@ -384,7 +373,77 @@ public class MemberController : Controller
             await _memberService.CreateChattWithUserAsync(chat);
         }
 
-        return RedirectToAction(nameof(Profile), new { receiverId = chat.ReceiverId });
+        return RedirectToAction("Conversation", new { receiverId = chat.ReceiverId });
+    }
+
+    [HttpGet("Messages")]
+    public async Task<IActionResult> Messages(int receiverId, Chatt chatt)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+
+        if (userId == null || userId == 0)
+            return RedirectToAction(nameof(Login), "Member");
+
+
+        var member = await _memberService.GetOneMemberAsync((int)userId);
+
+        FullViewModel viewModel = new FullViewModel();
+        if (member != null)
+        {
+            ViewBag.Member = member;
+
+            viewModel.Member = member;
+            viewModel.Chatts = await _memberService.AllChatForMemberAsync((int)userId);
+
+            viewModel.Chat = new Chatt();
+
+
+            if ((int)userId > 0 && receiverId > 0)
+            {
+                viewModel.ChattMessages = await _memberService.GetAllChattMessagesFromReceiverIdAsync((int)userId, receiverId);
+                viewModel.ReceiverMemberID = receiverId;
+            }
+
+        }
+
+        return View(viewModel);
+    }
+
+    [HttpPost("Messages")]
+    public async Task<IActionResult> Messages(Chatt chatt)
+    {
+        if (chatt == null)
+            return RedirectToAction(nameof(Messages));
+
+
+        var Chatt = await _memberService.GetAllChattMessagesFromReceiverIdAsync((int)HttpContext.Session.GetInt32("UserId"), (int)chatt.ReceiverId);
+
+        if (HttpContext.Session.GetInt32("UserId") == chatt.SenderId || HttpContext.Session.GetInt32("UserId") == chatt.ReceiverId || chatt.ReceiverId > 0)
+        {
+            foreach (var mes in Chatt)
+            {
+                await _conversationService.DeleteConversationAsync((int)mes.SenderId, (int)mes.ReceiverId);
+                //await _conversationService.DeleteConversationAsync((int)mes.ReceiverId, (int)mes.SenderId);
+            }
+        }
+
+        return RedirectToAction(nameof(Messages));
+    }
+
+
+    [HttpGet("Conversation")]
+    public async Task<IActionResult> Conversation(int receiverId)
+    {
+        var chatt = await _memberService.GetAllChattMessagesFromReceiverIdAsync((int)HttpContext.Session.GetInt32("UserId"), receiverId);
+
+        var fwm = new FullViewModel
+        {
+            ReceiverMemberID = receiverId,
+            ChattMessages = chatt,
+            Member = await _memberService.GetOneMemberAsync((int)HttpContext.Session.GetInt32("UserId")),
+        };
+
+        return View(fwm);
     }
 
     [HttpPost("DeleteUser")]

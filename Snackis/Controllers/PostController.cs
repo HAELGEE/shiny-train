@@ -2,6 +2,8 @@
 using Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
+
 
 namespace Snackis.Controllers;
 
@@ -54,8 +56,10 @@ public class PostController : Controller
     public async Task<IActionResult> ReadPost(int id, int subPostId)
     {
         var post = await _postService.GetOnePostAsync(id);
+        var users = await _memberService.GetAllMembersAsync();
 
         var subPosts = await _postService.GettingSubPostFromPostByIdAsync(post.Id);
+
 
         var subPost = new SubPost();
 
@@ -66,6 +70,33 @@ public class PostController : Controller
 
         var subCategory = await _categoryService.GetOneSubCategoriesAsync((int)post.SubCategoryId!);
 
+        //Check to look for "@" to see if anyone beeing "tagged"
+        string LookForTag(string text)
+        {
+            return Regex.Replace(text, @"@(\w+)", match =>
+            {
+                string username = match.Groups[1].Value;
+                var user = users.FirstOrDefault(u => u.UserName.Equals(username, StringComparison.OrdinalIgnoreCase));
+                if (user != null)
+                {
+                    return $"<a href='/Guest?id={user.Id}'>@{username}</a>";
+                }
+                return match.Value;
+            });
+        }
+        post.Text = LookForTag(post.Text);
+
+        if (subPost.Text != null)
+            subPost.Text = LookForTag(subPost.Text);
+
+        if (subPosts != null)
+        {
+            foreach (var subpost in subPosts)
+            {
+                subpost.Text = LookForTag(subpost.Text);
+            }
+        }
+
         var view = new Entities
         {
             Post = post,
@@ -73,7 +104,6 @@ public class PostController : Controller
             SubPost = subPost,
             SubCategory = subCategory,
         };
-
 
 
         if (HttpContext.Session.GetInt32("UserId") != null && id != null)
@@ -99,7 +129,7 @@ public class PostController : Controller
     [HttpGet("UnReport")]
     public async Task<IActionResult> UnReport(int id, int reporterId)
     {
-        
+
         if (id == 0 || reporterId == 0)
             return RedirectToAction("Index", "Home");
 
