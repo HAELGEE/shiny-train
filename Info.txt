@@ -104,11 +104,13 @@ Kunna sätta Bans på användare beroende på hur många reports dom fått på sig    <
 SMÅ FIX
 ---------------------------------------------------------------------------------------------------------------------
 
-Göra alla svarta borders snygga så det ser ut som att dom ligger på bakgrunden (Som ett berg typ)
+Text hamnar under bild
 
-En öppna och stäng knapp för chatten. Samt att den går öppna på telefon skärmar
+Fixa styling på Profilsida samt message sida
 
-Göra en mailfunktion inom forumet
+Vid updatering av skapad post så försvinner bild!
+
+Går ej ta bort bild via admin!
 
 ---------------------------------------------------------------------------------------------------------------------
 

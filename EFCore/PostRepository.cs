@@ -59,8 +59,8 @@ public class PostRepository : IPostRepository
     public async Task<List<Post>> Getting10RecentPostByReplyAsync() =>
         await _context.Post
             .Include(p => p.SubPosts)
-            .Take(10)
             .OrderByDescending(x => x.Reply)
+            .Take(10)
             .ToListAsync();
 
     public async Task CreatePostAsync(Post post)

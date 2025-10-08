@@ -7,28 +7,26 @@
 <div>
     <form asp-controller="Post" asp-action="CreatePost" method="post" enctype="multipart/form-data">
 
-        <input type="hidden" asp-for="@Model.Post.SubCategoryId" />
+        <input class="form-control" type="hidden" asp-for="@Model.Post.SubCategoryId" />
         <input type="hidden" asp-for="@Model.Post.MemberId" />
 
         <label asp-for="@Model.Post.Description"></label><br />
-        <input type="text" asp-for="@Model.Post.Description" required style="width: 20rem; " />
+        <input class="form-control" type="text" asp-for="@Model.Post.Description" required style="width: 20rem; " />
         <span asp-validation-for="@Model.Post.Description"></span>
         <br />
         <br />
 
         <label asp-for="@Model.Post.Text"></label><br />
-        <textarea asp-for="@Model.Post.Text" required style="width: 20rem; height: 5rem;"></textarea>
+        <textarea asp-for="@Model.Post.Text" required style="width: 20rem; height: 5rem;" class="form-control"></textarea>
         <span asp-validation-for="@Model.Post.Text"></span>
         <br />
 
-
-        <input asp-for="@Model.UploadedImage" /><br />
+        <input class="form-control" asp-for="@Model.UploadedImage" /><br />
         
-
         <br />
 
         <div asp-validation-summary="All" class="text-danger" style="margin-top: 1rem;">
-            <button type="submit">Create</button>
+            <button class="btn btn-primary" type="submit">Create</button>
         </div>
 
     </form>
