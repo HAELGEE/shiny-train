@@ -23,7 +23,7 @@
                     else
                     {
                         <div class="message other" style="color:black">
-                            <b style="justify-self: flex-end">@message.SenderMember.UserName</b> @message.TimeCreated.ToString("yyyy/MM/dd - HH:mm") <br />
+                            <b style="justify-self: flex-end">@Model.OtherMember.UserName</b> @message.TimeCreated.ToString("yyyy/MM/dd - HH:mm") <br />
                             <hr style="margin-top: 0rem;" />
                             @message.Text
                         </div>

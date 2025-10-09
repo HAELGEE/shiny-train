@@ -423,7 +423,7 @@ public class MemberController : Controller
             foreach (var mes in Chatt)
             {
                 await _conversationService.DeleteConversationAsync((int)mes.SenderId, (int)mes.ReceiverId);
-                //await _conversationService.DeleteConversationAsync((int)mes.ReceiverId, (int)mes.SenderId);
+                
             }
         }
 
@@ -435,12 +435,14 @@ public class MemberController : Controller
     public async Task<IActionResult> Conversation(int receiverId)
     {
         var chatt = await _memberService.GetAllChattMessagesFromReceiverIdAsync((int)HttpContext.Session.GetInt32("UserId"), receiverId);
+        var userId = HttpContext.Session.GetInt32("UserId");
 
         var fwm = new FullViewModel
         {
             ReceiverMemberID = receiverId,
             ChattMessages = chatt,
             Member = await _memberService.GetOneMemberAsync((int)HttpContext.Session.GetInt32("UserId")),
+            OtherMember = await _memberService.GetOneMemberAsync(receiverId),
         };
 
         return View(fwm);

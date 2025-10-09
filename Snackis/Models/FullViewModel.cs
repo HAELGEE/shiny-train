@@ -6,6 +6,8 @@ public class FullViewModel
     public int searchType { get; set; } = 0;
     public string Text { get; set; } = "";
     public Member? Member { get; set; }
+    public Member? OtherMember { get; set; }
+
     public List<Category>? Categorys { get; set; } = new();
     public List<SubCategory>? SubCategorys { get; set; }
     public List<Post>? Posts { get; set; }
