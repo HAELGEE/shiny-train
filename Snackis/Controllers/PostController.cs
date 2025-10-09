@@ -234,7 +234,7 @@ public class PostController : Controller
             await _postService.DeleteSubPostAsync(post);
         }
 
-        return RedirectToAction(nameof(ReadPost), new { Id = subPostCheck.PostId });
+        return RedirectToAction("Admin", "Member");
     }
 
     [HttpGet("CreatePost")]

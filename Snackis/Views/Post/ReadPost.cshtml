@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "ReadPost";
     bool checkIfTrue = false;
-
     bool likedPost = false;
 
 }
@@ -224,7 +223,7 @@
 {
     @foreach (var item in Model.SubPosts)
     {
-
+        bool checkIfTrue2 = false;
         <div class="change">
             @if (Context.Session.GetInt32("UserId") == item.MemberId || Context.Session.GetInt32("IsAdmin") == 1)
             {
@@ -234,7 +233,19 @@
 
             @if (Context.Session.GetInt32("UserId") > 0)
             {
-                @if (item.ReporterIds == null && item.Reported == false && item.MemberId != Context.Session.GetInt32("UserId"))
+                ViewBag.SubreporterId = 0;
+                if (item.ReporterIds != null)
+                {
+                    @foreach (var reports in item.ReporterIds)
+                    {
+                        if (reports.MemberId == Context.Session.GetInt32("UserId"))
+                        {
+                            checkIfTrue2 = true;
+                            ViewBag.SubreporterId = reports.MemberId;
+                        }
+                    }
+                }
+                @if (!checkIfTrue2 && item.MemberId != Context.Session.GetInt32("UserId"))
                 {
                     <a asp-controller="Post" asp-action="ReportSubpost" asp-route-id="@item.Id" asp-route-reporterId="@Context.Session.GetInt32("UserId")" asp-route-postId="@Model.Post.Id">
                         <button type="submit" class="btn btn-primary" style="background-color:teal;">Report</button>
@@ -243,7 +254,16 @@
 
                 @if (Context.Session.GetInt32("IsAdmin") == 1 && item.Reported == true)
                 {
-
+                    if (item.ReporterIds != null)
+                    {
+                        @foreach (var report in item.ReporterIds)
+                        {
+                            if (report.MemberId == Context.Session.GetInt32("UserId"))
+                            {
+                                ViewBag.SubreporterId = @report.MemberId;
+                            }
+                        }
+                    }
                     <a asp-controller="Post" asp-action="UnReportSubpost" asp-route-id="@item.Id" asp-route-reporterId="@Context.Session.GetInt32("UserId")" asp-route-postId="@Model.Post.Id">
                         <button type="submit" class="btn btn-primary" style="background-color:lightseagreen;">UnReport</button>
                     </a>
@@ -294,7 +314,7 @@
                                 {
                                     <div style="background-color: darkgray; display: flex; flex-direction:row; margin-top: -2rem; margin-left: 2rem; word-break: break-word;">
 
-                                        <p style="font-style: italic; margin-bottom: -0.1rem;">Answer to @parent.Member.UserName &quot;@parent.Text&quot;</p>
+                                        <p style="font-style: italic; margin-bottom: -0.1rem;">Answer to @parent.Member.UserName &quot;@Html.Raw(parent.Text)&quot;</p>
 
                                     </div>
 
@@ -324,7 +344,7 @@
                             {
                                 <div style="background-color: darkgray; display: flex; flex-direction:row; margin-top: -2rem; margin-left: 2rem; word-break: break-word;">
 
-                                    <p style="font-style: italic; margin-bottom: -0.1rem;">Answer to @Model.Post.Member.UserName &quot;@Model.Post.Text&quot;</p>
+                                    <p style="font-style: italic; margin-bottom: -0.1rem;">Answer to @Model.Post.Member.UserName &quot;@Html.Raw(Model.Post.Text)&quot;</p>
 
                                 </div>
 
@@ -414,7 +434,7 @@
                                         <textarea class="textarea-style2" asp-for="@Model.SubPost.Text" style="width: 100;" required></textarea>
                                     </div>
                                 </div>
-                                <input class="form-control" asp-for="UploadedImage" style="width: 20rem;"/><br />
+                                <input class="form-control" asp-for="UploadedImage" style="width: 20rem;" /><br />
                                 <button type="submit" class="btn btn-primary button-to-right" style="margin-left:1.5rem;">Update</button>
                             </div>
                         </form>

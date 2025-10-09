@@ -106,6 +106,8 @@ SMÅ FIX
 
 Fixa styling på Profilsida samt message sida
 
+Kunna flytta Poster ifrån en kategori till en annan!! (id swap)
+
 Går ej ta bort bild via admin!
 
 ---------------------------------------------------------------------------------------------------------------------

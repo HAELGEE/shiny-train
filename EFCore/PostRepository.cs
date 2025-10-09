@@ -212,6 +212,7 @@ public class PostRepository : IPostRepository
     public async Task<List<SubPost>> GettingSubPostFromPostByIdAsync(int id) => await _context.SubPost
         .Where(sp => sp.PostId == id)
         .Include(sp => sp.Member)
+        .Include(sp => sp.ReporterIds)
         .ToListAsync();
 
     public async Task CreateSubPostAsync(SubPost subPost)
@@ -271,8 +272,9 @@ public class PostRepository : IPostRepository
                 SubPostId = subpost.Id,
             };
 
+            subpost.TotalReports++;
             _context.Reports.Add(report);
-            _context.Update(subpost);
+            _context.SubPost.Update(subpost);
             await _context.SaveChangesAsync();
         }
     }
@@ -282,6 +284,7 @@ public class PostRepository : IPostRepository
 
         var unreportMembers = await _context.Reports.Where(r => r.SubPostId == SubpostId).ToListAsync();
 
+
         if (unreportMembers != null)
         {
             foreach (var report in unreportMembers)
@@ -290,6 +293,7 @@ public class PostRepository : IPostRepository
             }
 
             subpost.Reported = false;
+            subpost.TotalReports--;
             _context.Update(subpost);
             await _context.SaveChangesAsync();
         }
