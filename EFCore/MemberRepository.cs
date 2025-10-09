@@ -137,34 +137,30 @@ public class MemberRepository : IMemberRepository
             .Where(c => c.ReceiverId == member.Id)
             .ToListAsync();
 
-
         var posts = await _dbContext.Post
              .Where(p => p.MemberId == member.Id)
              .ToListAsync();
 
         var postIds = posts.Select(p => p.Id).ToList();
 
-        // Ta bort Reports
         var reports = await _dbContext.Reports
             .Where(r => r.PostId.HasValue && postIds.Contains(r.PostId.Value))
             .ToListAsync();
 
-        // Ta bort PostViews
         var postViews = await _dbContext.PostViews
             .Where(v => postIds.Contains((int)v.PostId))
             .ToListAsync();
 
-        // Ta bort Likes
         var likes = await _dbContext.Likes
             .Where(l => postIds.Contains((int)l.PostId))
             .ToListAsync();
 
-        // Ta bort SubPosts som tillhör medlemmen
+        
         var subPosts = await _dbContext.SubPost
             .Where(sp => sp.MemberId == member.Id)
             .ToListAsync();
 
-        // Radera i rätt ordning
+        
         _dbContext.Chatt.RemoveRange(sentChats);
         _dbContext.Chatt.RemoveRange(receivedChats);
         _dbContext.PostViews.RemoveRange(postViews);
