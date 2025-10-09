@@ -4,6 +4,7 @@ using EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251009091331_update21")]
+    partial class update21
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -490,8 +493,7 @@ namespace EFCore.Migrations
 
                     b.HasOne("Entity.Post", "Post")
                         .WithMany("ReporterIds")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PostId");
 
                     b.HasOne("Entity.SubPost", "SubPost")
                         .WithMany("ReporterIds")
@@ -517,14 +519,11 @@ namespace EFCore.Migrations
                         .WithMany("SubPosts")
                         .HasForeignKey("MemberId");
 
-                    b.HasOne("Entity.Post", "Post")
+                    b.HasOne("Entity.Post", null)
                         .WithMany("SubPosts")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PostId");
 
                     b.Navigation("Member");
-
-                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("Entity.Category", b =>

@@ -21,6 +21,7 @@ public class SubPost
 
     // DB connections
     public int? PostId { get; set; }
+    public Post? Post { get; set; }
     public int? MemberId { get; set; }
     public Member? Member { get; set; }
     public ICollection<Reports>? ReporterIds { get; set; }

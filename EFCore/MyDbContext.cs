@@ -51,6 +51,29 @@ public class MyDbContext : DbContext
             .OnDelete(DeleteBehavior.Restrict)
             .HasConstraintName("FK_Chatt_ReceiverMember");
 
+        modelBuilder.Entity<PostView>()
+            .HasOne(v => v.Post)
+            .WithMany(p => p.Views)
+            .HasForeignKey(v => v.PostId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Post>()
+            .HasOne(p => p.Member)
+            .WithMany(m => m.Posts)
+            .HasForeignKey(p => p.MemberId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Reports>()
+            .HasOne(r => r.Post)
+            .WithMany(p => p.ReporterIds)
+            .HasForeignKey(r => r.PostId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<SubPost>()
+            .HasOne(sp => sp.Post)
+            .WithMany(p => p.SubPosts)
+            .HasForeignKey(sp => sp.PostId)
+            .OnDelete(DeleteBehavior.Cascade);
 
     }
 }

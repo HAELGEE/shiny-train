@@ -1,6 +1,7 @@
 ﻿using Entity;
 using Entity;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 
@@ -96,7 +97,7 @@ public class MemberRepository : IMemberRepository
                     }
                 }
             }
-            
+
 
             if (!trueCheck)
             {
@@ -128,47 +129,51 @@ public class MemberRepository : IMemberRepository
     }
     public async Task DeleteMemberAsync(Member member)
     {
-        var likes = await _dbContext.Likes.Where(l => l.MemberId == member.Id).ToListAsync();
-        if (likes != null)
-        {
-            foreach (var like in likes)
-            {
-                _dbContext.Remove(like);
-            }
-            await _dbContext.SaveChangesAsync();
-        }
+        var sentChats = await _dbContext.Chatt
+            .Where(c => c.SenderId == member.Id)
+            .ToListAsync();
 
-        var posts = await _dbContext.Post.Where(p => p.MemberId == member.Id).ToListAsync();
-        if (posts != null)
-        {
-            foreach (var post in posts)
-            {
-                _dbContext.Remove(post);
-            }
-        }
+        var receivedChats = await _dbContext.Chatt
+            .Where(c => c.ReceiverId == member.Id)
+            .ToListAsync();
 
-        var postView = await _dbContext.PostViews.Where(p => p.MemberId == member.Id).ToListAsync();
-        if (postView != null)
-        {
-            foreach (var view in postView)
-            {
-                _dbContext.Remove(view);
-            }
-            await _dbContext.SaveChangesAsync();
-        }
 
-        var memberView = await _dbContext.MemberViews.Where(p => p.Id == member.Id).ToListAsync();
-        if (memberView != null)
-        {
-            foreach (var view in memberView)
-            {
-                _dbContext.Remove(view);
-            }
-            await _dbContext.SaveChangesAsync();
+        var posts = await _dbContext.Post
+             .Where(p => p.MemberId == member.Id)
+             .ToListAsync();
 
-        }
+        var postIds = posts.Select(p => p.Id).ToList();
 
-        _dbContext.Remove(member);
+        // Ta bort Reports
+        var reports = await _dbContext.Reports
+            .Where(r => r.PostId.HasValue && postIds.Contains(r.PostId.Value))
+            .ToListAsync();
+
+        // Ta bort PostViews
+        var postViews = await _dbContext.PostViews
+            .Where(v => postIds.Contains((int)v.PostId))
+            .ToListAsync();
+
+        // Ta bort Likes
+        var likes = await _dbContext.Likes
+            .Where(l => postIds.Contains((int)l.PostId))
+            .ToListAsync();
+
+        // Ta bort SubPosts som tillhör medlemmen
+        var subPosts = await _dbContext.SubPost
+            .Where(sp => sp.MemberId == member.Id)
+            .ToListAsync();
+
+        // Radera i rätt ordning
+        _dbContext.Chatt.RemoveRange(sentChats);
+        _dbContext.Chatt.RemoveRange(receivedChats);
+        _dbContext.PostViews.RemoveRange(postViews);
+        _dbContext.Likes.RemoveRange(likes);
+        _dbContext.SubPost.RemoveRange(subPosts);
+        _dbContext.Reports.RemoveRange(reports);
+        _dbContext.Post.RemoveRange(posts);
+        _dbContext.Member.Remove(member);
+
         await _dbContext.SaveChangesAsync();
     }
 
